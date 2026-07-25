@@ -1,0 +1,210 @@
+# Autopilot Log
+
+Unattended, auditable uploading to YouTube from a script — no browser, no UI automation,
+no scraping. It talks to **YouTube Data API v3** and nothing else.
+
+It exists because a one-person studio cannot open a browser ten times a day, and because
+almost every "how to automate YouTube" article on the web is quietly out of date.
+
+```bash
+python -m autopilot_log.youtube upload \
+  --shelf main --file today.mp4 --title "Today's short" --privacy private
+```
+
+---
+
+## What it does
+
+| | |
+|---|---|
+| Uploads a video file | resumable upload, so a large file survives a flaky connection |
+| Handles OAuth | one browser click per channel, once, ever — then it runs unattended |
+| Holds many channels | each channel gets a nickname (`--shelf main`, `--shelf en`, …) |
+| Keeps secrets out of the repo | pluggable keystore, nothing is ever printed or logged |
+| Refuses to publish by accident | a posting gate file must explicitly allow public uploads |
+
+## What it deliberately does **not** do
+
+- No browser automation and no scraping of any platform. If a platform has no API for
+  something, this tool does not do that something.
+- No engagement automation — it does not like, follow, comment, or view.
+- No uploading of content you do not own the rights to. That is on you.
+- No TikTok posting. TikTok's own terms rule out the browser route, and their Content
+  Posting API cannot serve an unattended multi-account workflow before an audit. Rather
+  than work around that, this project does not ship it.
+
+---
+
+## Four things Google's documentation says that surprise most people
+
+These are the reason this tool exists in this shape. All four are from Google's own pages.
+
+1. **Uploads through an unaudited Cloud project are locked to private, forever.**
+   Every video uploaded via `videos.insert` from an API project created after 28 July 2020
+   is restricted to private viewing, and that lock cannot be lifted by hand or appealed.
+   The fix is the free [YouTube API compliance audit][audit].
+   **A successful upload is not a published video.** This tool prints a loud warning when
+   YouTube overrides the privacy you asked for.
+2. **An OAuth app left in "Testing" hands out refresh tokens that expire in 7 days.**
+   Unattended posting will die every single week until the app is published to production.
+   ([OAuth 2.0 docs][oauth])
+3. **Service accounts cannot upload to YouTube.** They have no channel, so the API answers
+   `NoLinkedYouTubeAccount`. There is no fully human-free path: each channel needs exactly
+   **one** consent click, once. ([Authentication docs][auth])
+4. **`videos.insert` costs 1 of 100 uploads per day**, on a budget separate from the
+   10,000-unit daily quota. The widely copied "1,600 units per upload, so 6 videos a day"
+   figure is out of date. ([Quota costs][quota])
+
+[audit]: https://developers.google.com/youtube/v3/guides/quota_and_compliance_audits
+[oauth]: https://developers.google.com/identity/protocols/oauth2
+[auth]: https://developers.google.com/youtube/v3/guides/authentication
+[quota]: https://developers.google.com/youtube/v3/determine_quota_cost
+
+---
+
+## Install
+
+Python 3.9+ and one dependency.
+
+```bash
+git clone https://github.com/rimone0511/autopilot-log.git
+cd autopilot-log
+pip install requests
+```
+
+## Get a key
+
+1. Create a project in the [Google Cloud console](https://console.cloud.google.com/).
+2. Enable **YouTube Data API v3**.
+3. Configure the OAuth consent screen (external user type).
+4. Create an **OAuth client ID** of type **Desktop app**. Copy the client secret — Google
+   shows it once. If you lose it, add a new secret from the client's detail page.
+5. **Publish the app to production.** Skipping this is failure mode #2 above.
+
+Store the client:
+
+```bash
+python -m autopilot_log.youtube set-client --client-id XXX --client-secret YYY
+python -m autopilot_log.youtube where     # confirms where it landed; prints no secret
+```
+
+## Connect a channel (one click, once)
+
+```bash
+python -m autopilot_log.youtube auth --shelf main
+```
+
+It prints a consent URL and waits on `http://localhost:8765/`. Open the URL in a browser
+signed in to the channel you want, press **Allow**, and the refresh token is saved. If the
+machine has no browser, use `auth-url` on that machine and `exchange --code ...` afterwards.
+
+```bash
+python -m autopilot_log.youtube whoami --shelf main
+```
+
+## Upload
+
+```bash
+# safe by default: private
+python -m autopilot_log.youtube upload --shelf main --file clip.mp4 --title "Test"
+
+# see the request without sending it
+python -m autopilot_log.youtube upload --shelf main --file clip.mp4 --title "Test" --dry-run
+
+# scheduled publish (requires the gate to be open)
+python -m autopilot_log.youtube upload --shelf main --file clip.mp4 \
+  --title "Tomorrow" --publish-at 2026-07-26T09:00:00Z
+```
+
+---
+
+## The posting gate
+
+Anything other than `--privacy private` is refused unless a gate file says otherwise.
+Default location: `./posting-gate.json`, override with `AUTOPILOT_LOG_GATE`.
+
+```json
+{ "channels": { "youtube": { "allowed": false } } }
+```
+
+It **fails closed**: a missing, unreadable, or malformed gate means private-only. The point
+is that "the automation is running" and "the automation may publish" are two separate
+switches, and the second one is a deliberate human act.
+
+The gate is covered by tests, because it is the only thing standing between "the automation
+is running" and "something went public that should not have":
+
+```bash
+python tests/test_gate.py
+```
+
+## Bring your own keystore
+
+Set `AUTOPILOT_LOG_KEYSTORE`:
+
+| value | where secrets live |
+|---|---|
+| `file` (default) | `~/.autopilot-log/keys.json`, owner-only permissions. Override with `AUTOPILOT_LOG_KEYFILE`. |
+| `env` | read-only, from `AUTOPILOT_LOG_<SERVICE>_<FIELD>` variables — for CI and container secrets |
+| `dpapi` | Windows: shells out to a PowerShell script pointed at by `AUTOPILOT_LOG_DPAPI_SHELF`, so keys sit in a DPAPI-encrypted store rather than a JSON file |
+
+No backend ever prints a secret. `where` shows the location; `keystore.redact()` shows only
+the last four characters of a value.
+
+---
+
+## Data this tool touches
+
+- **Your Google OAuth refresh token and channel id**, stored by your chosen keystore on your
+  own machine. They are sent only to `oauth2.googleapis.com` and `googleapis.com`.
+- **The video file and metadata you name on the command line.**
+
+Nothing is sent anywhere else. There is no telemetry, no analytics, and no server operated
+by this project. Revoke access any time at
+[myaccount.google.com/permissions](https://myaccount.google.com/permissions).
+
+Use of the YouTube API is subject to the [YouTube Terms of Service](https://www.youtube.com/t/terms),
+the [YouTube API Services Terms of Service](https://developers.google.com/youtube/terms/api-services-terms-of-service),
+and the [Google Privacy Policy](https://policies.google.com/privacy).
+
+---
+
+## 日本語(かんたんな説明)
+
+**これは何?** — 動画を「ブラウザを開かずに」YouTubeへ上げるための小さな道具です。
+毎日ショート動画を出したいけれど、人が10回もアップロード画面を開くのは無理、という
+ところから生まれました。
+
+**たとえ話**: YouTubeの投稿画面が「窓口に並んで手渡しする」だとすると、この道具は
+「**専用の宅配便の伝票を書いて出す**」やり方です。窓口に並ばなくていい代わりに、
+最初に一度だけ「この宅配業者を使っていいですよ」と許可のハンコ(=許可ボタン)を押します。
+ハンコはチャンネル1つにつき生涯1回だけ。あとは全部機械がやります。
+
+**気をつける点が4つ**(全部Googleの公式ドキュメントに書いてあります):
+
+1. **審査に通るまで、上げた動画は全部「非公開」で固定されます。** 手で公開に戻すことも、
+   異議を出すこともできません。無料の審査に通すのが唯一の解除方法です。
+   → だから「アップロード成功」と「公開できた」は別物です。この道具は、YouTube側に
+   privacy を書き換えられたとき大きな警告を出します。
+2. **アプリを「テスト中」のままにすると、機械が使う合鍵が7日で失効します。** 毎週止まります。
+   必ず「本番公開」に切り替えてください。
+3. **完全に人の手をゼロにはできません。** サービスアカウント(人が触らない鍵)はYouTubeでは
+   使えないので、チャンネルごとに1回だけ許可のクリックが要ります。
+4. **1日100本まで上げられます。** ネットに多い「1日6本まで」は古い情報です。
+
+**安全のしくみ**: 既定は必ず「非公開」で上げます。公開したいときは `posting-gate.json` という
+別のファイルで明示的に許可する必要があり、そのファイルが無い・壊れている場合は自動的に
+「非公開のみ」に倒れます(=事故で公開されない側に倒れる作り)。
+鍵は画面にもログにも一切出しません。
+
+**やらないこと**: ブラウザの自動操作・スクレイピング・いいね/フォローの自動化・TikTokへの投稿。
+どれも各サービスの規約に触れるか、規約の範囲では自動で回らないので、最初から作っていません。
+
+---
+
+## License
+
+MIT — see [LICENSE](LICENSE).
+
+This project is not affiliated with, endorsed by, or sponsored by Google or YouTube.
+YouTube is a trademark of Google LLC.

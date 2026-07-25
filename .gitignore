@@ -1,0 +1,20 @@
+# Never commit credentials or anything that could hold one.
+keys.json
+*.key
+*.pem
+client_secret*.json
+.env
+.env.*
+
+# The live gate is a local operational switch, not source. Ship the example only.
+posting-gate.json
+
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+
+*.mp4
+*.mov

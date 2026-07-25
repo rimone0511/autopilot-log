@@ -1,0 +1,9 @@
+{
+  "_comment": "Copy to posting-gate.json. Anything other than --privacy private is refused unless the channel below says allowed:true. A missing, unreadable or malformed file means private-only.",
+  "channels": {
+    "youtube": {
+      "allowed": false,
+      "why": "Uploads from an unaudited Cloud project are locked to private anyway. Open this only after the YouTube API compliance audit has passed and you intend to publish."
+    }
+  }
+}
