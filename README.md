@@ -146,7 +146,7 @@ Set `AUTOPILOT_LOG_KEYSTORE`:
 |---|---|
 | `file` (default) | `~/.autopilot-log/keys.json`, owner-only permissions. Override with `AUTOPILOT_LOG_KEYFILE`. |
 | `env` | read-only, from `AUTOPILOT_LOG_<SERVICE>_<FIELD>` variables — for CI and container secrets |
-| `dpapi` | Windows: shells out to a PowerShell script pointed at by `AUTOPILOT_LOG_DPAPI_SHELF`, so keys sit in a DPAPI-encrypted store rather than a JSON file |
+| `dpapi` | Windows: shells out to a PowerShell script pointed at by `AUTOPILOT_LOG_DPAPI_SHELF`, so keys sit in a DPAPI-encrypted store rather than a JSON file. The script must accept `-Get <name> [-Field <f>]` and `-Set <name> -FromFile <path> -RemoveSource -Note <text>`, where the file holds `KEY=VALUE` lines. Values are passed by file, never as arguments, so they never appear in a command line or a process listing. |
 
 No backend ever prints a secret. `where` shows the location; `keystore.redact()` shows only
 the last four characters of a value.

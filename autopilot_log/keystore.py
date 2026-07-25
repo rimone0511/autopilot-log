@@ -127,10 +127,31 @@ def put(service, pairs, note=""):
         )
 
     if kind == "dpapi":
-        items = "; ".join("%s='%s'" % (k, str(v).replace("'", "''")) for k, v in pairs.items())
-        rc, _out, err = _dpapi_run(["-Set", service, "-Pairs", "@{ %s }" % items, "-Note", note])
+        # The value must never be a command-line argument. Two reasons, both measured:
+        #   * `powershell -File script.ps1 -Pairs @{...}` passes every argument as a string, so a
+        #     hashtable arrives as the literal text "System.Collections.Hashtable" and the call fails.
+        #   * When it fails, PowerShell echoes the offending argument -- secret included -- to stderr.
+        # So we hand the shelf a temp KEY=VALUE file instead, and never repeat stderr back.
+        import tempfile
+        fd, path = tempfile.mkstemp(suffix=".txt", text=True)
+        try:
+            with os.fdopen(fd, "w", encoding="utf-8") as fh:
+                for k, v in pairs.items():
+                    fh.write("%s=%s\n" % (k, v))
+            rc, _out, _err = _dpapi_run(["-Set", service, "-FromFile", path,
+                                         "-RemoveSource", "-Note", note])
+        finally:
+            if os.path.exists(path):      # -RemoveSource normally deletes it; be certain.
+                try:
+                    with open(path, "wb") as fh:
+                        fh.write(b"\0" * 256)
+                    os.remove(path)
+                except OSError:
+                    pass
         if rc != 0:
-            raise KeyStoreError("shelf write failed for %s: %s" % (service, err[:300]))
+            raise KeyStoreError(
+                "shelf write failed for %s (exit %d). The error text is withheld because it can "
+                "contain the secret -- run the same -Set by hand to see it." % (service, rc))
         return
 
     data = _file_load()

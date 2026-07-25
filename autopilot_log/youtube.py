@@ -164,12 +164,23 @@ def channel_of(tok):
 
 
 def save_token(shelf, tok):
-    ch = channel_of(tok["access_token"])
-    keystore.put("youtube-token-" + shelf, {
-        "REFRESH_TOKEN": tok["refresh_token"],
-        "CHANNEL_ID": ch["id"],
-        "CHANNEL_TITLE": ch["title"],
-    }, "YouTube channel token for shelf '%s'" % shelf)
+    # Store the refresh token FIRST. Consent can only be granted once per run, so a
+    # failure in the channel lookup below must never throw the token away -- measured
+    # 2026-07-25, when an account with no YouTube channel yet lost a freshly issued token.
+    keystore.put("youtube-token-" + shelf, {"REFRESH_TOKEN": tok["refresh_token"]},
+                 "YouTube channel token for shelf '%s'" % shelf)
+
+    try:
+        ch = channel_of(tok["access_token"])
+    except SystemExit:
+        print("saved: shelf=%s refresh token stored, but this Google account has no YouTube\n"
+              "channel yet, so the channel could not be recorded. Create the channel, then run:\n"
+              "  python -m autopilot_log.youtube whoami --shelf %s" % (shelf, shelf))
+        return
+
+    keystore.put("youtube-token-" + shelf,
+                 {"CHANNEL_ID": ch["id"], "CHANNEL_TITLE": ch["title"]},
+                 "YouTube channel token for shelf '%s'" % shelf)
     print("saved: shelf=%s channel=%s (%s)" % (shelf, ch["title"], ch["id"]))
 
 
