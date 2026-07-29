@@ -7,6 +7,26 @@ automation, no scraping. It talks only to the **YouTube Data API v3** and TikTok
 It exists because a one-person studio cannot open a browser ten times a day, and because
 almost every "how to automate YouTube" article on the web is quietly out of date.
 
+> ### YouTube and TikTok are not the same story here — please read this before judging the name
+>
+> **YouTube** is the unattended part: you authorise your own channel once with your own
+> Google credentials, and after that the command runs on a timer without you.
+>
+> **TikTok is not unattended.** By default this CLI only performs an **inbox upload**: the
+> video lands in your TikTok inbox and *you* review it and press post inside the TikTok
+> app. Direct posting exists as a separate subcommand, it is off unless a posting-gate file
+> explicitly allows it, and it only works if **you** hold your own TikTok client
+> credentials that **you** have had audited. This repository is a self-hosted tool, so
+> every copy is its own API client running under its operator's own key.
+>
+> If you are looking for the hosted product — a web app where a person chooses the privacy
+> level and every other setting and presses Post themselves — that is
+> **[Autopilot Log Studio](https://yutalab.dev/autopilot-log/studio/)**, and it is a
+> different, separately reviewed API client from this CLI.
+>
+> The name is just a name. Nothing in this repository operates TikTok through a browser,
+> and nothing posts to TikTok on a schedule.
+
 ```bash
 python -m autopilot_log.youtube upload \
   --shelf main --file today.mp4 --title "Today's short" --privacy private
