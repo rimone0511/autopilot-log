@@ -1,7 +1,8 @@
 # Autopilot Log
 
-Unattended, auditable uploading to YouTube from a script — no browser, no UI automation,
-no scraping. It talks to **YouTube Data API v3** and nothing else.
+Unattended, auditable uploading to YouTube and TikTok from a script — no browser, no UI
+automation, no scraping. It talks only to the **YouTube Data API v3** and TikTok's
+**Content Posting API**.
 
 It exists because a one-person studio cannot open a browser ten times a day, and because
 almost every "how to automate YouTube" article on the web is quietly out of date.
@@ -9,6 +10,10 @@ almost every "how to automate YouTube" article on the web is quietly out of date
 ```bash
 python -m autopilot_log.youtube upload \
   --shelf main --file today.mp4 --title "Today's short" --privacy private
+
+python -m autopilot_log.tiktok upload \
+  --shelf main --file today.mp4
+# lands in your TikTok inbox; you review and post it yourself in the TikTok app
 ```
 
 ---
@@ -29,9 +34,11 @@ python -m autopilot_log.youtube upload \
   something, this tool does not do that something.
 - No engagement automation — it does not like, follow, comment, or view.
 - No uploading of content you do not own the rights to. That is on you.
-- No TikTok posting. TikTok's own terms rule out the browser route, and their Content
-  Posting API cannot serve an unattended multi-account workflow before an audit. Rather
-  than work around that, this project does not ship it.
+- TikTok posting uses the official Content Posting API only. Browser automation remains
+  out of scope. An unaudited client is restricted to `SELF_ONLY`, posting accounts must
+  be private, and no more than five users may post through that client in a 24-hour
+  period. TikTok's [getting-started guide][tiktok-start] and [content-sharing
+  guidelines][tiktok-guidelines] describe these limits.
 
 ---
 
@@ -59,6 +66,28 @@ These are the reason this tool exists in this shape. All four are from Google's 
 [oauth]: https://developers.google.com/identity/protocols/oauth2
 [auth]: https://developers.google.com/youtube/v3/guides/authentication
 [quota]: https://developers.google.com/youtube/v3/determine_quota_cost
+
+---
+
+## Three things TikTok's documentation says that surprise most people
+
+These constraints are why the TikTok module has separate inbox and direct-post commands.
+
+1. **An unaudited client can direct-post only to `SELF_ONLY`.**
+   The restriction is removed through TikTok's audit process; until then, posting
+   accounts must also be private and the client is limited to five users in 24 hours.
+   ([Content Posting API getting started][tiktok-start])
+2. **A refresh token rotates whenever it is used.**
+   The old value can stop working, so this tool saves the newly returned refresh token
+   before using the accompanying access token. ([OAuth token management][tiktok-token])
+3. **An unspecified posting mode means `MEDIA_UPLOAD`, not a direct post.**
+   That sends media to the creator's inbox for a final action. This tool always sends an
+   explicit `post_mode`: `MEDIA_UPLOAD` for `upload`, or `DIRECT_POST` for `publish`.
+   ([Content Posting API reference][tiktok-start])
+
+[tiktok-start]: https://developers.tiktok.com/doc/content-posting-api-get-started
+[tiktok-guidelines]: https://developers.tiktok.com/doc/content-sharing-guidelines
+[tiktok-token]: https://developers.tiktok.com/doc/oauth-user-access-token-management
 
 ---
 
@@ -171,7 +200,7 @@ and the [Google Privacy Policy](https://policies.google.com/privacy).
 
 ## 日本語(かんたんな説明)
 
-**これは何?** — 動画を「ブラウザを開かずに」YouTubeへ上げるための小さな道具です。
+**これは何?** — 動画を「ブラウザを開かずに」YouTubeやTikTokへ上げるための小さな道具です。
 毎日ショート動画を出したいけれど、人が10回もアップロード画面を開くのは無理、という
 ところから生まれました。
 
@@ -197,8 +226,8 @@ and the [Google Privacy Policy](https://policies.google.com/privacy).
 「非公開のみ」に倒れます(=事故で公開されない側に倒れる作り)。
 鍵は画面にもログにも一切出しません。
 
-**やらないこと**: ブラウザの自動操作・スクレイピング・いいね/フォローの自動化・TikTokへの投稿。
-どれも各サービスの規約に触れるか、規約の範囲では自動で回らないので、最初から作っていません。
+**やらないこと**: ブラウザの自動操作・スクレイピング・いいね/フォローの自動化。
+TikTokは公式Content Posting APIだけを使い、未審査クライアントの制限を回避しません。
 
 ---
 
