@@ -1,0 +1,11 @@
+SYNTHETIC / SELF-MADE / NOT A CUSTOMER RESULT
+ticket=EARN-SHOWCASE-P1-20260916
+dataset=synthetic-self-made
+input_count=20
+ready_for_review=6
+needs_human=14
+sent=0
+published=0
+synthetic=true
+secrets_used=0
+Counts describe this synthetic fixture run only. They are not a customer KPI, time-saved rate, or sales result.

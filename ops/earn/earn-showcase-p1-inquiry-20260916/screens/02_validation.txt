@@ -1,0 +1,24 @@
+画面2 / 入力検査と重複判定（合成・ワイヤフレーム）
+================================================
+規則: 欠ける・壊れる・似ている・危ない・同じ inquiry_id がバッチ内重複 → needs_human
+      通った行も ready_for_review（人が見る）。自動送信しない。
+
++--------+----------------------+----------------------------------+
+| ID     | キュー               | 理由                             |
++--------+----------------------+----------------------------------+
+| 001    | ready_for_review     | VALID_UNIQUE                     |
+| 002    | ready_for_review     | VALID_UNIQUE                     |
+| 003    | needs_human          | EXACT_EMAIL_DUPLICATE            |
+| 004    | ready_for_review     | VALID_UNIQUE                     |
+| 005    | needs_human          | EXACT_PHONE_DUPLICATE            |
+| 006    | needs_human          | MISSING_CONTACT                  |
+| 007    | needs_human          | INVALID_EMAIL                    |
+| 008    | needs_human          | MISSING_BODY                     |
+| 009    | needs_human          | FUTURE_RECEIVED_AT               |
+| 010    | needs_human          | RISK_KEYWORD                     |
+| 015    | needs_human          | AMBIGUOUS_SIMILARITY             |
+| 018    | needs_human          | AMBIGUOUS_IDENTITY               |
+| 020    | needs_human          | EXACT_EMAIL_DUPLICATE            |
++--------+----------------------+----------------------------------+
+
+失敗の見せ方: 落とさず、確認待ちに残す。

@@ -1,0 +1,227 @@
+{
+  "dataset": "synthetic-self-made",
+  "ticket": "EARN-SHOWCASE-P1-20260916",
+  "pii": "none-real",
+  "inquiries": [
+    {
+      "inquiry_id": "INQ-S0-001",
+      "received_at": "2026-09-10T09:15:00+09:00",
+      "channel": "form",
+      "name": "山田サンプル",
+      "email": "yamada.sample@example.com",
+      "phone": "0300001001",
+      "company": "株式会社サンプル南",
+      "subject": "料金の見積もり希望",
+      "body": "ホームページのミニ導入について料金の見積もりが欲しいです。対象は問い合わせ整理の範囲です。"
+    },
+    {
+      "inquiry_id": "INQ-S0-002",
+      "received_at": "2026-09-10T11:40:00+09:00",
+      "channel": "email",
+      "name": "佐藤デモ",
+      "email": "sato.demo@example.com",
+      "phone": "0300002002",
+      "company": "デモ商事",
+      "subject": "納品日の確認",
+      "body": "納品予定日を教えてください。注文番号は SAMPLE-002 です。"
+    },
+    {
+      "inquiry_id": "INQ-S0-003",
+      "received_at": "2026-09-11T08:05:00+09:00",
+      "channel": "email",
+      "name": "山田サンプル",
+      "email": "yamada.sample@example.com",
+      "phone": "0300001001",
+      "company": "株式会社サンプル南",
+      "subject": "料金の見積もり希望（再送）",
+      "body": "ホームページのミニ導入について料金の見積もりが欲しいです。対象は問い合わせ整理の範囲です。"
+    },
+    {
+      "inquiry_id": "INQ-S0-004",
+      "received_at": "2026-09-11T13:20:00+09:00",
+      "channel": "phone_note",
+      "name": "高橋見本",
+      "email": "",
+      "phone": "0300004004",
+      "company": "見本工房",
+      "subject": "営業時間の確認",
+      "body": "電話メモ。営業時間と初回ヒアリングの所要時間を知りたいとのこと。折り返しは不要でメール不要。"
+    },
+    {
+      "inquiry_id": "INQ-S0-005",
+      "received_at": "2026-09-11T16:02:00+09:00",
+      "channel": "form",
+      "name": "高橋見本",
+      "email": "takahashi.alt@example.invalid",
+      "phone": "0300004004",
+      "company": "見本工房",
+      "subject": "営業時間について",
+      "body": "営業時間を確認したいです。先ほど電話でも聞きました。"
+    },
+    {
+      "inquiry_id": "INQ-S0-006",
+      "received_at": "2026-09-12T09:00:00+09:00",
+      "channel": "form",
+      "name": "中村架空",
+      "email": "",
+      "phone": "",
+      "company": "架空商店",
+      "subject": "資料が欲しい",
+      "body": "会社案内の資料を送ってください。連絡先は後で書きます。"
+    },
+    {
+      "inquiry_id": "INQ-S0-007",
+      "received_at": "2026-09-12T10:12:00+09:00",
+      "channel": "email",
+      "name": "小林デモ",
+      "email": "not-an-email",
+      "phone": "0300007007",
+      "company": "デモ設計",
+      "subject": "見積依頼",
+      "body": "見積をお願いします。添付は後日送ります。"
+    },
+    {
+      "inquiry_id": "INQ-S0-008",
+      "received_at": "2026-09-12T10:30:00+09:00",
+      "channel": "form",
+      "name": "加藤サンプル",
+      "email": "kato.sample@example.com",
+      "phone": "0300008008",
+      "company": "サンプル堂",
+      "subject": "問い合わせ",
+      "body": ""
+    },
+    {
+      "inquiry_id": "INQ-S0-009",
+      "received_at": "2027-01-01T00:00:00+09:00",
+      "channel": "email",
+      "name": "吉田合成",
+      "email": "yoshida.synthetic@example.com",
+      "phone": "0300009009",
+      "company": "合成企画",
+      "subject": "予約の相談",
+      "body": "来月の導入枠があるか知りたいです。内容は問い合わせ整理です。"
+    },
+    {
+      "inquiry_id": "INQ-S0-010",
+      "received_at": "2026-09-12T14:18:00+09:00",
+      "channel": "email",
+      "name": "渡辺苦情",
+      "email": "watanabe.refund@example.com",
+      "phone": "0300010010",
+      "company": "苦情サンプル社",
+      "subject": "返金してほしい",
+      "body": "先日の案内に納得できないので返金してほしい。対応が遅い。"
+    },
+    {
+      "inquiry_id": "INQ-S0-011",
+      "received_at": "2026-09-12T15:01:00+09:00",
+      "channel": "chat",
+      "name": "松本不明",
+      "email": "matsumoto.hello@example.com",
+      "phone": "0300011011",
+      "company": "不明商店",
+      "subject": "こんにちは",
+      "body": "こんにちは"
+    },
+    {
+      "inquiry_id": "INQ-S0-012",
+      "received_at": "2026-09-12T16:44:00+09:00",
+      "channel": "email",
+      "name": "林法務",
+      "email": "hayashi.legal@example.com",
+      "phone": "0300012012",
+      "company": "法務サンプル",
+      "subject": "法的措置の検討",
+      "body": "対応が不十分なため弁護士に相談する予定です。記録を残してください。"
+    },
+    {
+      "inquiry_id": "INQ-S0-013",
+      "received_at": "2026-09-13T09:10:00+09:00",
+      "channel": "fax",
+      "name": "遠藤見本",
+      "email": "endo.fax@example.com",
+      "phone": "0300013013",
+      "company": "FAX見本社",
+      "subject": "FAX問い合わせ",
+      "body": "FAXで見積を送ってほしいです。番号はダミーです。"
+    },
+    {
+      "inquiry_id": "INQ-S0-014",
+      "received_at": "2026-09-13T10:22:00+09:00",
+      "channel": "form",
+      "name": "",
+      "email": "no.name@example.com",
+      "phone": "0300014014",
+      "company": "無名社",
+      "subject": "名前なしの問合せ",
+      "body": "担当者名はまだ決まっていませんが、導入の可否を知りたいです。"
+    },
+    {
+      "inquiry_id": "INQ-S0-015",
+      "received_at": "2026-09-13T11:05:00+09:00",
+      "channel": "email",
+      "name": "佐藤 デモ",
+      "email": "sato.other@example.invalid",
+      "phone": "0800002015",
+      "company": "別窓商事",
+      "subject": "納品予定の確認",
+      "body": "納品の予定日を教えて下さい。注文番号 SAMPLE-002 です。"
+    },
+    {
+      "inquiry_id": "INQ-S0-016",
+      "received_at": "2026-09-13T13:33:00+09:00",
+      "channel": "chat",
+      "name": "伊藤合成",
+      "email": "ito.synthetic@example.com",
+      "phone": "0300016016",
+      "company": "合成通信",
+      "subject": "チャットからの質問",
+      "body": "チャット経由です。入力チェックの対象項目を一覧で知りたいです。"
+    },
+    {
+      "inquiry_id": "INQ-S0-017",
+      "received_at": "2026-09-14T09:48:00+09:00",
+      "channel": "email",
+      "name": "鈴木サンプル",
+      "email": "suzuki.north@example.com",
+      "phone": "0300017017",
+      "company": "株式会社デモ北",
+      "subject": "資料請求",
+      "body": "問い合わせ整理の1ページ資料が欲しいです。社内共有用です。"
+    },
+    {
+      "inquiry_id": "INQ-S0-018",
+      "received_at": "2026-09-14T11:07:00+09:00",
+      "channel": "form",
+      "name": "鈴木サンプル",
+      "email": "suzuki.alt@example.invalid",
+      "phone": "0800018018",
+      "company": "株式会社デモ北",
+      "subject": "資料をください",
+      "body": "問い合わせ整理の資料をください。社内で共有します。"
+    },
+    {
+      "inquiry_id": "INQ-S0-019",
+      "received_at": "2026-09-15T08:55:00+09:00",
+      "channel": "phone_note",
+      "name": "渡辺架空",
+      "email": "",
+      "phone": "0300019019",
+      "company": "架空製作所",
+      "subject": "折り返し希望",
+      "body": "電話メモ。折り返し希望。内容は受付フローの見学可否。メールアドレスは未聴取。"
+    },
+    {
+      "inquiry_id": "INQ-S0-020",
+      "received_at": "2026-09-15T17:40:00+09:00",
+      "channel": "form",
+      "name": "山田サンプル",
+      "email": "yamada.sample@example.com",
+      "phone": "",
+      "company": "株式会社サンプル南",
+      "subject": "料金について再確認",
+      "body": "料金の見積もりをもう一度送ってほしいです。前回の続きです。"
+    }
+  ]
+}
