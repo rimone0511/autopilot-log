@@ -19,8 +19,8 @@ live: MAIN Google で入ろうとして **Your Google account cannot be accessed
 これは本人確認不足ではない。**SSO の門**。エージェント・この環境から **再試行しない。別 Google を作らない。**
 
 [PR#35](https://github.com/rimone0511/autopilot-log/pull/35) の「Upwork next」は古い。  
-**次の CU は LinkedIn profile draft**（既存 LinkedIn = MAIN Google。2つ目のアカウント禁止）。  
-LinkedIn **Services ページは GO-gated / not enabled** — 開かない・Save しない。handoff [PR#16](https://github.com/rimone0511/autopilot-log/pull/16) の Services カードは置いたまま。
+LinkedIn（A6）も `blocked_skip` **reCAPTCHA**（login）。**next にしない。** 開かない。再試行しない。Services は GO-gated / not enabled。  
+**次の CU は TimeTicket（A7, in progress）** → Contra → Craudia → Freelancer。handoff [PR#16](https://github.com/rimone0511/autopilot-log/pull/16) は置いたまま。
 
 人が自分の端末で MAIN Google に入れるようになってから、ID 画面が出たらこのスリップ。SSO のままなら `blocked_skipのまま`。
 
@@ -56,7 +56,7 @@ https://support.upwork.com/hc/en-us/articles/360000563227-How-to-verify-your-ide
 - [ ] プロフィールに電話・メール・「contact me」URL を書く
 - [ ] 名前を ID に合わせて偽の英語名にする。不一致は朝に記録するだけ
 - [ ] 書類を git / チャット / エージェントへ
-- [ ] LinkedIn Services ページを、このスリップのついでに開く / Save する
+- [ ] LinkedIn に進む / login reCAPTCHA を再試行する / Services を開く・Save する
 
 Phone SMS / 通話コードは「アカウント作成のコード」と「ID検証の一種」が公式に並ぶ。下書き保存のため人が SMS するのは可。ID / 自撮り / 有料バッジに繋がったら **止める**。
 

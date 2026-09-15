@@ -9,9 +9,9 @@
 > **DRAFT_ONLY.** 出品・プロフィール・商品は下書きのまま。公開しない。秘密なし。エージェントからの signup なし。
 
 これは [PR#4](https://github.com/rimone0511/autopilot-log/pull/4) `earn-kyc-morning-checklist-20260916/` の **全机1枚** を置き換えない。  
-いま `blocked_skip` か `draft_saved` の机だけを **1机1スリップ** にする（Upwork 含む。live: Google SSO skip）。
+いま `blocked_skip` か `draft_saved` の机だけを **1机1スリップ** にする（Upwork 含む。live: Google SSO skip）。LinkedIn も `blocked_skip`（login reCAPTCHA）だが、このフォルダにスリップは置かない。
 
-TimeTicket / Contra / クラウディア / Freelancer.com / Wave B–D は、まだこの refresh の対象外。PR#4 を正とする。
+TimeTicket / Contra / クラウディア / Freelancer.com の **本人確認文** はまだ PR#4。Wave B–D も対象外。CU の次机だけ下のポインタを正とする。
 
 ---
 
@@ -26,10 +26,19 @@ TimeTicket / Contra / クラウディア / Freelancer.com / Wave B–D は、ま
 | [05-upwork.md](05-upwork.md) | Upwork | `blocked_skip` **Google SSO** |
 | [06-gumroad.md](06-gumroad.md) | Gumroad | `draft_saved` |
 
-**いま開く CU（この refresh の正）:** LinkedIn **profile draft**（既存アカウント。2つ目を作らない）。  
-LinkedIn **Services ページは GO-gated / not enabled** — 開かない・Save しない。
+### CU ポインタ（この refresh の正。LinkedIn を next にしない）
 
-CU ポインタの出典: live box（Upwork Google SSO skip）が [PR#35 MASTER INDEX](https://github.com/rimone0511/autopilot-log/pull/35) の「Upwork next」より新しい。Fiverr hold / Lancers captcha / CW 403 は同じ。  
+| Desk | CU hint | このフォルダ |
+|---|---|---|
+| LinkedIn（A6） | `blocked_skip` **reCAPTCHA**（login） | スリップなし。next にしない。Services は GO-gated / not enabled — 開かない |
+| **TimeTicket（A7）** | **in progress（いま開く CU）** | スリップなし。KYC は PR#4 |
+| Contra（A8） | after TimeTicket | スリップなし。KYC は PR#4 |
+| クラウディア Craudia（A9） | after Contra | スリップなし。KYC は PR#4 |
+| Freelancer.com（A10） | after Craudia | スリップなし。KYC は PR#4 |
+
+順: **TimeTicket → Contra → Craudia → Freelancer**。LinkedIn login の reCAPTCHA はエージェントから再試行しない。2つ目の LinkedIn を作らない。
+
+CU ポインタの出典: live box（Upwork Google SSO skip + LinkedIn reCAPTCHA skip）が [PR#35 MASTER INDEX](https://github.com/rimone0511/autopilot-log/pull/35) の「Upwork next」より新しい。Fiverr hold / Lancers captcha / CW 403 は同じ。  
 ココナラと Gumroad の `draft_saved` は [PR#1 QUEUE](https://github.com/rimone0511/autopilot-log/pull/1) の `done-draft`（公開しない）。  
 [PR#24 REGISTER-BOARD](https://github.com/rimone0511/autopilot-log/pull/24) の「CW next」と PR#35 の「Upwork next」は古い。パック本文は複製しない。
 
@@ -53,7 +62,7 @@ CU ポインタの出典: live box（Upwork Google SSO skip）が [PR#35 MASTER 
 2. **出品・プロフィール・商品を公開しない。** 本人確認だけ。`draft_saved` を公開にしない。
 3. **書類写真を git / チャット / 共有フォルダに置かない。** サイトの画面にだけ上げる。
 4. **有料は一呼吸。** Fiverr 手数料・Seller Plus・Connects・Gumroad boost は、迷ったら閉じる。
-5. **詰まったら閉じる。** 同じ机を3回叩かない。`blocked_skip` の原因（hold / captcha / 403 / Google SSO）をエージェントから再試行しない。
+5. **詰まったら閉じる。** 同じ机を3回叩かない。`blocked_skip` の原因（hold / captcha / 403 / Google SSO / LinkedIn reCAPTCHA）をエージェントから再試行しない。
 
 状態の書き方（机の名前だけ）: `なし` / `上げた` / `待ち` / `詰まった` / `draft_savedのまま` / `blocked_skipのまま`
 
@@ -64,7 +73,7 @@ CU ポインタの出典: live box（Upwork Google SSO skip）が [PR#35 MASTER 
 - マーケットへ **signup / 会員登録を完了しない**
 - 本人確認・税・口座の **アップロードをしない**
 - 出品公開、Catalog Submit、応募、提案送信をしない
-- hold / captcha / **403** / Upwork **Google SSO** を再試行しない
+- hold / captcha / **403** / Upwork **Google SSO** / LinkedIn **reCAPTCHA** を再試行しない
 - 秘密（OTP、口座、マイナンバー、ID画像）をログや git に残さない
 
 エージェントが KYC 画面を見たら: 机名と画面の種類だけ書いて **閉じる**。このフォルダを朝の本人へ渡す。
@@ -80,7 +89,7 @@ CU ポインタの出典: live box（Upwork Google SSO skip）が [PR#35 MASTER 
 3. Fiverr — **hold のまま**。人が hold を外したあと、ID が出たらこのスリップ
 4. ランサーズ — **captcha は人**。エージェントは叩かない。ID が出たらこのスリップ
 5. クラウドワークス — **403 は再試行しない**。自分の回線で開いて ID が出たらこのスリップ
-6. Upwork — **Google SSO skip のまま**。人が MAIN Google に入れるようになったあと、ID が出たらこのスリップ。Connects を買わない。次の CU は LinkedIn profile draft（Services は触らない）
+6. Upwork — **Google SSO skip のまま**。人が MAIN Google に入れるようになったあと、ID が出たらこのスリップ。Connects を買わない。LinkedIn は **reCAPTCHA skip**（next にしない）。次の CU は **TimeTicket**（in progress）→ Contra → Craudia → Freelancer
 
 3つやったら休憩。
 

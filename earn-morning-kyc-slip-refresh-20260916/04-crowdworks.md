@@ -17,7 +17,7 @@
 
 live box から homepage / signup が **403 Forbidden**（[PR#35](https://github.com/rimone0511/autopilot-log/pull/35)）。  
 エージェント・この環境から **再GETしない。signup しない。**  
-[PR#24](https://github.com/rimone0511/autopilot-log/pull/24) の「CW next」は古い。Upwork も `blocked_skip`（Google SSO）。**次の CU は LinkedIn profile draft**（Services は GO-gated / 開かない）。
+[PR#24](https://github.com/rimone0511/autopilot-log/pull/24) の「CW next」は古い。Upwork も `blocked_skip`（Google SSO）。LinkedIn も `blocked_skip`（login reCAPTCHA）— **next にしない**。**次の CU は TimeTicket**（in progress）→ Contra → Craudia → Freelancer。
 
 人が **自分の回線・自分のブラウザ** で開いて、本人確認の画面が出たときだけこのスリップ。403 のままなら `blocked_skipのまま`。AI CrowdWorks（B15）と PARK（`park.jp`）は開かない。
 
