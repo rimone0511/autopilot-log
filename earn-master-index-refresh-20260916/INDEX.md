@@ -9,7 +9,7 @@
 これは earn-ops の **フォルダ単位マスター索引の更新**。  
 register / handoff / activity-gate / proposal / listing / ops を1枚で辿る。
 
-初版は [PR#14](https://github.com/rimone0511/autopilot-log/pull/14)（#1–#13）。机単位の貼る順（CU-01–CU-28）は複製しない。それは [PR#8](https://github.com/rimone0511/autopilot-log/pull/8)。机単位の CU hint は [PR#24](https://github.com/rimone0511/autopilot-log/pull/24)（#1–#22 まで）。
+初版は [PR#14](https://github.com/rimone0511/autopilot-log/pull/14)（#1–#13）。机単位の貼る順（CU-01–CU-28）は複製しない。それは [PR#8](https://github.com/rimone0511/autopilot-log/pull/8)。机単位の CU hint の **フォルダ表** は [PR#24](https://github.com/rimone0511/autopilot-log/pull/24)（#1–#22 まで）。**いま開く机** は下の live-box ポインタ（PR#24 の CW-next を上書き）。
 
 認証: MAIN Google のみ。KYC が出たら朝の本人へ。エージェントは進めない。
 
@@ -17,16 +17,23 @@ register / handoff / activity-gate / proposal / listing / ops を1枚で辿る�
 
 ## いまの CU ポインタ
 
-QUEUE の Fiverr `next` より、REGISTER-BOARD の skip が新しい。**次に開く CU は CrowdWorks。**
+**live box 進捗（発明しない）。** QUEUE の Fiverr `next` と PR#24 の「CW = first pending」より新しい。**次に開く CU は Upwork（in progress）。そのあと LinkedIn Services。**
 
 | 机 | CU serial | CU hint | パック（本文は開かない。パスだけ） | 次の動作 |
 |---|---|---|---|---|
 | Fiverr | CU-02 | `blocked_skip` **hold** | #6 #15（listing）。`earn-packs/fiverr/` は未作成 | パーク。再試行しない。signup しない。Gig/FAQ は unpublished |
 | ランサーズ Lancers | CU-03 | `blocked_skip` **captcha** | #17 handoff | パーク。captcha を回さない。signup しない |
-| **クラウドワークス CrowdWorks** | **CU-04** | **next CU**（`pending`） | #17 handoff。#32 は field map（prep。playbook ではない） | **このパスの最初の `pending`。** seller 下書きのみ。応募しない。KYC で止める |
+| クラウドワークス CrowdWorks | CU-04 | `blocked_skip` **403** | #17 handoff。#32 は field map（prep。playbook ではない） | live box で signup/homepage が **403 Forbidden**。パーク。再試行しない。signup しない |
+| **Upwork** | **CU-05** | **next CU**（in progress） | #10 catalog · #16 handoff · #32 field map（prep） | **CW skip の次。** profile/catalog 下書き。0 Connects。Submit しない。KYC で止める |
+| LinkedIn Services | CU-06 | after Upwork | #16 handoff | Upwork の次。Service Page draft。Jobs/feed は対象外 |
 
-直列（ランブック #7。本文は複製しない）: Fiverr → Lancers → **CrowdWorks** → Upwork → LinkedIn Services → TimeTicket → Contra → Craudia → Freelancer.com → Wave B **gate `pass` only**。  
-Fiverr と Lancers は parked skip。Wave B/C/D の CU 登録は Wave A `pending` が終わるまで開かない。
+直列（ランブック #7。本文は複製しない）: Fiverr → Lancers → CrowdWorks → **Upwork** → LinkedIn Services → TimeTicket → Contra → Craudia → Freelancer.com → Wave B **gate `pass` only**。  
+Fiverr / Lancers / CrowdWorks は parked skip。Wave B/C/D の CU 登録は Wave A `pending` が終わるまで開かない。
+
+### REGISTER-BOARD（#24）との差分
+
+PR#24 本文は複製しない。書かれた時点の hint は Fiverr hold / Lancers captcha / **CW next**。  
+この refresh は live box のあと: CW を `blocked_skip` **403** に上げ、**next CU = Upwork（in progress）→ LinkedIn Services**。フォルダ名・波の表は #24 のまま。開く机だけここが新しい。
 
 ---
 
@@ -49,7 +56,7 @@ Fiverr と Lancers は parked skip。Wave B/C/D の CU 登録は Wave A `pending
 | `ready · draft` | 兄弟PRにファイルがある。PRは draft |
 | `unknown · no PR` | 机または置き場は QUEUE / ランブックにあるが、パックファイルがどの枝にも無い |
 | `blocked_skip` | CU はこの机をこのパスで開かない（パックが `ready` でも） |
-| `next CU` | このパスで次に開く机（CrowdWorks） |
+| `next CU` | このパスで次に開く机（Upwork。in progress。そのあと LinkedIn Services） |
 
 `ready` は「登録済み」ではない。QUEUE の `done-draft` / `next` / `week-2` / `gate` / `late` は登録作業のラベルで、別物。
 
@@ -73,21 +80,21 @@ Fiverr と Lancers は parked skip。Wave B/C/D の CU 登録は Wave A `pending
 | CU serial runbook | [`earn-cu-runbook-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/earn-cu-serial-runbook-2e17/earn-cu-runbook-20260916) | Wave A 残り（Fiverr→…→Freelancer.com）→ Wave B の gate `pass` のみ | CU | ready · draft · いまの skip は BOARD が上 | [#7](https://github.com/rimone0511/autopilot-log/pull/7) |
 | CU serial register-pack INDEX | [`earn-register-pack-index-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/earn-register-pack-index-45e2/earn-register-pack-index-20260916) | CU-01–CU-28（机単位の期待パス） | prep | ready · draft | [#8](https://github.com/rimone0511/autopilot-log/pull/8) |
 | ops-bake ORCH / CLI / GrokBOT Head | [`ops-bake-orch-cli-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/ops-bake-orch-cli-20260916-ad2e/ops-bake-orch-cli-20260916) | マーケット机ではない（運用焼き込み。本番未適用） | prep | ready · draft · 本番未適用 | [#9](https://github.com/rimone0511/autopilot-log/pull/9) |
-| Upwork Project Catalog listing paste | [`earn-upwork-catalog-draft-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/earn-upwork-catalog-draft-0e79/earn-upwork-catalog-draft-20260916) | Upwork（CU-05。Catalog は Submit しない） | CU | ready · draft · unpublished | [#10](https://github.com/rimone0511/autopilot-log/pull/10) |
+| Upwork Project Catalog listing paste | [`earn-upwork-catalog-draft-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/earn-upwork-catalog-draft-0e79/earn-upwork-catalog-draft-20260916) | Upwork（CU-05。Catalog は Submit しない） | CU | ready · draft · unpublished · next CU desk | [#10](https://github.com/rimone0511/autopilot-log/pull/10) |
 | JP HANDS proposal + estimate (Wave 1) | [`earn-jp-proposal-drafts-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/jp-proposal-drafts-c1d1/earn-jp-proposal-drafts-20260916) | CrowdWorks, Lancers, Coconala | prep | ready · draft · DO NOT SEND | [#11](https://github.com/rimone0511/autopilot-log/pull/11) |
 | JP Wave B activity-gate | [`earn-activity-gate-waveB-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/earn-activity-gate-waveb-jp-fced/earn-activity-gate-waveB-20260916) | SOKUDAN, Workship, 複業クラウド, CrowdLinks, Anycrew, MENTA, ストアカ, Skill Shift, AI CrowdWorks, ITプロパートナーズ, YOUTRUST, Offers, Shufti | prep | ready · draft · pass 5 / needs_check 8 / SKIP thin 0 | [#12](https://github.com/rimone0511/autopilot-log/pull/12) |
 | Wave D Fit-Med activity-gate | [`earn-activity-gate-waveD-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/earn-activity-gate-waved-b552/earn-activity-gate-waveD-20260916) | SKIMA, Payhip, Ko-fi, Dribbble Services, Fastwork, Truelancer, Twine, ワークシフト, ママワークス, 99designs, シュフティ, Wellfound | prep | ready · draft · pass 9 / needs_check 1 / SKIP 2 | [#13](https://github.com/rimone0511/autopilot-log/pull/13) |
 | MASTER INDEX (first cut) | [`earn-register-pack-master-index-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/earn-register-pack-master-index-9290/earn-register-pack-master-index-20260916) | #1–#13 の地図。この refresh が後継 | prep | ready · draft · superseded by this folder for #15–#32 | [#14](https://github.com/rimone0511/autopilot-log/pull/14) |
 | Fiverr Requirements + FAQ polish | [`earn-fiverr-requirements-faq-polish-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/earn-fiverr-req-faq-polish-7daf/earn-fiverr-requirements-faq-polish-20260916) | Fiverr（unpublished n8n Gig の Requirements/FAQ） | CU | ready · draft · unpublished · CU `blocked_skip` hold | [#15](https://github.com/rimone0511/autopilot-log/pull/15) |
-| CU handoff Upwork + LinkedIn Services | [`earn-upwork-linkedin-cu-handoff-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/earn-upwork-linkedin-cu-handoff-a525/earn-upwork-linkedin-cu-handoff-20260916) | Upwork (CU-05), LinkedIn Services (CU-06) | CU | ready · draft | [#16](https://github.com/rimone0511/autopilot-log/pull/16) |
-| CU handoff Lancers + CrowdWorks | [`earn-lancers-cw-cu-handoff-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/earn-lancers-cw-cu-handoff-a8a0/earn-lancers-cw-cu-handoff-20260916) | Lancers (CU-03) `blocked_skip` captcha; **CrowdWorks (CU-04) next CU** | CU | ready · draft · Lancers skip / CW next | [#17](https://github.com/rimone0511/autopilot-log/pull/17) |
+| CU handoff Upwork + LinkedIn Services | [`earn-upwork-linkedin-cu-handoff-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/earn-upwork-linkedin-cu-handoff-a525/earn-upwork-linkedin-cu-handoff-20260916) | Upwork (CU-05) **next CU** in progress; LinkedIn Services (CU-06) after | CU | ready · draft · Upwork next | [#16](https://github.com/rimone0511/autopilot-log/pull/16) |
+| CU handoff Lancers + CrowdWorks | [`earn-lancers-cw-cu-handoff-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/earn-lancers-cw-cu-handoff-a8a0/earn-lancers-cw-cu-handoff-20260916) | Lancers (CU-03) `blocked_skip` captcha; CrowdWorks (CU-04) `blocked_skip` 403 | CU | ready · draft · both skip（このパスでは開かない） | [#17](https://github.com/rimone0511/autopilot-log/pull/17) |
 | CU handoff TimeTicket + Contra + Craudia | [`earn-timeticket-contra-craudia-handoff-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/earn-tt-contra-craudia-handoff-37db/earn-timeticket-contra-craudia-handoff-20260916) | TimeTicket (CU-07), Contra (CU-08), クラウディア (CU-09) | CU | ready · draft | [#18](https://github.com/rimone0511/autopilot-log/pull/18) |
 | Freelancer.com profile + Wave B catalog-gap notes | [`earn-freelancer-waveb-gap-notes-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/earn-freelancer-waveb-gap-notes-40b7/earn-freelancer-waveb-gap-notes-20260916) | Freelancer.com (CU-10); notes: AI CrowdWorks, Skill Shift（DMM生成AI人材バンク / Workshift は QUEUE 外） | CU（profile） / prep（gap notes） | ready · draft · no bids | [#19](https://github.com/rimone0511/autopilot-log/pull/19) |
 | Wave D late activity-gate (D11–D20) | [`earn-activity-gate-wave-d-late-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/earn-activity-gate-wave-d-late-4f33/earn-activity-gate-wave-d-late-20260916) | Comet, Replit Bounties, Superpeer, We Work Remotely, Remote OK, Himalayas, ココナラテック, Findy Freelance, PRONI アイミツ, 比較ビズ | prep | ready · draft · keep 0 / skip 10 | [#20](https://github.com/rimone0511/autopilot-log/pull/20) |
 | Wave B ALIVE CU-ready profile sample | [`earn-waveb-alive-handoff-sample-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/earn-waveb-alive-handoff-a6eb/earn-waveb-alive-handoff-sample-20260916) | SOKUDAN, Anycrew, 複業クラウド, MENTA, ストアカ | CU | ready · draft · Wave A のあと | [#21](https://github.com/rimone0511/autopilot-log/pull/21) |
 | Wave D-early activity-gate (D01–D10) | [`earn-activity-gate-wave-d-early-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/earn-activity-gate-wave-d-early-3a00/earn-activity-gate-wave-d-early-20260916) | Shufti, カイコク, note, Braintrust, Twine, Fastwork, Twago, 99freelas, Gulp, Xing Projects | prep | ready · draft · keep_queue 6 / skip_log 2 / needs_check 2 | [#22](https://github.com/rimone0511/autopilot-log/pull/22) |
 | ops-bake PARALLEL-CAP APPLY-WINDOW | [`ops-parallel-cap-bake-skeleton-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/ops-parallel-cap-bake-skeleton-31df/ops-parallel-cap-bake-skeleton-20260916) | マーケット机ではない（並行キャップ。本番未適用。CU mutex=1） | prep | ready · draft · 本番未適用 | [#23](https://github.com/rimone0511/autopilot-log/pull/23) |
-| REGISTER-BOARD (Wave A–D CU status) | [`earn-register-progress-board-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/earn-register-progress-board-5458/earn-register-progress-board-20260916) | Wave A–D の机（フォルダ名のみ。#1–#22）。**Fiverr/Lancers skip · CW next** の正本 | prep | ready · draft | [#24](https://github.com/rimone0511/autopilot-log/pull/24) |
+| REGISTER-BOARD (Wave A–D CU status) | [`earn-register-progress-board-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/earn-register-progress-board-5458/earn-register-progress-board-20260916) | Wave A–D の机（フォルダ名のみ。#1–#22）。Fiverr/Lancers skip は同じ。**CW-next 行はこの refresh の live-box 403 で上書き** | prep | ready · draft · CW pointer stale vs this INDEX | [#24](https://github.com/rimone0511/autopilot-log/pull/24) |
 | World gigs scan wave2 | [`earn-world-gigs-scan-wave2-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/earn-world-gigs-scan-wave2-d86f/earn-world-gigs-scan-wave2-20260916) | JP+EN ボードの AI-agent/automation パターン地図（30）。登録ではない | prep | ready · draft | [#25](https://github.com/rimone0511/autopilot-log/pull/25) |
 | ops GROK-HEAD-THIN-HANDS bake skeleton | [`ops-grok-head-thin-hands-bake-skeleton-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/ops-grok-head-thin-hands-skeleton-1bcc/ops-grok-head-thin-hands-bake-skeleton-20260916) | マーケット机ではない（Pro 未着。本番未適用） | prep | ready · draft · 本番未適用 | [#26](https://github.com/rimone0511/autopilot-log/pull/26) |
 | X keyword pack + triage rubric | [`earn-x-leads-keyword-pack-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/earn-x-leads-keyword-pack-8ee4/earn-x-leads-keyword-pack-20260916) | X（Twitter）公開 Latest 用。APIなし。投稿・DMなし | prep | ready · draft · 検索未実行 | [#27](https://github.com/rimone0511/autopilot-log/pull/27) |
@@ -189,9 +196,9 @@ PR#8 は QUEUE 置き場 `earn-packs/<desk-slug>/` を期待する。そのパ�
 | Top10 paste (missing) | `earn-packs/coconala/` | — | ココナラ（CU-01, QUEUE `done-draft`） | CU | unknown · no PR · BOARD `draft` | — |
 | Top10 paste (missing) | `earn-packs/fiverr/` | listing #6 #15 | Fiverr（CU-02） | CU | unknown · no PR（登録プロフィール）。listing `ready`。CU `blocked_skip` hold | #6 #15 |
 | Top10 paste (missing) | `earn-packs/lancers/` | handoff #17 | ランサーズ（CU-03） | CU | unknown · no PR（`earn-packs/`）。handoff `ready`。CU `blocked_skip` captcha | #17 |
-| Top10 paste (missing) | `earn-packs/crowdworks/` | handoff #17 · field map #32 | **クラウドワークス（CU-04）next CU** | CU | unknown · no PR（`earn-packs/`）。handoff `ready` · **next CU** | #17 #32 |
-| Top10 paste (missing) | `earn-packs/upwork/` | catalog #10 · handoff #16 · field map #32 | Upwork（CU-05） | CU | unknown · no PR（登録プロフィールの QUEUE パス）。別フォルダ `ready` | #10 #16 #32 |
-| Top10 paste (missing) | `earn-packs/linkedin-services/` | handoff #16 | LinkedIn Services（CU-06）。Jobsボードは SKIP | CU | unknown · no PR（`earn-packs/`）。handoff `ready` | #16 |
+| Top10 paste (missing) | `earn-packs/crowdworks/` | handoff #17 · field map #32 | クラウドワークス（CU-04） | CU | unknown · no PR（`earn-packs/`）。handoff `ready`。CU `blocked_skip` 403 | #17 #32 |
+| Top10 paste (missing) | `earn-packs/upwork/` | catalog #10 · handoff #16 · field map #32 | **Upwork（CU-05）next CU** in progress | CU | unknown · no PR（登録プロフィールの QUEUE パス）。別フォルダ `ready` · **next CU** | #10 #16 #32 |
+| Top10 paste (missing) | `earn-packs/linkedin-services/` | handoff #16 | LinkedIn Services（CU-06）。Upwork の次。Jobsボードは SKIP | CU | unknown · no PR（`earn-packs/`）。handoff `ready` · after Upwork | #16 |
 | Top10 paste (missing) | `earn-packs/timeticket/` | handoff #18 | TimeTicket（CU-07） | CU | unknown · no PR（`earn-packs/`）。handoff `ready` | #18 |
 | Top10 paste (missing) | `earn-packs/contra/` | handoff #18 | Contra（CU-08） | CU | unknown · no PR（`earn-packs/`）。handoff `ready` | #18 |
 | Top10 paste (missing) | `earn-packs/craudia/` | handoff #18 | クラウディア（CU-09） | CU | unknown · no PR（`earn-packs/`）。handoff `ready` | #18 |
@@ -229,7 +236,7 @@ Wave D の `pass` 机にもペーストパックPRはまだ無い（ゲートだ
 
 1. **どのフォルダ／PRか** はこの表。
 2. **どの机を何番で貼るか** は [PR#8](https://github.com/rimone0511/autopilot-log/pull/8)。波と `done-draft` は [PR#1 QUEUE](https://github.com/rimone0511/autopilot-log/pull/1)。
-3. **いま開く CU** は CrowdWorks（#17 の `02-crowdworks.md`）。Fiverr は `blocked_skip` hold。Lancers は `blocked_skip` captcha。#32 はラベル地図だけ（playbook にしない）。
+3. **いま開く CU** は Upwork（#16。in progress）。そのあと LinkedIn Services。Fiverr は `blocked_skip` hold。Lancers は `blocked_skip` captcha。CrowdWorks は `blocked_skip` 403（signup/homepage）。#32 はラベル地図だけ（playbook にしない）。
 4. MAIN Google。別アカウントを増やさない。
 5. 活動ゲートが `needs_check` / `gate` の机は、公開一覧の日付を目視するまで登録しない。
 6. KYC・有料プラン・出品公開で止める。提案文（#5 / #11 / #28 / #31）は **送らない**。
@@ -242,4 +249,4 @@ Wave D の `pass` 机にもペーストパックPRはまだ無い（ゲートだ
 - 秘密・実メール・実電話のコミット
 - 案件数・GMV・「稼げる額」の創作
 - 兄弟PRのマージや draft 解除
-- Fiverr hold / Lancers captcha の再試行
+- Fiverr hold / Lancers captcha / CrowdWorks 403 の再試行
