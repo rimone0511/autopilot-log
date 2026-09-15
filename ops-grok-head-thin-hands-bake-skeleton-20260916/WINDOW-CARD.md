@@ -1,45 +1,68 @@
 # WINDOW card — GROK-HEAD-THIN-HANDS
 
-状態: **SKELETON / AWAITING PRO REPLY**  
+状態: **DRAFT BAKE / Pro recovered / not production-applied**  
 座席: **GrokBOT本体**（仕事窓口 / Head）  
 非座席: **Cursor Grok 4.6**（本パックを書いているクラウドエージェントを含む）
 
-本番の desired-state / Bot / Routine / Connector は変更しない。  
-ロック4点以外の最終文面は `{{PRO_RULE}}`。発明しない。
+本番の desired-state / Bot / Routine / Connector は変更しない。下書き焼きのみ。
 
 ---
 
-## カード面（ロック。増減・言い換えしない）
+## カード面（回収 Pro。増減・言い換えしない）
 
-| つまみ | ロック（本人意図） | Pro 本文（未着） |
-|---|---|---|
-| **Effort max** | **GrokBOT本体**。**NOT Cursor Grok 4.6** | {{PRO_RULE}} |
-| **Instruct** | **THICK** | {{PRO_RULE}} |
-| **Hands→others** | **~0** | {{PRO_RULE}} |
-| **Receive** | **FULL for important** | {{PRO_RULE}} |
-
-ロック4点の言い換え・例外・追加条件はすべて `{{PRO_RULE}}`。ここへ書かない。
+| つまみ | ロック（GrokBOT本体。NOT Cursor Grok 4.6） |
+|---|---|
+| **Head** | **ON。** purpose / auth / dispatch / thick instruct / accept-reject / inspect / losscut |
+| **Instruct** | **THICK**（Head ON の thick instruct。COMMON へ移さない） |
+| **Hands** | **~0 at window。** exploration / long browser / production / impl / debug / mass screenshot / repetitive clicks → **other workers** |
+| **Receive** | **FULL for important。** required return fields を省略しない。evidence 欠けるとき **ACCEPT しない** |
+| **Control** | order / cancel / status / record / evidence **only**。**dedupe only** |
+| **Effort max** | 対象座席は **GrokBOT本体**（**NOT Cursor Grok 4.6**）。**証拠なしに適用済みと書かない** |
+| **Token savings** | **パーセントを発明しない** |
 
 ---
 
-## WINDOW に残す常設（Pro 待ち）
+## WINDOW に残す常設（回収 Pro）
 
-{{PRO_RULE}}
+Head ON の仕事は次に限る。
+
+- **purpose**
+- **auth**
+- **dispatch**
+- **thick instruct**
+- **accept-reject**
+- **inspect**
+- **losscut**
 
 ### 手渡し
 
-{{PRO_RULE}}
+Hands 実働は窓口に置かない。次は **other workers** へ dispatch する。
 
-### この WINDOW がやらないこと（Pro 待ち）
+- exploration
+- long browser
+- production
+- impl
+- debug
+- mass screenshot
+- repetitive clicks
 
-{{PRO_RULE}}
+### Important Receive FULL
+
+- required return fields を省略しない
+- evidence が欠けているとき ACCEPT しない
+
+### Control
+
+- order / cancel / status / record / evidence のみ
+- 重複除去のみ
 
 ---
 
-## この骨格がやらないこと
+## この下書き焼きがやらないこと
 
 - 仕事窓口プロファイル・Routine・Connector・desired-state の実変更
 - Cursor Grok 4.6 への Effort max 焼き込み
-- Hands→others ~0 を崩す焼き込み
-- 未回収 MAIN 6 Pro（GROK-FOUNDATION-COST）の想像復元
-- X 投稿、Webhook 秘密、金庫の値、認証の転記
+- Effort max を証拠なしに適用済みと書くこと
+- トークン節約パーセントの発明
+- Hands ~0 at window を崩し、上の実働を窓口へ戻すこと
+- 秘密・Webhook・金庫の値・認証の転記
