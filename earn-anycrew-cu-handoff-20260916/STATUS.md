@@ -1,11 +1,19 @@
 # STATUS — Anycrew（B10）CU handoff desk
 
+> ## REGISTER-CU-CUT
+>
+> **2026-09-16.** Anycrew is **not** next live CU.
+> Prefer **JOBS phase** (`register-winddown` / jobs-first).
+> **Do not** treat this pack as next live CU after Freelancer.com (A10 / CU-10).
+> After Freelancer parks: stay on JOBS (do-not-send bids / listings / week plan). Do **not** open B10 Anycrew from here.
+> This folder stays **DRAFT_ONLY**. Not a signup GO. `register_cu_cut` overrides play.
+
 Snapshot: **2026-09-16**（JST folder stamp）  
 Folder: `earn-anycrew-cu-handoff-20260916/`  
-State: **DRAFT_ONLY**  
+State: **DRAFT_ONLY** / **REGISTER-CU-CUT** (pack exists; **not** next CU)  
 Authoring: 公開 GET / 利用規約 / ID バンドル文字列のみ。**アカウント作成なし。OAuth 未完走。POST なし。応募なし。公開なし。**
 
-This file is a desk box for **B10 / QUEUE B5 / CU-15 Anycrew talent**. It does not claim an Anycrew account exists. It does not rewrite Wave B serial STATUS in sibling PRs.
+This file is a desk box for **B10 / QUEUE B5 / CU-15 Anycrew talent**. It does not claim an Anycrew account exists. It does not rewrite Wave B serial STATUS in sibling PRs. **Cut overrides play:** do not start this desk from a Freelancer `done-draft`.
 
 Forbidden: secrets, live phones/passwords/OTP, KYC files, signup from this authoring agent, **apply**, **publish**, GraphQL POST, invented traffic/GMV/fee %.
 
@@ -15,10 +23,11 @@ Forbidden: secrets, live phones/passwords/OTP, KYC files, signup from this autho
 
 | Hint | Meaning here |
 |---|---|
-| `pack_ready` | This 4-file handoff is paste-ready. CU may type under PLAYBOOK rules **after a human GO** |
+| `pack_ready` | Files exist. **Not** a play GO. Default `register_cu_cut` |
+| `register_cu_cut` | Register cut. **Not** next live CU. Prefer JOBS phase |
 | `pending` | Live CU has **not** marked a draft on this desk from **this** folder |
 | `needs_check` | `/offers` SPA empty this GET. Do not promote to `pass` |
-| `draft_saved` | Talent profile parked unpublished (fill after a real CU run) |
+| `draft_saved` | Fill only after a real CU run **and** a human GO that lifts the cut |
 | `blocked_skip` | Skip this pass. Do not retry the listed reason |
 | `kyc_wait` | 本人確認画面。朝の本人。アップロードなし |
 | `phone_wall` / `sms_wait_user` | 電話・SMS。番号を git に書かない |
@@ -28,9 +37,9 @@ Current row (authoring time):
 
 | # | desk | CU hint | reason | next action |
 |---|---|---|---|---|
-| B10 / B5 / CU-15 | Anycrew | `pack_ready` + `pending` + `needs_check` | Handoff written. `/offers` 429B shell. No live signup / apply / publish from this agent | Human GO → talent profile draft only. **No apply. No publish.** Stop at KYC / phone / biz. One dated card before treating gate as pass |
+| B10 / B5 / CU-15 | Anycrew | `pack_ready` + `register_cu_cut` + `pending` + `needs_check` | Cut. `/offers` 429B shell. No live signup / apply / publish from this agent | **Do not play.** Prefer JOBS. Keep draft. Human GO required before any paste |
 
-**REGISTER-CU-CUT（PR#72）:** Wave B 登録直列は jobs-first に譲る。このパックを Freelancer.com（A10）の次の自動 CU にしない。人が GO するまで `pending`。PR#72 はこの机を skip する。GO しても応募しない。
+Do **not** chain: Freelancer.com → Anycrew. Prefer JOBS siblings, including [PR#68](https://github.com/rimone0511/autopilot-log/pull/68) (Freelancer bid DRAFTs, do-not-send) and [PR#76](https://github.com/rimone0511/autopilot-log/pull/76) (JOBS week on `draft_saved` desks). Wave B serial skip of this desk remains [PR#72](https://github.com/rimone0511/autopilot-log/pull/72). This STATUS is not a signup GO.
 
 IDs: **B10 = Anycrew** in this folder and PR#61. QUEUE **B5** = Anycrew（PR#1）。CU-**15**。QUEUE の Malt **B10** ではない。Offers.jp（B19）ではない。
 
@@ -99,6 +108,7 @@ id: B10
 queue: B5
 cu: CU-15
 pack: earn-anycrew-cu-handoff-20260916/
+hint: register_cu_cut
 auth:
 otp:
 kyc:
@@ -120,7 +130,16 @@ publish_clicked: no
 phone_entered: no
 ```
 
-Outcome so far: **not_run**. Valid later values: `done-draft` | `already_member_draft` | `kyc_wait` | `sms_wait_user` | `phone_wall` | `no_draft_path` | `otp_missing` | `hold_failed` | `oauth_overreach` | `apply_wall` | `needs_check_offers`.
+Outcome so far: **not_run** / **register_cu_cut**. Valid later values: `done-draft` | `already_member_draft` | `kyc_wait` | `sms_wait_user` | `phone_wall` | `no_draft_path` | `otp_missing` | `hold_failed` | `oauth_overreach` | `apply_wall` | `needs_check_offers`.
+
+---
+
+## Next (human)
+
+1. **REGISTER-CU-CUT.** Do not CU-play Anycrew as the step after Freelancer. Prefer JOBS phase.
+2. JOBS: do-not-send pastes / week plan on desks that already have `draft_saved`. Do not start Wave B register from this folder.
+3. Keep this PR **draft**. Do not merge until Yuta reviews.
+4. If register CU is ever re-opened by a human GO, then and only then follow [PLAYBOOK.md](PLAYBOOK.md) + [STOP.md](STOP.md). Default is **cut**. Still no apply / no publish / no secrets.
 
 ---
 
@@ -135,4 +154,5 @@ Outcome so far: **not_run**. Valid later values: `done-draft` | `already_member_
 - Treat news/blog dates as `/offers` freshness
 - Copy sibling pack bodies into this folder
 - Play Workship → SOKUDAN serial as live CU
+- Start Anycrew register CU after Freelancer (cut; prefer JOBS)
 - Change Python posting-gate tests

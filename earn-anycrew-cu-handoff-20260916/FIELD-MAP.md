@@ -1,6 +1,7 @@
 # FIELD-MAP — Anycrew 人材下書き（JA bio · 石田祐太 · n8n/AI）
 
-> **DRAFT_ONLY.** Paste-ready JA. No secrets. **No apply. No publish.** Live form wins.  
+> **DRAFT_ONLY.** **REGISTER-CU-CUT.** Paste-ready JA. No secrets. **No apply. No publish.** Live form wins.  
+> **Not next live CU.** Do not paste on a live form unless a human GO lifts the cut.  
 > Seller-brand = 石田祐太 / ユタラボ / **n8n と AI** / 公式APIのみ / 人が検品できる仕組み / 未確認の数字は書かない / **応募しない** / **公開しない**。  
 > 実パスワード・OTP・電話・番地・口座・身分証番号は **このリポジトリに書かない**。
 

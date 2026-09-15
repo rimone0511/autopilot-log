@@ -1,7 +1,7 @@
 # STOP — Anycrew（B10）no apply / no publish / KYC / phone
 
-> **DRAFT_ONLY.** No secrets. **No apply. No publish.**  
-> This file is a stop list. It is not a how-to for KYC, SMS, payments, or sending proposals.  
+> **DRAFT_ONLY.** **REGISTER-CU-CUT.** No secrets. **No apply. No publish.**  
+> Anycrew is **not** next live CU. Jobs-first. This file is a stop list, not a how-to for KYC, SMS, payments, or sending proposals.  
 > This authoring agent did not sign up, apply, publish, or upload ID.
 
 CU 手順: [PLAYBOOK.md](PLAYBOOK.md)  

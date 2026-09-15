@@ -1,7 +1,8 @@
 # PLAYBOOK — Anycrew（B10）talent CU
 
-> **DRAFT_ONLY.** No secrets. **No apply. No publish.**  
-> Computer-use（CU）直列用。このフォルダを書いているエージェントは **登録していない。応募していない。公開していない。**  
+> **DRAFT_ONLY.** **REGISTER-CU-CUT.** No secrets. **No apply. No publish.**  
+> **Not next live CU.** Jobs-first. Default is **do not play** this desk after Freelancer.com.  
+> Computer-use（CU）用のランナー。このフォルダを書いているエージェントは **登録していない。応募していない。公開していない。**  
 > Live form wins. 公開 HTML / 規約に無いラベルは `needs_check`。
 
 | キー | 値 |
@@ -19,6 +20,7 @@
 | Timebox | 15–25 min。1モーダルで 10 min 超えたら park |
 | `thin_site_skip` | **false**（この GET: アプリトップ 200、ブランド一致、閉鎖文なし） |
 | activity_gate | **needs_check**（`/offers` SPA 空。案件カード未読。pass にしない） |
+| CU hint | **`register_cu_cut`** — not next live CU. Jobs-first |
 
 Paste values: [FIELD-MAP.md](FIELD-MAP.md)  
 Desk box: [STATUS.md](STATUS.md)
@@ -35,13 +37,17 @@ Sibling bodies are **not copied** here (pointers only):
 | Week2 pack | [#3 `05-anycrew.md`](https://github.com/rimone0511/autopilot-log/pull/3) |
 | Alive serial (skips this desk) | [#72](https://github.com/rimone0511/autopilot-log/pull/72) |
 
-**REGISTER-CU-CUT（PR#72）:** Wave B 登録直列の自動再生は jobs-first に譲る。このフォルダは Anycrew 机のランナー。Freelancer.com（A10）の次に **勝手に開かない。** 人が GO したときだけ PLAYBOOK を踏む。GO しても **応募・公開はしない。** ゲートは `needs_check` のまま。
+**REGISTER-CU-CUT（PR#72 / this STATUS banner）:** Anycrew is **not** next live CU. Wave B 登録直列の自動再生は **jobs-first** に譲る。Freelancer.com（A10 / CU-10）の次に **開かない。** 人が明示 GO して cut を上げるまで PLAYBOOK を踏まない。GO しても **応募・公開はしない。** ゲートは `needs_check` のまま。[STATUS.md](STATUS.md) の `register_cu_cut` が play に優先する。
 
 この机の `/offers` は Anycrew の案件 SPA である。Offers.jp（B19 / CU-25）ではない。
 
 ---
 
 ## 0. How far to go (then stop)
+
+**Default: do not start.** `register_cu_cut` — Anycrew is not next live CU. Jobs-first. Skip this section unless a human GO lifts the cut.
+
+If (and only if) that GO exists:
 
 1. Open talent home: https://app.any-crew.com/ — **not** https://biz.any-crew.com/ .
 2. Signup URL: https://id.any-crew.com/signup?auth_entry_source=front — 公開 CTA「会員登録」「会員登録(無料)」「新規会員登録はこちら」。SPA のラベルは **Googleで登録する**。
@@ -219,5 +225,6 @@ Valid later outcomes: `done-draft` | `already_member_draft` | `kyc_wait` | `sms_
 - 求人応募・提案送信（JOBS フェーズの他机ドラフトも **ここからは送らない**）
 - `/offers` を GraphQL で埋める
 - Workship / SOKUDAN / Offers.jp の直列再生
+- Freelancer.com の次にこの机を live CU として開く（**REGISTER-CU-CUT**。JOBS を先にする）
 - 先パックの秘密や長文の二重管理（ポインタを使う）
 - Python posting-gate 試験の変更
