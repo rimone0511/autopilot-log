@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "account": "rimone0511@gmail.com",
+  "policy": {
+    "shared_across": ["grok-bot", "claude-code", "codex", "cursor-grok", "devin-swe2"],
+    "canonical_paths": {
+      "box": "/workspace/grok-operations/ops/mail/shared-progress.json",
+      "github": "ops/mail/shared-progress.json (autopilot-log)",
+      "drive_note": "optional mirror under Grok Bot専用｜成果（非公開）/ops/mail/"
+    },
+    "rules": [
+      "Any mail sort (ad-hoc skill or scheduled digest) MUST read this file first.",
+      "After finishing, update last_run + reported_open_items + processed_message_ids (cap 200 newest).",
+      "If an open item fingerprint is unchanged since last_reported_at, do NOT re-ask the user in いま動くこと / 本人判断. Put 変化なし in result only.",
+      "Re-surface only when: new mail, status change, amount/deadline change, deadline is today or overdue with still-open action, or user asks again.",
+      "報告済み ≠ 決着済み. Ledger Windows canonical remains separate (mail-ledger-reference is read-only snapshot).",
+      "No secrets, card full numbers, passwords, or OTP in this file."
+    ]
+  },
+  "last_run": {
+    "at_jst": "2026-09-16T07:35:52+09:00",
+    "by": "grok-bot",
+    "kind": "morning-secretary",
+    "label_changes": 4,
+    "note": "Morning digest after evening 9/15; many open items were re-reported because shared-progress did not exist yet."
+  },
+  "reported_open_items": [
+    {
+      "id": "rakuten-mobile-unpaid-1081",
+      "title": "楽天モバイル未払い1081円確認",
+      "status": "user_action",
+      "fingerprint": "1081|card-switched-7110|stop-warning",
+      "last_reported_at": "2026-09-16T07:35:52+09:00",
+      "last_reported_by": "grok-bot",
+      "first_reported_at": "2026-09-15T18:54:00+09:00",
+      "deadline_jst": null,
+      "note": "カード変更済み。未払い解消確認が残る"
+    },
+    {
+      "id": "amazon-subscribe-gargle-999",
+      "title": "Amazon定期おトク便 うがい薬",
+      "status": "user_action",
+      "fingerprint": "999|arrive-2026-09-22|manage-by-2026-09-17",
+      "last_reported_at": "2026-09-16T07:35:52+09:00",
+      "last_reported_by": "grok-bot",
+      "first_reported_at": "2026-09-15T18:54:00+09:00",
+      "deadline_jst": "2026-09-17",
+      "note": "変更・スキップ最終日 9/17"
+    },
+    {
+      "id": "ibkr-passkey",
+      "title": "IBKR Passkey必須",
+      "status": "user_action",
+      "fingerprint": "passkey-required|reg-deadline-passed-0630",
+      "last_reported_at": "2026-09-16T07:35:52+09:00",
+      "last_reported_by": "grok-bot",
+      "first_reported_at": "2026-09-15T18:54:00+09:00",
+      "deadline_jst": null,
+      "note": "未設定なら建玉・出金制限の案内"
+    },
+    {
+      "id": "timeticket-email-verify-20260916",
+      "title": "タイムチケットメール認証",
+      "status": "user_action",
+      "fingerprint": "link-2026-09-16T05:22|valid-24h",
+      "last_reported_at": "2026-09-16T07:35:52+09:00",
+      "last_reported_by": "grok-bot",
+      "first_reported_at": "2026-09-16T07:35:52+09:00",
+      "deadline_jst": "2026-09-17T05:22:00+09:00",
+      "note": "朝便で新規"
+    },
+    {
+      "id": "cfd-e2607091",
+      "title": "CFD E2607091 相手待ち",
+      "status": "waiting_other",
+      "fingerprint": "no-new-mail-since-2026-09-11|refund-no-reask",
+      "last_reported_at": "2026-09-16T07:35:52+09:00",
+      "last_reported_by": "grok-bot",
+      "first_reported_at": "2026-09-15T18:54:00+09:00",
+      "deadline_jst": null,
+      "note": "変化なしなら本文に再掲しない（返金再判断しない）"
+    },
+    {
+      "id": "paypay-card-sep-190",
+      "title": "PayPayカード9月190円",
+      "status": "optional_user",
+      "fingerprint": "190|pay-2026-09-28|adjust-by-2026-09-17T21:59",
+      "last_reported_at": "2026-09-16T07:35:52+09:00",
+      "last_reported_by": "grok-bot",
+      "first_reported_at": "2026-09-15T18:54:00+09:00",
+      "deadline_jst": "2026-09-17T21:59:00+09:00",
+      "note": "金額調整は任意"
+    },
+    {
+      "id": "miyako-thanks-draft",
+      "title": "宮古市お礼下書き",
+      "status": "hold_hand_delivery",
+      "fingerprint": "draft-keep|do-not-send|hand-delivery",
+      "last_reported_at": "2026-09-16T07:35:52+09:00",
+      "last_reported_by": "grok-bot",
+      "first_reported_at": "2026-09-15T18:54:00+09:00",
+      "deadline_jst": null,
+      "note": "送信しない方針"
+    }
+  ],
+  "processed_message_ids": [],
+  "updated_at": "2026-09-16T07:56:00+09:00",
+  "updated_by": "grok-bot",
+  "seed_note": "Seeded 2026-09-16 after user flagged duplicate morning report vs prior sort. Next digests must diff against this file."
+}
