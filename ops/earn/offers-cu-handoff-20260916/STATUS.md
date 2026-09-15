@@ -1,11 +1,18 @@
 # STATUS — Offers（B19）CU handoff desk
 
+> ## REGISTER-CU-CUT
+>
+> **2026-09-16.** Prefer **JOBS phase** (`register-winddown` / jobs-first).
+> **Do not** treat Offers (B19 / CU-25) as next live CU after Freelancer.com (A10 / CU-10).
+> After Freelancer parks: stay on JOBS (do-not-send). Do **not** open `/worker/signup` from this folder as the next serial step.
+> This folder stays **DRAFT_ONLY**. Archive + paste pointers. **Not a signup GO.** Hint: `register_cu_cut`.
+
 Snapshot: **2026-09-16**（JST folder stamp）  
 Folder: `ops/earn/offers-cu-handoff-20260916/`  
-State: **DRAFT_ONLY**  
+State: **DRAFT_ONLY** / **REGISTER-CU-CUT** (not next CU)  
 Authoring: 公開 GET / 利用規約のみ。**アカウント作成なし。OAuth 未完走。POST なし。応募なし。**
 
-This file is a desk box for **B19 / QUEUE B14 / CU-25 Offers worker**. It does not claim an Offers account exists. It does not rewrite Wave B serial STATUS in sibling PRs.
+This file is a desk box for **B19 / QUEUE B14 / CU-25 Offers worker**. It does not claim an Offers account exists. It does not rewrite Wave B serial STATUS in sibling PRs. **Cut overrides play.**
 
 Forbidden: secrets, live phones/passwords/OTP, KYC files, signup from this authoring agent, **apply**, paid booths, invented traffic/GMV/fee %.
 
@@ -15,20 +22,21 @@ Forbidden: secrets, live phones/passwords/OTP, KYC files, signup from this autho
 
 | Hint | Meaning here |
 |---|---|
-| `pack_ready` | This 4-file handoff is paste-ready. CU may type under PLAYBOOK rules **after a human GO** |
+| `pack_ready` | Files exist. **Not** a play GO. Default `register_cu_cut` |
 | `pending` | Live CU has **not** marked a draft on this desk from **this** folder |
 | `draft_saved` | Worker profile parked unpublished (fill after a real CU run) |
 | `blocked_skip` | Skip this pass. Do not retry the listed reason |
 | `kyc_wait` | 本人確認画面。朝の本人。アップロードなし |
 | `apply_wall` | Save required apply — **do not apply** |
+| `register_cu_cut` | Register serial cut. **Not** next live CU. Prefer JOBS phase |
 
 Current row (authoring time):
 
 | # | desk | CU hint | reason | next action |
 |---|---|---|---|---|
-| B19 / B14 / CU-25 | Offers | `pack_ready` + `pending` | Handoff written. No live signup / apply from this agent | Human GO → worker profile draft only. **No apply.** Stop at KYC / paid / client |
+| B19 / B14 / CU-25 | Offers | `pack_ready` + `register_cu_cut` | Handoff written. Cut overrides play. No live signup / apply | **Do not CU-play.** Prefer JOBS. Keep draft |
 
-**REGISTER-CU-CUT（PR#72）:** Wave B 登録直列は jobs-first に譲る。このパックを Freelancer.com（A10）の次の自動 CU にしない。人が GO するまで `pending`。
+Do **not** chain: Freelancer.com → Offers. Prefer JOBS siblings: [PR#68](https://github.com/rimone0511/autopilot-log/pull/68) Freelancer bid DRAFTs (do-not-send), [PR#76](https://github.com/rimone0511/autopilot-log/pull/76) JOBS week on `draft_saved` desks, [PR#88](https://github.com/rimone0511/autopilot-log/pull/88) TODAY apply queue. Freelancer register handoff remains [PR#66](https://github.com/rimone0511/autopilot-log/pull/66). Wave B serial cut: [PR#72](https://github.com/rimone0511/autopilot-log/pull/72).
 
 IDs: **B19 ≠ PPH**（PPH は別ゲートのローカル番号）。QUEUE **B14** = Offers。CU-**25**。Workshift（B09）ではない。
 
@@ -38,7 +46,7 @@ IDs: **B19 ≠ PPH**（PPH は別ゲートのローカル番号）。QUEUE **B14
 
 | File | What CU does |
 |---|---|
-| [PLAYBOOK.md](PLAYBOOK.md) | MAIN Google → worker プロフィール → save draft → stop |
+| [PLAYBOOK.md](PLAYBOOK.md) | Archive paste order. **Default: do not play.** If register CU is re-opened: MAIN Google → draft → stop |
 | [FIELD-MAP.md](FIELD-MAP.md) | JA bio **safe paste**（URL 無し 150/200/255/800 + URL あり 200/800）+ field table |
 | [STOP.md](STOP.md) | **No apply.** KYC / 有料 / クライアントも停止 |
 | [STATUS.md](STATUS.md) | This box. Fill the success line after a live run |
@@ -94,7 +102,7 @@ upload: none
 apply_clicked: no
 ```
 
-Outcome so far: **not_run**. Valid later values: `done-draft` | `already_member_draft` | `kyc_wait` | `sms_wait_user` | `no_draft_path` | `otp_missing` | `hold_failed` | `card_wall` | `oauth_overreach` | `rate_empty` | `apply_wall`.
+Outcome so far: **not_run** / **register_cu_cut**. Default next: JOBS phase, not this desk. Valid later values (only if a human re-opens register CU): `done-draft` | `already_member_draft` | `kyc_wait` | `sms_wait_user` | `no_draft_path` | `otp_missing` | `hold_failed` | `card_wall` | `oauth_overreach` | `rate_empty` | `apply_wall`.
 
 ---
 
@@ -107,4 +115,5 @@ Outcome so far: **not_run**. Valid later values: `done-draft` | `already_member_
 - Open `/client/` as the worker path
 - Copy sibling pack bodies into `earn-packs/`
 - Play Workship → SOKUDAN → Offers serial as live CU
+- Treat Offers as next live CU after Freelancer.com (cut; prefer JOBS)
 - Change Python posting-gate tests

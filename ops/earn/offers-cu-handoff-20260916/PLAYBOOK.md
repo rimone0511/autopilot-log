@@ -1,7 +1,13 @@
 # PLAYBOOK — Offers（B19）worker CU
 
+> ## REGISTER-CU-CUT / jobs-first
+>
+> **Do not** treat Offers as next live CU after Freelancer.com (A10 / CU-10).  
+> Prefer JOBS phase. Default hint: `register_cu_cut`. This file is archive + paste order, **not a signup GO.**  
+> Keep draft. No secrets. **No apply.**
+
 > **DRAFT_ONLY.** No secrets. **No apply.**  
-> Computer-use（CU）直列用。このフォルダを書いているエージェントは **登録していない。応募していない。**  
+> このフォルダを書いているエージェントは **登録していない。応募していない。**  
 > Live form wins. 公開 HTML / 規約に無いラベルは `needs_check`。
 
 | キー | 値 |
@@ -14,7 +20,7 @@
 | Host | `offers.jp` |
 | Language | **日本語** |
 | Google | **PREFER_GOOGLE**（MAIN のみ） |
-| Mode | 会員登録（必要なら）→ ワーカープロフィール **下書き保存** |
+| Mode | **REGISTER-CU-CUT.** Archive paste order. Not next live CU. If a human re-opens register CU: 会員登録（必要なら）→ ワーカープロフィール **下書き保存** |
 | Stop | [STOP.md](STOP.md) — **応募しない。** KYC / 有料ブース / クライアント登録もしない |
 | Timebox | 15–25 min。1モーダルで 10 min 超えたら park |
 | `thin_site_skip` | **false**（この GET: `/worker/signup` 200） |
@@ -32,7 +38,7 @@ Sibling bodies are **not copied** here (pointers only):
 | Activity gate | [#12 `records/12-offers.md`](https://github.com/rimone0511/autopilot-log/pull/12) |
 | B19 CU-NOTE | [#72 `b19-offers/CU-NOTE.md`](https://github.com/rimone0511/autopilot-log/pull/72) |
 
-**REGISTER-CU-CUT（PR#72）:** Wave B 登録直列の自動再生は jobs-first に譲る。このフォルダは Offers 机のランナー。Freelancer.com（A10）の次に **勝手に開かない。** 人が GO したときだけ PLAYBOOK を踏む。GO しても **応募はしない。**
+**REGISTER-CU-CUT（PR#72）:** Wave B 登録直列は jobs-first に譲る。Freelancer.com（A10）の次に **Offers を開かない。** 下の手順は人が register CU を明示的に再オープンしたときだけ。既定は **cut**。再オープンしても **応募はしない。**
 
 ---
 

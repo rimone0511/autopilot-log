@@ -1,6 +1,7 @@
 # STOP — Offers（B19）no apply
 
-> **DRAFT_ONLY.** No secrets. **No apply.**  
+> **DRAFT_ONLY.** No secrets. **No apply.** **REGISTER-CU-CUT.**  
+> Default: do **not** treat Offers as next live CU. Prefer JOBS.  
 > This file is a stop list. It is not a how-to for KYC, payments, or sending proposals.  
 > This authoring agent did not sign up, apply, or upload ID.
 
