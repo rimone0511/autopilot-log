@@ -1,38 +1,39 @@
 # ops-bake 並列キャップ骨格（下書き）
 
-案件: 並列キャップ APPLY-WINDOW の骨格  
+案件: 並列キャップ APPLY-WINDOW（適応設計）  
 版: 2026-09-16 DRAFT  
 枝: `ops-parallel-cap-bake-skeleton-20260916/`
 
-**これは骨格だけです。本番の憲法・CLI・Bot・スキルへは適用していません。**  
-**最終数字は焼かない。Pro `PARALLEL-CAP-PERF` の回答が来るまで `{{PRO_NUMBER}}` のまま残す。**
+**これは下書き APPLY です。本番の憲法・CLI・Bot・スキルへは適用していません。**  
+**固定の 10/10 max は焼かない。** 最適数はライブ観測まで `{{UNKNOWN}}`。
 
-リポジトリに既存の並列キャップ APPLY 原文は無かった。HANDS が渡した窓の形と、照合できたロック（CU mutex）だけを薄く残す。無い数字・手順・コマンドは作らない。
+回収した Pro `PARALLEL-CAP-PERF` で、骨格の `{{PRO_NUMBER}}` を適応トークンへ置き換えた。無い観測・下げ幅・関数実装は作らない。
 
 ## このフォルダ
 
 | ファイル | 中身 |
 |---|---|
-| [APPLY-WINDOW.md](APPLY-WINDOW.md) | 並列キャップの窓。max Cursor Grok / SWE-2 / CU / refill-on-empty はプレースホルダ |
-| [BAKE-CHECKLIST.md](BAKE-CHECKLIST.md) | Pro 回答が着いてから数字を焼く手順。今は全部未完 |
+| [APPLY-WINDOW.md](APPLY-WINDOW.md) | 共有キャップ `{{UNKNOWN}}`、旧 ~10/~10 は `{{LEGACY_UNVERIFIED}}`、増減は `{{ADAPTIVE}}`、CU=1 |
+| [BAKE-CHECKLIST.md](BAKE-CHECKLIST.md) | 既知項目はチェック済み。ライブ観測と本番パッチは未 |
 | [SOURCES.md](SOURCES.md) | 照合した原典。秘密・認証・Drive ID は書かない |
 
 ## 状態
 
 | 項目 | 今 |
 |---|---|
-| APPLY-WINDOW | 骨格。`{{PRO_NUMBER_*}}` 未置換 |
-| Pro `PARALLEL-CAP-PERF` | **未回収**。MAIN Pro 枠 残り 0% の記録あり |
-| ソフト暫定 GO | Cursor Grok **~10** + SWE-2 **~10**。Pro までの仮。最終値ではない |
-| CU | 兄弟パック ORCH が mutex=**1** をロック。この窓でも上げない |
+| APPLY-WINDOW | 適応設計。`{{LEGACY_UNVERIFIED}}` / `{{UNKNOWN}}` / `{{ADAPTIVE}}` / CU=1 |
+| Pro `PARALLEL-CAP-PERF` | **回収済み**（HANDS 2026-09-16） |
+| 旧 ~10/~10 | 移行境界のみ。証明済み maxima ではない |
+| CU | **1 always** |
+| 最適並行数 | `{{UNKNOWN}}`（ライブ観測待ち） |
 | 本番適用 | していない |
 
 ## まだ本番にしないこと
 
-- `{{PRO_NUMBER_*}}` を推測で埋めない。~10 を正として焼かない
+- `{{UNKNOWN}}` を 10/10 で埋める。`{{LEGACY_UNVERIFIED}}` を現行 max にする
 - 憲法・CLI・desired-state の実書き換え
 - Computer Use の起動、並列 CU の焼き込み
-- 未回収 Pro の想像復元
+- wait-only Pro worker、偽の並行の実装コードをこの PR で足す
 - 公開・課金・解約・秘密の転記
 
 ## 検証
