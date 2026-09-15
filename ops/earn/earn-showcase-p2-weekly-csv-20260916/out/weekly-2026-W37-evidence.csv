@@ -1,0 +1,90 @@
+line_id,row_id,source_line,evidence_link,predicate
+L01,ROW-W37-001,2,../fixtures/inbound-ops-synthetic-w37.csv#L2,bucket==fulfilled
+L01,ROW-W37-002,3,../fixtures/inbound-ops-synthetic-w37.csv#L3,bucket==fulfilled
+L01,ROW-W37-003,4,../fixtures/inbound-ops-synthetic-w37.csv#L4,bucket==fulfilled
+L01,ROW-W37-004,5,../fixtures/inbound-ops-synthetic-w37.csv#L5,bucket==fulfilled
+L01,ROW-W37-005,6,../fixtures/inbound-ops-synthetic-w37.csv#L6,bucket==fulfilled
+L01,ROW-W37-006,7,../fixtures/inbound-ops-synthetic-w37.csv#L7,bucket==fulfilled
+L01,ROW-W37-007,8,../fixtures/inbound-ops-synthetic-w37.csv#L8,bucket==fulfilled
+L01,ROW-W37-008,9,../fixtures/inbound-ops-synthetic-w37.csv#L9,bucket==fulfilled
+L01,ROW-W37-009,10,../fixtures/inbound-ops-synthetic-w37.csv#L10,bucket==fulfilled
+L01,ROW-W37-010,11,../fixtures/inbound-ops-synthetic-w37.csv#L11,bucket==fulfilled
+L01,ROW-W37-011,12,../fixtures/inbound-ops-synthetic-w37.csv#L12,bucket==fulfilled
+L01,ROW-W37-012,13,../fixtures/inbound-ops-synthetic-w37.csv#L13,bucket==fulfilled
+L01,ROW-W37-013,14,../fixtures/inbound-ops-synthetic-w37.csv#L14,bucket==fulfilled
+L01,ROW-W37-027,30,../fixtures/inbound-ops-synthetic-w37.csv#L30,bucket==fulfilled
+L02,ROW-W37-001,2,../fixtures/inbound-ops-synthetic-w37.csv#L2,bucket==fulfilled
+L02,ROW-W37-002,3,../fixtures/inbound-ops-synthetic-w37.csv#L3,bucket==fulfilled
+L02,ROW-W37-003,4,../fixtures/inbound-ops-synthetic-w37.csv#L4,bucket==fulfilled
+L02,ROW-W37-004,5,../fixtures/inbound-ops-synthetic-w37.csv#L5,bucket==fulfilled
+L02,ROW-W37-005,6,../fixtures/inbound-ops-synthetic-w37.csv#L6,bucket==fulfilled
+L02,ROW-W37-006,7,../fixtures/inbound-ops-synthetic-w37.csv#L7,bucket==fulfilled
+L02,ROW-W37-007,8,../fixtures/inbound-ops-synthetic-w37.csv#L8,bucket==fulfilled
+L02,ROW-W37-008,9,../fixtures/inbound-ops-synthetic-w37.csv#L9,bucket==fulfilled
+L02,ROW-W37-009,10,../fixtures/inbound-ops-synthetic-w37.csv#L10,bucket==fulfilled
+L02,ROW-W37-010,11,../fixtures/inbound-ops-synthetic-w37.csv#L11,bucket==fulfilled
+L02,ROW-W37-011,12,../fixtures/inbound-ops-synthetic-w37.csv#L12,bucket==fulfilled
+L02,ROW-W37-012,13,../fixtures/inbound-ops-synthetic-w37.csv#L13,bucket==fulfilled
+L02,ROW-W37-013,14,../fixtures/inbound-ops-synthetic-w37.csv#L14,bucket==fulfilled
+L02,ROW-W37-027,30,../fixtures/inbound-ops-synthetic-w37.csv#L30,bucket==fulfilled
+L03,ROW-W37-001,2,../fixtures/inbound-ops-synthetic-w37.csv#L2,bucket==fulfilled
+L03,ROW-W37-002,3,../fixtures/inbound-ops-synthetic-w37.csv#L3,bucket==fulfilled
+L03,ROW-W37-003,4,../fixtures/inbound-ops-synthetic-w37.csv#L4,bucket==fulfilled
+L03,ROW-W37-004,5,../fixtures/inbound-ops-synthetic-w37.csv#L5,bucket==fulfilled
+L03,ROW-W37-005,6,../fixtures/inbound-ops-synthetic-w37.csv#L6,bucket==fulfilled
+L03,ROW-W37-006,7,../fixtures/inbound-ops-synthetic-w37.csv#L7,bucket==fulfilled
+L03,ROW-W37-007,8,../fixtures/inbound-ops-synthetic-w37.csv#L8,bucket==fulfilled
+L03,ROW-W37-008,9,../fixtures/inbound-ops-synthetic-w37.csv#L9,bucket==fulfilled
+L03,ROW-W37-009,10,../fixtures/inbound-ops-synthetic-w37.csv#L10,bucket==fulfilled
+L03,ROW-W37-010,11,../fixtures/inbound-ops-synthetic-w37.csv#L11,bucket==fulfilled
+L03,ROW-W37-011,12,../fixtures/inbound-ops-synthetic-w37.csv#L12,bucket==fulfilled
+L03,ROW-W37-012,13,../fixtures/inbound-ops-synthetic-w37.csv#L13,bucket==fulfilled
+L03,ROW-W37-013,14,../fixtures/inbound-ops-synthetic-w37.csv#L14,bucket==fulfilled
+L03,ROW-W37-027,30,../fixtures/inbound-ops-synthetic-w37.csv#L30,bucket==fulfilled
+L04,ROW-W37-001,2,../fixtures/inbound-ops-synthetic-w37.csv#L2,bucket==fulfilled AND channel==store
+L04,ROW-W37-003,4,../fixtures/inbound-ops-synthetic-w37.csv#L4,bucket==fulfilled AND channel==store
+L04,ROW-W37-006,7,../fixtures/inbound-ops-synthetic-w37.csv#L7,bucket==fulfilled AND channel==store
+L04,ROW-W37-009,10,../fixtures/inbound-ops-synthetic-w37.csv#L10,bucket==fulfilled AND channel==store
+L04,ROW-W37-012,13,../fixtures/inbound-ops-synthetic-w37.csv#L13,bucket==fulfilled AND channel==store
+L04,ROW-W37-027,30,../fixtures/inbound-ops-synthetic-w37.csv#L30,bucket==fulfilled AND channel==store
+L05,ROW-W37-002,3,../fixtures/inbound-ops-synthetic-w37.csv#L3,bucket==fulfilled AND channel==web
+L05,ROW-W37-005,6,../fixtures/inbound-ops-synthetic-w37.csv#L6,bucket==fulfilled AND channel==web
+L05,ROW-W37-008,9,../fixtures/inbound-ops-synthetic-w37.csv#L9,bucket==fulfilled AND channel==web
+L05,ROW-W37-011,12,../fixtures/inbound-ops-synthetic-w37.csv#L12,bucket==fulfilled AND channel==web
+L05,ROW-W37-013,14,../fixtures/inbound-ops-synthetic-w37.csv#L14,bucket==fulfilled AND channel==web
+L06,ROW-W37-004,5,../fixtures/inbound-ops-synthetic-w37.csv#L5,bucket==fulfilled AND channel==phone
+L06,ROW-W37-010,11,../fixtures/inbound-ops-synthetic-w37.csv#L11,bucket==fulfilled AND channel==phone
+L07,ROW-W37-007,8,../fixtures/inbound-ops-synthetic-w37.csv#L8,bucket==fulfilled AND channel==wholesale
+L08,ROW-W37-001,2,../fixtures/inbound-ops-synthetic-w37.csv#L2,bucket==fulfilled AND sku==NB-A5
+L08,ROW-W37-004,5,../fixtures/inbound-ops-synthetic-w37.csv#L5,bucket==fulfilled AND sku==NB-A5
+L08,ROW-W37-005,6,../fixtures/inbound-ops-synthetic-w37.csv#L6,bucket==fulfilled AND sku==NB-A5
+L08,ROW-W37-009,10,../fixtures/inbound-ops-synthetic-w37.csv#L10,bucket==fulfilled AND sku==NB-A5
+L08,ROW-W37-011,12,../fixtures/inbound-ops-synthetic-w37.csv#L12,bucket==fulfilled AND sku==NB-A5
+L08,ROW-W37-027,30,../fixtures/inbound-ops-synthetic-w37.csv#L30,bucket==fulfilled AND sku==NB-A5
+L09,ROW-W37-002,3,../fixtures/inbound-ops-synthetic-w37.csv#L3,bucket==fulfilled AND sku==PEN-BK
+L09,ROW-W37-006,7,../fixtures/inbound-ops-synthetic-w37.csv#L7,bucket==fulfilled AND sku==PEN-BK
+L09,ROW-W37-008,9,../fixtures/inbound-ops-synthetic-w37.csv#L9,bucket==fulfilled AND sku==PEN-BK
+L09,ROW-W37-012,13,../fixtures/inbound-ops-synthetic-w37.csv#L13,bucket==fulfilled AND sku==PEN-BK
+L10,ROW-W37-003,4,../fixtures/inbound-ops-synthetic-w37.csv#L4,bucket==fulfilled AND sku==CLIP-20
+L10,ROW-W37-007,8,../fixtures/inbound-ops-synthetic-w37.csv#L8,bucket==fulfilled AND sku==CLIP-20
+L10,ROW-W37-010,11,../fixtures/inbound-ops-synthetic-w37.csv#L11,bucket==fulfilled AND sku==CLIP-20
+L10,ROW-W37-013,14,../fixtures/inbound-ops-synthetic-w37.csv#L14,bucket==fulfilled AND sku==CLIP-20
+L11,ROW-W37-015,16,../fixtures/inbound-ops-synthetic-w37.csv#L16,bucket==cancelled
+L11,ROW-W37-016,17,../fixtures/inbound-ops-synthetic-w37.csv#L17,bucket==cancelled
+L12,ROW-W37-015,16,../fixtures/inbound-ops-synthetic-w37.csv#L16,bucket==cancelled
+L12,ROW-W37-016,17,../fixtures/inbound-ops-synthetic-w37.csv#L17,bucket==cancelled
+L13,ROW-W37-017,18,../fixtures/inbound-ops-synthetic-w37.csv#L18,bucket==hold
+L13,ROW-W37-018,19,../fixtures/inbound-ops-synthetic-w37.csv#L19,bucket==hold
+L14,ROW-W37-017,18,../fixtures/inbound-ops-synthetic-w37.csv#L18,bucket==hold
+L14,ROW-W37-018,19,../fixtures/inbound-ops-synthetic-w37.csv#L19,bucket==hold
+L15,ROW-W37-014,15,../fixtures/inbound-ops-synthetic-w37.csv#L15,bucket==exception
+L15,ROW-W37-019,20,../fixtures/inbound-ops-synthetic-w37.csv#L20,bucket==exception
+L15,ROW-W37-020,21,../fixtures/inbound-ops-synthetic-w37.csv#L21,bucket==exception
+L15,ROW-W37-021,22,../fixtures/inbound-ops-synthetic-w37.csv#L22,bucket==exception
+L15,ROW-W37-022,23,../fixtures/inbound-ops-synthetic-w37.csv#L23,bucket==exception
+L15,ROW-W37-023,24,../fixtures/inbound-ops-synthetic-w37.csv#L24,bucket==exception
+L15,ROW-W37-024,25,../fixtures/inbound-ops-synthetic-w37.csv#L25,bucket==exception
+L15,ROW-W37-DUP,26,../fixtures/inbound-ops-synthetic-w37.csv#L26,bucket==exception
+L15,ROW-W37-DUP,27,../fixtures/inbound-ops-synthetic-w37.csv#L27,bucket==exception
+L15,ROW-W37-025,28,../fixtures/inbound-ops-synthetic-w37.csv#L28,bucket==exception
+L15,ROW-W37-026,29,../fixtures/inbound-ops-synthetic-w37.csv#L29,bucket==exception

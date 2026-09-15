@@ -1,0 +1,12 @@
+source_line,row_id,reasons,channel,sku,status,occurred_at,evidence_link
+15,ROW-W37-014,zero_qty,store,NB-A5,fulfilled,2026-09-08T11:00:00+09:00,../fixtures/inbound-ops-synthetic-w37.csv#L15
+20,ROW-W37-019,out_of_week,store,PEN-BK,fulfilled,2026-09-06T16:00:00+09:00,../fixtures/inbound-ops-synthetic-w37.csv#L20
+21,ROW-W37-020,out_of_week,web,NB-A5,fulfilled,2026-09-14T09:10:00+09:00,../fixtures/inbound-ops-synthetic-w37.csv#L21
+22,ROW-W37-021,missing_sku,store,,fulfilled,2026-09-10T11:00:00+09:00,../fixtures/inbound-ops-synthetic-w37.csv#L22
+23,ROW-W37-022,negative_qty,store,NB-A5,fulfilled,2026-09-10T11:05:00+09:00,../fixtures/inbound-ops-synthetic-w37.csv#L23
+24,ROW-W37-023,unknown_channel,mystery,NB-A5,fulfilled,2026-09-10T11:10:00+09:00,../fixtures/inbound-ops-synthetic-w37.csv#L24
+25,ROW-W37-024,unknown_status,store,NB-A5,exploded,2026-09-10T11:15:00+09:00,../fixtures/inbound-ops-synthetic-w37.csv#L25
+26,ROW-W37-DUP,id_collision,store,NB-A5,fulfilled,2026-09-10T12:00:00+09:00,../fixtures/inbound-ops-synthetic-w37.csv#L26
+27,ROW-W37-DUP,id_collision,store,NB-A5,fulfilled,2026-09-10T12:01:00+09:00,../fixtures/inbound-ops-synthetic-w37.csv#L27
+28,ROW-W37-025,bad_unit_amount,web,PEN-BK,fulfilled,2026-09-09T10:00:00+09:00,../fixtures/inbound-ops-synthetic-w37.csv#L28
+29,ROW-W37-026,missing_or_bad_occurred_at,store,CLIP-20,fulfilled,,../fixtures/inbound-ops-synthetic-w37.csv#L29
