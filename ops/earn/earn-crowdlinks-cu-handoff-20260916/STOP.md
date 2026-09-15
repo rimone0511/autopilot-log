@@ -1,8 +1,10 @@
 # STOP — CrowdLinks / クラウドリンクス (B04)
 
-Mode: **DRAFT_ONLY**  
+Mode: **DRAFT_ONLY** / **REGISTER-CU-CUT**  
 Pack: `ops/earn/earn-crowdlinks-cu-handoff-20260916/`  
 Date: 2026-09-16
+
+**Do not autoplay this folder.** CrowdLinks is not next live CU. Jobs-first. See [STATUS.md](STATUS.md) (`register_cu_cut`).
 
 **This file is a stop list.** It does not tell anyone how to pass identity checks, which ID to use, which bank to pick, how to pass SMS, or how to 応募.
 

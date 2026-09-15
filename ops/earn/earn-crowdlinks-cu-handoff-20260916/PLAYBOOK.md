@@ -1,5 +1,6 @@
 > DRAFT_ONLY CU handoff. NO secrets. NO invented credentials. NO live signup from this authoring agent.  
-> Human / CU paste only. Live form wins.  
+> **REGISTER-CU-CUT.** CrowdLinks is **not next live CU**. Jobs-first. **Do not autoplay this folder.** Hint: `register_cu_cut` — see [STATUS.md](STATUS.md).  
+> Human / CU paste only **after a human GO**. Live form wins.  
 > Desk: クラウドリンクス / CrowdLinks（**B04** / QUEUE **Wave B** / **CU-14**).  
 > Auth: **MAIN Google** on public https://crowdlinks.jp/worker/signup/ (`Googleで登録する` at click-time).  
 > This pass: **free-member profile draft only**. **Do not 応募 / 話を聞きたい / マッチング報告.**  
@@ -17,9 +18,10 @@
 | Google | **PREFER_GOOGLE** — MAIN only. Public signup JS: **Googleで登録する**. FAQ: Google認証は **別アカウントへ付け替え不可** |
 | Email fallback | Same MAIN mailbox (`メールアドレスで登録する`). Password **not** in git. OTP = parent Gmail |
 | Plan | **無料会員 only**. FAQ: worker use is free; listed pay is not commission-cut. **No yen / % invented.** Do not buy 有料会員 |
-| This pass | Account (if needed) → プロフィール下書き保存. Stop before 応募 |
-| Hard no | **応募フォームへ** · **話を聞きたい** · スカウト返信 · マッチング報告 · 有料会員化 · 追加書類 · 口座 · 電話を本人確認に使う |
+| This pass | **cut.** Not next live CU. If a human GO later: account (if needed) → プロフィール下書き保存. Stop before 応募 |
+| Hard no | **応募フォームへ** · **話を聞きたい** · スカウト返信 · マッチング報告 · 有料会員化 · 追加書類 · 口座 · 電話を本人確認に使う · **autoplay this folder** |
 | Activity gate | **needs_check** — observed evidence only. See [STATUS.md](STATUS.md). Do not call the desk `alive` |
+| Live CU | **`register_cu_cut`**. Jobs-first. Do not autoplay |
 | `thin_site_skip` | **false** (public pages live this GET) |
 | Authoring session | Public GET / help / TOS only. **Did not create an account** |
 
@@ -31,6 +33,7 @@ Sibling packs (bodies **not** required to open this runner; n8n paste fences liv
 | Thin Week2 | `earn-register-packs-jp-20260916/04-crowdlinks.md` ([#3](https://github.com/rimone0511/autopilot-log/pull/3)) |
 | Gate record (JP Wave B) | `earn-activity-gate-waveB-20260916/records/04-crowdlinks.md` ([#12](https://github.com/rimone0511/autopilot-log/pull/12)) **needs_check** |
 | Gate note (batch1) | `ops/earn/waveb-activity-gate-batch1-20260916/b04-crowdlinks.md` ([#62](https://github.com/rimone0511/autopilot-log/pull/62)) **needs_check** |
+| Alive serial CUT | `ops/earn/waveb-alive-cu-serial-20260916/` ([#72](https://github.com/rimone0511/autopilot-log/pull/72)) **REGISTER-CU-CUT** / jobs-first |
 
 This playbook is the **step order**. Placeholders stay empty of secrets in git.
 
@@ -194,7 +197,9 @@ Help center **is** recently touched (FAQ article timestamps **2026/8/3**). Site 
 
 ## Success line (secret-free)
 
-Valid outcomes: `done-draft` | `already_member_draft` | `kyc_wait` | `apply_stop` | `sms_wait_user` | `no_draft_path` | `otp_missing` | `oauth_overreach` | `rate_empty` | `google_icon_missing` | `years_empty_park`.
+Valid outcomes: `register_cu_cut` | `done-draft` | `already_member_draft` | `kyc_wait` | `apply_stop` | `sms_wait_user` | `no_draft_path` | `otp_missing` | `oauth_overreach` | `rate_empty` | `google_icon_missing` | `years_empty_park`.
+
+Default until a human GO: **`register_cu_cut`**. Do not autoplay.
 
 Not success: “応募した,” “話を聞きたい,” “スカウト返信,” “有料会員,” “口座登録,” “書類提出.”
 
@@ -217,6 +222,7 @@ bank: no
 phone: skipped | sms_wait_user | blocked
 rate: empty | placeholder-from-ledger | rate_empty
 years: empty | ledger | years_empty_park
+register_cu_cut: yes
 next: stop
 ```
 

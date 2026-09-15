@@ -1,8 +1,16 @@
 # STATUS — CrowdLinks (B04) CU handoff
 
+> ## REGISTER-CU-CUT
+>
+> **2026-09-16.** CrowdLinks / クラウドリンクス (**B04** / CU-14) is **not next live CU**.
+> Prefer **JOBS phase** (`register-winddown` / jobs-first).
+> **Do not autoplay this folder.** Do not open `/worker/signup/` from a Freelancer.com park or from any register serial.
+> Hint: `register_cu_cut`. Pack stays **DRAFT_ONLY** archive + paste. Not a signup GO.
+> A later **human GO** is required before any CU types here. Default is **cut**.
+
 Snapshot: **2026-09-16** (folder stamp; authoring GET ~2026-09-15 21:00 UTC / 2026-09-16 JST)  
 Folder: `ops/earn/earn-crowdlinks-cu-handoff-20260916/`  
-State: **DRAFT_ONLY**
+State: **DRAFT_ONLY** / **REGISTER-CU-CUT** (not next CU; jobs-first)  
 
 This file is the desk box for **B04 / QUEUE Wave B / CU-14 クラウドリンクス (CrowdLinks)**. It is not a signup log and **does not claim an account exists**.
 
@@ -17,13 +25,14 @@ Authoring session: public CrowdLinks HTML + Help Center + TOS only. **No login. 
 | Desk | CrowdLinks worker（クラウドリンクス） |
 | IDs | **B04** · QUEUE **Wave B** · **CU-14** |
 | Not | CrowdWorks.jp · `/client/` 契約企業 |
-| CU hint | `pending` — pack ready; live CU has **not** run this folder |
+| CU hint | **`register_cu_cut`** — pack exists; **not** next live CU; **do not autoplay**. `pending` only after a human GO |
 | Activity gate | **needs_check** ([PR#12](https://github.com/rimone0511/autopilot-log/pull/12) · [PR#62](https://github.com/rimone0511/autopilot-log/pull/62)). This GET did **not** upgrade it to `alive` |
 | Google | MAIN only (`Googleで登録する` in signup JS; icon/label **at click-time**. Static HTML has no “Google”) |
 | Plan | 無料会員 only ([FAQ](https://help.crowdlinks.jp/0029649d31534622a6d95ffe53df18dd) qualitative free / no commission-cut. **No yen table**) |
 | Stop | **応募 / 話を聞きたい** + KYC/phone/paid — [STOP.md](STOP.md) |
 | Runner | [PLAYBOOK.md](PLAYBOOK.md) · [FIELD-MAP.md](FIELD-MAP.md) |
 | Paste | 石田祐太 n8n / AI automation JP — FIELD-MAP fences (200 / 800 counted) |
+| Morning context | Sibling [PR#72](https://github.com/rimone0511/autopilot-log/pull/72) **REGISTER-CU-CUT** (jobs-first). This folder is still the CrowdLinks runner **only if** a human GO re-opens this desk |
 
 Sibling paste (bodies not merged here except n8n fences already in FIELD-MAP):
 
@@ -33,6 +42,7 @@ Sibling paste (bodies not merged here except n8n fences already in FIELD-MAP):
 | Thin Week2 | [#3](https://github.com/rimone0511/autopilot-log/pull/3) |
 | Gate record | [#12](https://github.com/rimone0511/autopilot-log/pull/12) |
 | Gate note batch1 | [#62](https://github.com/rimone0511/autopilot-log/pull/62) |
+| Alive serial CUT | [#72](https://github.com/rimone0511/autopilot-log/pull/72) |
 
 ---
 
@@ -101,10 +111,20 @@ bank: no
 phone:
 rate:
 years:
+register_cu_cut: yes
 next: stop
 ```
 
-Current: **not run**.
+Current: **not run**. **`register_cu_cut`.** Do not autoplay.
+
+---
+
+## Next (human)
+
+1. **REGISTER-CU-CUT.** CrowdLinks is not the next live CU. Prefer JOBS phase.
+2. Do **not** CU-play this folder after Freelancer.com or as a Wave B register hop.
+3. Keep this PR **draft**. Do not merge until Yuta reviews.
+4. If register CU is ever re-opened by a **human GO**, then and only then follow [PLAYBOOK.md](PLAYBOOK.md) + [STOP.md](STOP.md). Default is **cut**.
 
 ---
 
@@ -122,3 +142,4 @@ Current: **not run**.
 - Mix CrowdLinks with CrowdWorks
 - Merge sibling pack folders
 - Change Python posting-gate tests
+- Autoplay this folder as next live CU (REGISTER-CU-CUT / jobs-first)
