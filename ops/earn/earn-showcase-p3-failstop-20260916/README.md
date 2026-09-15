@@ -23,30 +23,35 @@
 |---|---|
 | 合成イベントログを順に読む | 実顧客・実メール・実 ID を使う |
 | 通してよい行だけ台帳へ書く | 二重・衝突・不正を成功扱いにする |
+| `event_id`・時刻・approve の actor が無い書き込みを止める | 認証済み承認と名乗る |
 | 止めた行を `needs_human` で出す | タイムアウトを approve にする |
 | 人が `approve` した保留だけ後から書く | メール / Slack / Sheets へ送る |
 | 失敗カタログを before / after で見せる | 精度 %、SLA、時短を名乗る |
 
 ```mermaid
 flowchart LR
-  E[合成イベント] --> V{必須・形式}
-  V -->|不正| H[needs_human]
+  E[合成イベント] --> ENV{event_id / 時刻 / 一意}
+  ENV -->|欠落・重複・形式不正| H[needs_human]
+  ENV -->|OK| V{必須・形式}
+  V -->|不正| H
   V -->|OK| D{重複 / 衝突}
   D -->|はい| H
   D -->|いいえ| W{人待ち?}
   W -->|いいえ| L[台帳へ書く]
   W -->|はい| P[held]
-  P -->|approve| L
+  P -->|approve と actor| L
+  P -->|approve で actor 欠落| H
   P -->|timeout / reject / 欠落| H
 ```
 
 ```text
 合成イベント
+  → event_id（非空・一意）と timezone 付き時刻
   → 必須項目・形式
   → 同一キー / 同一顧客の重複
   → 同一ID・別内容の衝突
   → 即時書き込み、または人待ち
-  → approve 以外（reject / 欠落 / timeout / 不明）は閉じる
+  → approve は actor 必須。それ以外（reject / 欠落 / timeout / 不明）は閉じる
 ```
 
 ---
@@ -91,7 +96,7 @@ python3 runner/failstop.py \
 | `fixtures/events.jsonl` | 合成イベント 12 行 |
 | `fixtures/expected-summary.json` | テストが見る期待結果 |
 | `runner/failstop.py` | ガード本体 + CLI |
-| `n8n/p3-failstop-double-reg.workflow.json` | inactive な分岐見本 |
+| `n8n/p3-failstop-double-reg.workflow.json` | inactive な分岐見本（Manual Trigger。認証なし） |
 | `examples/before-after.md` | 人が読む before / after |
 | `examples/after-*.json` | ランナーが出した例 |
 | `FACTS.md` | 主張してよいこと |
@@ -126,10 +131,10 @@ python3 runner/failstop.py \
 
 1. `n8n/p3-failstop-double-reg.workflow.json` を import する
 2. **Activate しない**
-3. `{{WEBHOOK_PATH_P3}}` はプレースホルダのまま（実 path をコミットしない）
-4. 認証は付けない。後段は NoOp
+3. 認証は付けない。後段は NoOp。**Webhook ノードは置かない**（未認証 ingress になるため）
+4. 起動は Manual Trigger の見本だけ。外部から受ける形は下の文書のみ
 
-POST の形（合成）:
+入力の形（合成。Workflow には Webhook を足さない）:
 
 ```json
 {
@@ -147,7 +152,7 @@ n8n の Code ノードは分岐の説明用です。ハッシュ計算も Python
 
 - P1 問い合わせ整理、P2 週報、返信下書き、AI 分類
 - 自動返信、自動送信、本番 CRM / Sheets / Slack
-- タイムアウト自動承認、SLA、会社全体の承認基盤
+- タイムアウト自動承認、認証済み承認、SLA、会社全体の承認基盤
 - ブラウザ自動操作、スクレイピング、SNS 運用代行
 - 秘密、実 webhook、顧客データ
 - 公開、応募、登録追加、Gumroad 公開
@@ -160,5 +165,6 @@ n8n は手段の候補であり、看板固定ではありません。
 ## 英語（短い）
 
 Synthetic fail-stop demo. Duplicate or invalid writes stop and become `needs_human`.
+Missing actor / event ID / time, and reused event IDs, do not write.
 Timeout is not approve. No secrets. Draft only. P3 only — not P1/P2.
 Run `python3 runner/failstop.py` then `python3 tests/test_failstop.py`.

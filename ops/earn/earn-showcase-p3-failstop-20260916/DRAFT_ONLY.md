@@ -18,6 +18,8 @@
 | この PR の Ready / merge | `false`（本人レビューまで draft） |
 
 タイムアウトを承認として扱わない。欠落した判定も承認ではない。
+actor 無しの approve、event_id / 時刻の欠落、event_id の再利用も書き込みではない。
+n8n に Webhook を足して Activate しない。
 
 後から公開・応募する場合は、**このフォルダの外**で本人 GO を取る。
 GO が出るまで、下の箱はすべて `false` のまま。

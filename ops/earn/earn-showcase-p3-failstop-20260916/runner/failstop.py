@@ -2,8 +2,9 @@
 """P3 fail-stop / double-registration guard (synthetic showcase).
 
 Reads a ledger + a synthetic event log. When a write would duplicate,
-collide, or fail validation, it STOPS and surfaces needs_human.
-A timeout is never treated as approve.
+collide, fail validation, or lack an event envelope (actor on approve,
+event ID, timezone-aware time, unique event ID), it STOPS and surfaces
+needs_human. A timeout is never treated as approve.
 
 No network. No secrets. No outbound send.
 """
@@ -16,6 +17,7 @@ import json
 import re
 import sys
 from copy import deepcopy
+from datetime import datetime
 from pathlib import Path
 
 TICKET = "EARN-SHOWCASE-P3-20260916"
@@ -23,6 +25,9 @@ PACK = "earn-showcase-p3-failstop-20260916"
 DEFAULT_AS_OF = "2026-09-16T12:00:00Z"
 
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[A-Za-z]{2,}$")
+OCCURRED_AT_RE = re.compile(
+    r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$"
+)
 REQUIRED_RECORD_FIELDS = ("record_id", "kind", "display_name", "email")
 ALLOWED_KINDS = frozenset({"customer"})
 WRITE_DECISIONS = frozenset({"approve"})
@@ -45,6 +50,11 @@ REASON_JA = {
     "unknown_decision": "判定が approve / reject / timeout 以外です。承認として扱いません。",
     "unknown_hold_target": "保留中の書き込みが見つかりません。勝手には書きません。",
     "unknown_event_type": "未知のイベント種別です。書き込みしていません。",
+    "missing_event_id": "イベントIDが空です。監査できないため書き込みを止めました。",
+    "duplicate_event_id": "同じイベントIDが既に使われています。再利用は書き込みません。",
+    "missing_occurred_at": "時刻が空です。監査できないため書き込みを止めました。",
+    "invalid_occurred_at": "時刻の形式が不正か、タイムゾーンがありません。書き込みを止めました。",
+    "missing_actor": "approve なのに actor が空です。人が承認した記録にならないため書き込みを止めました。",
 }
 
 REASON_EN = {
@@ -58,7 +68,32 @@ REASON_EN = {
     "unknown_decision": "Decision is not approve / reject / timeout. Not treated as approve.",
     "unknown_hold_target": "No matching held write. Nothing was written.",
     "unknown_event_type": "Unknown event type. Nothing was written.",
+    "missing_event_id": "Event ID is empty. Not written; the row would not be auditable.",
+    "duplicate_event_id": "This event ID was already used. Reuse is not written.",
+    "missing_occurred_at": "Event time is empty. Not written; the row would not be auditable.",
+    "invalid_occurred_at": "Event time is malformed or missing a timezone. Not written.",
+    "missing_actor": "Approve without an actor. Not treated as a human approval. Not written.",
 }
+
+
+def require_text(value):
+    if not isinstance(value, str):
+        return ""
+    return value.strip()
+
+
+def parse_occurred_at(value):
+    text = require_text(value)
+    if not text or not OCCURRED_AT_RE.match(text):
+        return None
+    iso = text[:-1] + "+00:00" if text.endswith("Z") else text
+    try:
+        parsed = datetime.fromisoformat(iso)
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        return None
+    return parsed
 
 
 def payload_hash(record):
@@ -128,6 +163,7 @@ class Guard:
         for row in self.ledger["records"]:
             row = self._index_existing(row)
         self.holds = {}
+        self.seen_event_ids = set()
         self.needs_human = []
         self.trace = []
 
@@ -148,16 +184,34 @@ class Guard:
         return self.result()
 
     def process_event(self, event):
-        event_type = str(event.get("event_type") or "")
-        if event_type == "write_attempt":
-            outcome = self._write_attempt(event)
-        elif event_type == "human_decision":
-            outcome = self._human_decision(event)
+        envelope_reason = self._envelope_reason(event)
+        if envelope_reason:
+            outcome = self._stop(event, envelope_reason)
         else:
-            outcome = _needs_human(event, "unknown_event_type")
-            self.needs_human.append(outcome)
+            event_type = str(event.get("event_type") or "")
+            if event_type == "write_attempt":
+                outcome = self._write_attempt(event)
+            elif event_type == "human_decision":
+                outcome = self._human_decision(event)
+            else:
+                outcome = _needs_human(event, "unknown_event_type")
+                self.needs_human.append(outcome)
         self.trace.append(self._trace_row(event, outcome))
         return outcome
+
+    def _envelope_reason(self, event):
+        event_id = require_text(event.get("event_id"))
+        if not event_id:
+            return "missing_event_id"
+        if event_id in self.seen_event_ids:
+            return "duplicate_event_id"
+        self.seen_event_ids.add(event_id)
+        occurred_raw = event.get("occurred_at")
+        if not require_text(occurred_raw):
+            return "missing_occurred_at"
+        if parse_occurred_at(occurred_raw) is None:
+            return "invalid_occurred_at"
+        return None
 
     def _write_attempt(self, event, from_hold=False):
         record = event.get("record") or {}
@@ -192,17 +246,18 @@ class Guard:
 
         hold = bool(event.get("hold_for_human")) and not from_hold
         if hold:
+            event_id = require_text(event.get("event_id"))
             hold_row = {
                 "status": "held",
                 "written": False,
-                "event_id": event.get("event_id"),
+                "event_id": event_id,
                 "record_id": record["record_id"],
                 "idempotency_key": key,
                 "payload_hash": digest,
                 "message_ja": "人の判定待ちです。この時点では台帳に書いていません。",
                 "message_en": "Waiting for a human decision. Not written yet.",
             }
-            self.holds[event.get("event_id")] = {
+            self.holds[event_id] = {
                 "event": deepcopy(event),
                 "record": deepcopy(record),
                 "idempotency_key": key,
@@ -214,7 +269,7 @@ class Guard:
         return {
             "status": "written",
             "written": True,
-            "event_id": event.get("event_id"),
+            "event_id": written["source_event_id"],
             "record_id": written["record_id"],
             "idempotency_key": key,
             "payload_hash": digest,
@@ -234,9 +289,14 @@ class Guard:
             return self._stop(event, "unknown_hold_target", extra)
 
         if decision in WRITE_DECISIONS:
+            if not require_text(event.get("actor")):
+                extra["held_event_id"] = held["event"].get("event_id")
+                extra["record_id"] = held["record"].get("record_id")
+                extra["idempotency_key"] = held["idempotency_key"]
+                return self._stop(event, "missing_actor", extra)
             write_event = deepcopy(held["event"])
-            write_event["event_id"] = event.get("event_id")
-            write_event["occurred_at"] = event.get("occurred_at")
+            write_event["event_id"] = require_text(event.get("event_id"))
+            write_event["occurred_at"] = require_text(event.get("occurred_at"))
             write_event["hold_for_human"] = False
             write_event["approved_from_event_id"] = held["event"].get("event_id")
             outcome = self._write_attempt(write_event, from_hold=True)
@@ -263,13 +323,19 @@ class Guard:
         return item
 
     def _commit(self, event, record, key, digest):
+        event_id = require_text(event.get("event_id"))
+        occurred_at = require_text(event.get("occurred_at"))
+        if not event_id or parse_occurred_at(occurred_at) is None:
+            raise RuntimeError(
+                "fail-closed: refusing ledger write without event_id and timezone-aware occurred_at"
+            )
         row = _copy_record(
             record,
             {
                 "idempotency_key": key,
                 "payload_hash": digest,
-                "written_at": event.get("occurred_at") or DEFAULT_AS_OF,
-                "source_event_id": event.get("event_id"),
+                "written_at": occurred_at,
+                "source_event_id": event_id,
             },
         )
         if event.get("approved_from_event_id"):

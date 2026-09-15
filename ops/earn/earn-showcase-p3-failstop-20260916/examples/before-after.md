@@ -25,10 +25,12 @@
 6. 依頼者D を人待ちにする
 7. D が timeout → **書かない**
 8. 依頼者E を人待ちにする
-9. E を人が approve → 書く
+9. E を人が approve（actor あり） → 書く
 10. 依頼者F を人待ちにする
 11. F を人が reject → 書かない
 12. 空の名前を止める
+
+同梱 12 行以外の unit probe（actor 無し approve、event_id / 時刻欠落、event_id 再利用）は台帳に書かない。
 
 ## After
 

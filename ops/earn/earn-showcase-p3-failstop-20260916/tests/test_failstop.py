@@ -164,6 +164,7 @@ class GuardUnitTest(unittest.TestCase):
         outcome = guard.process_event(
             {
                 "event_id": "u-05",
+                "occurred_at": "2026-09-16T01:01:00Z",
                 "event_type": "human_decision",
                 "target_event_id": "u-04",
                 "actor": "example-operator",
@@ -197,7 +198,11 @@ class GuardUnitTest(unittest.TestCase):
     def test_unknown_event_type_stops(self):
         guard = self.fresh()
         outcome = guard.process_event(
-            {"event_id": "u-10", "event_type": "send_email_now"}
+            {
+                "event_id": "u-10",
+                "occurred_at": "2026-09-16T01:00:00Z",
+                "event_type": "send_email_now",
+            }
         )
         self.assertEqual(outcome["reason"], "unknown_event_type")
 
@@ -218,6 +223,107 @@ class GuardUnitTest(unittest.TestCase):
         self.assertEqual(outcome["reason"], "duplicate_registration")
         ids = [row["record_id"] for row in guard.ledger["records"]]
         self.assertEqual(ids.count("cust-2005"), 1)
+
+    def test_actorless_approve_does_not_write(self):
+        guard = self.fresh()
+        guard.process_event(
+            self.write("u-a1", "cust-3101", "hold-a@example.invalid", hold=True)
+        )
+        outcome = guard.process_event(
+            {
+                "event_id": "u-a2",
+                "occurred_at": "2026-09-16T01:01:00Z",
+                "event_type": "human_decision",
+                "target_event_id": "u-a1",
+                "decision": "approve",
+            }
+        )
+        self.assertEqual(outcome["status"], "needs_human")
+        self.assertEqual(outcome["reason"], "missing_actor")
+        self.assertFalse(outcome["written"])
+        ids = [row["record_id"] for row in guard.ledger["records"]]
+        self.assertNotIn("cust-3101", ids)
+
+        guard2 = self.fresh()
+        guard2.process_event(
+            self.write("u-a3", "cust-3102", "hold-b@example.invalid", hold=True)
+        )
+        blank = self.decide("u-a4", "u-a3", "approve")
+        blank["actor"] = "   "
+        outcome2 = guard2.process_event(blank)
+        self.assertEqual(outcome2["reason"], "missing_actor")
+        self.assertFalse(outcome2["written"])
+        ids2 = [row["record_id"] for row in guard2.ledger["records"]]
+        self.assertNotIn("cust-3102", ids2)
+
+    def test_missing_event_id_does_not_write(self):
+        guard = self.fresh()
+        event = self.write("will-drop", "cust-3201", "noid@example.invalid")
+        del event["event_id"]
+        outcome = guard.process_event(event)
+        self.assertEqual(outcome["reason"], "missing_event_id")
+        self.assertFalse(outcome["written"])
+        self.assertNotEqual(outcome["status"], "written")
+        ids = [row["record_id"] for row in guard.ledger["records"]]
+        self.assertNotIn("cust-3201", ids)
+        self.assertTrue(all(row.get("source_event_id") for row in guard.ledger["records"]))
+
+        empty = self.write("   ", "cust-3201b", "empty-id@example.invalid")
+        outcome_empty = guard.process_event(empty)
+        self.assertEqual(outcome_empty["reason"], "missing_event_id")
+        self.assertFalse(outcome_empty["written"])
+        self.assertNotIn(
+            "cust-3201b", [row["record_id"] for row in guard.ledger["records"]]
+        )
+
+    def test_missing_occurred_at_does_not_write(self):
+        guard = self.fresh()
+        event = self.write("u-t1", "cust-3202", "notime@example.invalid")
+        del event["occurred_at"]
+        outcome = guard.process_event(event)
+        self.assertEqual(outcome["reason"], "missing_occurred_at")
+        self.assertFalse(outcome["written"])
+        self.assertNotIn(
+            "cust-3202", [row["record_id"] for row in guard.ledger["records"]]
+        )
+        for row in guard.ledger["records"]:
+            if row.get("source_event_id") == "u-t1":
+                self.fail("missing occurred_at must not produce a ledger row")
+
+        naive = self.write("u-t2", "cust-3203", "naive@example.invalid")
+        naive["occurred_at"] = "2026-09-16T01:00:00"
+        outcome_naive = guard.process_event(naive)
+        self.assertEqual(outcome_naive["reason"], "invalid_occurred_at")
+        self.assertFalse(outcome_naive["written"])
+        self.assertNotIn(
+            "cust-3203", [row["record_id"] for row in guard.ledger["records"]]
+        )
+
+    def test_duplicate_event_id_does_not_write(self):
+        guard = self.fresh()
+        first = self.write(
+            "dup-id",
+            "cust-3301",
+            "one@example.invalid",
+            key="reg:studio-a:cust-3301",
+        )
+        second = self.write(
+            "dup-id",
+            "cust-3302",
+            "two@example.invalid",
+            key="reg:studio-a:cust-3302",
+        )
+        outcome_first = guard.process_event(first)
+        self.assertEqual(outcome_first["status"], "written")
+        outcome_second = guard.process_event(second)
+        self.assertEqual(outcome_second["status"], "needs_human")
+        self.assertEqual(outcome_second["reason"], "duplicate_event_id")
+        self.assertFalse(outcome_second["written"])
+        ids = [row["record_id"] for row in guard.ledger["records"]]
+        self.assertIn("cust-3301", ids)
+        self.assertNotIn("cust-3302", ids)
+        source_ids = [row["source_event_id"] for row in guard.ledger["records"]]
+        self.assertEqual(source_ids.count("dup-id"), 1)
 
 
 class CliAndPackTest(unittest.TestCase):
@@ -244,10 +350,26 @@ class CliAndPackTest(unittest.TestCase):
         self.assertFalse(data.get("active"))
         blob = json.dumps(data)
         self.assertNotRegex(blob, SECRET_RE)
-        self.assertIn("{{WEBHOOK_PATH_P3}}", blob)
         self.assertNotIn("credentials", blob)
         types = {node.get("type") for node in data.get("nodes", [])}
-        self.assertTrue(types.isdisjoint({"n8n-nodes-base.emailSend", "n8n-nodes-base.gmail", "n8n-nodes-base.slack"}))
+        self.assertIn("n8n-nodes-base.manualTrigger", types)
+        self.assertNotIn("n8n-nodes-base.webhook", types)
+        self.assertTrue(
+            types.isdisjoint(
+                {
+                    "n8n-nodes-base.emailSend",
+                    "n8n-nodes-base.gmail",
+                    "n8n-nodes-base.slack",
+                }
+            )
+        )
+        for marker in (
+            "missing_actor",
+            "missing_event_id",
+            "missing_occurred_at",
+            "duplicate_event_id",
+        ):
+            self.assertIn(marker, blob)
 
     def test_pack_text_has_no_secrets_or_live_mail(self):
         skip_ext = {".pyc"}
