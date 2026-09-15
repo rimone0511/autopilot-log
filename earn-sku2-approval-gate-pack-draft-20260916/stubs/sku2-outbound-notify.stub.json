@@ -1,0 +1,204 @@
+{
+  "name": "SKU-2 Outbound Notify STUB — DO NOT ACTIVATE",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## SKU-2 outbound notify (STUB)\n\nHuman decision webhook.\nOnly `approve` may reach the outbound placeholder.\nReject / missing / unknown / timeout → STOP.\nThe outbound node is **NoOp** — no live send.\nDo not treat timeout as yes.",
+        "height": 340,
+        "width": 400,
+        "color": 5
+      },
+      "id": "dddddddd-0002-4000-8000-000000000001",
+      "name": "Note: outbound rules",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [0, 80]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "{{WEBHOOK_PATH_SKU2_APPROVAL}}",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "dddddddd-0002-4000-8000-000000000002",
+      "name": "Approval intake STUB",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [460, 320],
+      "webhookId": "00000000-0000-4000-8000-00000000ddd1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "appr-decision",
+              "name": "decision",
+              "value": "={{ $json.decision || $json.body?.decision || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "appr-field",
+              "name": "decision_field",
+              "value": "{{APPROVAL_DECISION_FIELD}}",
+              "type": "string"
+            },
+            {
+              "id": "appr-auto",
+              "name": "auto_send",
+              "value": "={{ $json.auto_send || $json.body?.auto_send || 'false' }}",
+              "type": "string"
+            },
+            {
+              "id": "appr-label",
+              "name": "approver_label",
+              "value": "={{ $json.approver_label || $json.body?.approver_label || 'redacted' }}",
+              "type": "string"
+            },
+            {
+              "id": "appr-note",
+              "name": "note",
+              "value": "={{ $json.note || $json.body?.note || '' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "dddddddd-0002-4000-8000-000000000003",
+      "name": "Read decision STUB",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [680, 320]
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = String($json.decision ?? '').trim().toLowerCase();\nconst autoSend = String($json.auto_send ?? false).toLowerCase() === 'true';\n\nlet branch = 'fail_closed';\nlet reason = 'missing-or-unknown-decision';\n\nif (autoSend) {\n  branch = 'fail_closed';\n  reason = 'auto_send-refused';\n} else if (raw === 'approve') {\n  branch = 'approve';\n  reason = 'human-approve';\n} else if (raw === 'reject' || raw === 'deny' || raw === 'decline') {\n  branch = 'reject';\n  reason = 'human-reject';\n} else if (raw === 'timeout' || raw === 'expired') {\n  branch = 'fail_closed';\n  reason = 'timeout-is-not-approve';\n}\n\nreturn [{\n  json: {\n    decision_raw: raw,\n    branch,\n    reason,\n    approver_label: $json.approver_label,\n    note: $json.note,\n    outbound_allowed: branch === 'approve' ? 'placeholder-only' : 'false',\n    live_send: 'false',\n    notify_channel: '{{OPERATOR_NOTIFY_CHANNEL}}',\n  },\n}];"
+      },
+      "id": "dddddddd-0002-4000-8000-000000000004",
+      "name": "Classify decision STUB",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 320]
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $json.branch }}",
+        "rules": {
+          "rules": [
+            { "value2": "approve" },
+            { "value2": "reject" }
+          ]
+        },
+        "fallbackOut": "extra"
+      },
+      "id": "dddddddd-0002-4000-8000-000000000005",
+      "name": "Route decision STUB",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [1120, 320]
+    },
+    {
+      "parameters": {},
+      "id": "dddddddd-0002-4000-8000-000000000006",
+      "name": "Outbound notify PLACEHOLDER (no send)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1380, 80]
+    },
+    {
+      "parameters": {},
+      "id": "dddddddd-0002-4000-8000-000000000007",
+      "name": "STOP — human reject",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1380, 280]
+    },
+    {
+      "parameters": {},
+      "id": "dddddddd-0002-4000-8000-000000000008",
+      "name": "STOP — fail closed (no outbound)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1380, 480]
+    }
+  ],
+  "connections": {
+    "Approval intake STUB": {
+      "main": [
+        [
+          {
+            "node": "Read decision STUB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read decision STUB": {
+      "main": [
+        [
+          {
+            "node": "Classify decision STUB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Classify decision STUB": {
+      "main": [
+        [
+          {
+            "node": "Route decision STUB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route decision STUB": {
+      "main": [
+        [
+          {
+            "node": "Outbound notify PLACEHOLDER (no send)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "STOP — human reject",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "STOP — fail closed (no outbound)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "sku": "SKU-2",
+    "status": "DRAFT_ONLY_STUB",
+    "templateCredsSetupCompleted": false,
+    "instanceId": "STUB-DO-NOT-USE-AS-INSTANCE-ID"
+  },
+  "versionId": "dddddddd-0002-4000-8000-000000000099",
+  "tags": []
+}
