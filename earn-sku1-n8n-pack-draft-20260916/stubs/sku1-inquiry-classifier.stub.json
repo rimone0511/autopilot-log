@@ -1,0 +1,214 @@
+{
+  "name": "SKU-1 Inquiry Classifier STUB — DO NOT ACTIVATE",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## SKU-1 classifier (STUB)\n\nInactive on purpose.\nReplace `{{WEBHOOK_PATH_SKU1}}`.\nNo secrets in this file.\nUnclear text MUST stay `uncertain`.\nDo not add auto-reply nodes.",
+        "height": 300,
+        "width": 360,
+        "color": 7
+      },
+      "id": "aaaaaaaa-0001-4000-8000-000000000001",
+      "name": "Note: stub rules",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [0, 80]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "{{WEBHOOK_PATH_SKU1}}",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "aaaaaaaa-0001-4000-8000-000000000002",
+      "name": "Webhook intake STUB",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [420, 300],
+      "webhookId": "00000000-0000-4000-8000-00000000aaa1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "norm-source",
+              "name": "source",
+              "value": "={{ $json.source || $json.body?.source || 'unspecified' }}",
+              "type": "string"
+            },
+            {
+              "id": "norm-subject",
+              "name": "subject",
+              "value": "={{ $json.subject || $json.body?.subject || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "norm-body",
+              "name": "body",
+              "value": "={{ $json.body?.body || $json.body || $json.text || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "norm-from",
+              "name": "from_label",
+              "value": "={{ $json.from_label || $json.from || 'redacted' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "aaaaaaaa-0001-4000-8000-000000000003",
+      "name": "Normalize fields STUB",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [640, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const subject = String($json.subject ?? '');\nconst body = String($json.body ?? '');\nconst text = `${subject} ${body}`.toLowerCase();\n\nlet label = 'uncertain';\nif (/\\binvoice\\b|\\breceipt\\b|\\bpayment\\b|\\b請求\\b|\\b領収\\b|\\b支払/.test(text)) {\n  label = 'billing';\n} else if (/\\bhow to\\b|\\bbroken\\b|\\berror\\b|\\b使い方\\b|\\b不具合\\b|\\b動かない/.test(text)) {\n  label = 'support';\n} else if (/\\bquote\\b|\\bhire\\b|\\bproposal\\b|\\b見積\\b|\\b依頼\\b|\\b発注/.test(text)) {\n  label = 'sales';\n}\n\nreturn [{\n  json: {\n    source: $json.source,\n    subject,\n    body,\n    from_label: $json.from_label,\n    label,\n    classifier: 'sku1-stub-keyword-rules',\n    accuracy_claim: 'none',\n    next: label === 'uncertain' ? 'hold-queue' : 'operator-review',\n  },\n}];"
+      },
+      "id": "aaaaaaaa-0001-4000-8000-000000000004",
+      "name": "Keyword label STUB",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [860, 300]
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $json.label }}",
+        "rules": {
+          "rules": [
+            { "value2": "billing" },
+            { "value2": "support" },
+            { "value2": "sales" }
+          ]
+        },
+        "fallbackOut": "extra"
+      },
+      "id": "aaaaaaaa-0001-4000-8000-000000000005",
+      "name": "Route label STUB",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [1080, 300]
+    },
+    {
+      "parameters": {},
+      "id": "aaaaaaaa-0001-4000-8000-000000000006",
+      "name": "Billing → operator review (no send)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1320, 80]
+    },
+    {
+      "parameters": {},
+      "id": "aaaaaaaa-0001-4000-8000-000000000007",
+      "name": "Support → operator review (no send)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1320, 260]
+    },
+    {
+      "parameters": {},
+      "id": "aaaaaaaa-0001-4000-8000-000000000008",
+      "name": "Sales → operator review (no send)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1320, 440]
+    },
+    {
+      "parameters": {},
+      "id": "aaaaaaaa-0001-4000-8000-000000000009",
+      "name": "Uncertain → hold queue STUB",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1320, 620]
+    }
+  ],
+  "connections": {
+    "Webhook intake STUB": {
+      "main": [
+        [
+          {
+            "node": "Normalize fields STUB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize fields STUB": {
+      "main": [
+        [
+          {
+            "node": "Keyword label STUB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Keyword label STUB": {
+      "main": [
+        [
+          {
+            "node": "Route label STUB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route label STUB": {
+      "main": [
+        [
+          {
+            "node": "Billing → operator review (no send)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Support → operator review (no send)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Sales → operator review (no send)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Uncertain → hold queue STUB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "sku": "SKU-1",
+    "status": "DRAFT_ONLY_STUB",
+    "templateCredsSetupCompleted": false,
+    "instanceId": "STUB-DO-NOT-USE-AS-INSTANCE-ID"
+  },
+  "pinData": {},
+  "versionId": "aaaaaaaa-0001-4000-8000-000000000099",
+  "tags": []
+}
