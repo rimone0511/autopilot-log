@@ -1,12 +1,16 @@
 # ORDER — Wave B alive CU serial (prep)
 
-**DRAFT_ONLY.** Prep for a later computer-use (CU) pass. This folder’s authoring agent did **not** sign up, log in, apply, or publish.
+> **REGISTER-CU-CUT.** This register serial is **superseded** by register-winddown / **jobs-first**.  
+> **Do not** open this ORDER as next live CU after Freelancer.com (A10 / CU-10). Prefer JOBS phase.  
+> See [STATUS.md](STATUS.md). Default: **do not play**.
+
+**DRAFT_ONLY.** Archive + pointers. This folder’s authoring agent did **not** sign up, log in, apply, or publish.
 
 | | |
 |---|---|
 | Folder | `ops/earn/waveb-alive-cu-serial-20260916/` |
 | Observed | **2026-09-16 JST** (logged-out public GET only) |
-| Live CU | **not started.** Wave A `pending` / `blocked_skip` still blocks Wave B play ([PR#54](https://github.com/rimone0511/autopilot-log/pull/54)) |
+| Live CU | **cut.** Not next after Freelancer. Prefer JOBS ([PR#76](https://github.com/rimone0511/autopilot-log/pull/76) week plan; [PR#68](https://github.com/rimone0511/autopilot-log/pull/68) Freelancer bids do-not-send) |
 | Secrets | none. No CSRF / OTP / tokens in git |
 
 Desk **IDs in this folder are local labels.** Canonical WAVE letters stay in [PR#1](https://github.com/rimone0511/autopilot-log/pull/1) `QUEUE.md`. Canonical CU numbers stay in [PR#8](https://github.com/rimone0511/autopilot-log/pull/8). **Do not invent CU-29+.**
@@ -39,9 +43,11 @@ Do **not** confuse:
 
 ---
 
-## Serial (this folder)
+## Serial (this folder) — **do not play** (REGISTER-CU-CUT)
 
-When Wave A `pending` rows are `draft_saved` or still parked `blocked_skip`, play **one desk at a time**:
+Kept as an archive of the six-desk order only. **Do not** start this chain when Freelancer.com parks. Prefer JOBS phase.
+
+If a **human GO** later re-opens Wave B register (not the default), then and only then play **one desk at a time**:
 
 ```
 B02 Workship
@@ -81,7 +87,8 @@ Skip = park that desk (`blocked_skip` / `kyc_wait` / `otp_missing` / `sms_wait_u
 
 | Skip | Why |
 |---|---|
-| Wave A desks | Still the live CU box ([PR#54](https://github.com/rimone0511/autopilot-log/pull/54): Contra → Craudia → Freelancer.com). This folder does not jump the queue. |
+| **This whole serial after Freelancer** | **REGISTER-CU-CUT.** Prefer JOBS phase. Not next live CU. |
+| Wave A desks | Live register box stays Wave A / Freelancer handoff ([PR#54](https://github.com/rimone0511/autopilot-log/pull/54), [PR#66](https://github.com/rimone0511/autopilot-log/pull/66)). This folder does not jump that queue **and** does not follow it. |
 | B03 複業クラウド / B04 CrowdLinks / B05 AI CrowdWorks | [PR#62](https://github.com/rimone0511/autopilot-log/pull/62) still `needs_check` |
 | Anycrew / MENTA / ストアカ | PR#61 gate records. Not these six. |
 | Guru / PPH / Malt / Workana / Freelancermap / YOUTRUST | GLOBAL / other local B-ids. PPH seller `blocked_paid_plan` in PR#59 |
@@ -127,7 +134,7 @@ Skip = park that desk (`blocked_skip` / `kyc_wait` / `otp_missing` / `sms_wait_u
 | Account | MAIN Google `{{GOOGLE_ACCOUNT_EMAIL}}` only. Mailbox desks use the **same** mailbox |
 | Publish | `DRAFT_ONLY` |
 | KYC | Stop. No uploads |
-| This PR | Prep. Not a signup GO |
+| This PR | Prep. **REGISTER-CU-CUT.** Not a signup GO. Not next CU after Freelancer |
 
 Viewport: desktop **≥ 1280px**.
 
