@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1220" height="1240" viewBox="0 0 1220 1240" role="img" aria-labelledby="title desc">
+  <title id="title">n8n uketsuke cover layout mock</title>
+  <desc id="desc">Coconala 4403529 cover layout mock. Not an official n8n or Coconala mark. Do not upload until titles sit inside the 1220 by 1016 safe zone and secrets are absent.</desc>
+  <rect width="1220" height="1240" fill="#F3F6F8"/>
+  <rect x="0" y="112" width="1220" height="1016" fill="#EEF2F5"/>
+  <rect x="72" y="168" width="1076" height="888" rx="28" fill="#FFFFFF" stroke="#D5DEE6" stroke-width="2"/>
+  <text x="610" y="268" text-anchor="middle" font-family="Hiragino Sans, Noto Sans JP, Yu Gothic, sans-serif" font-size="72" font-weight="700" fill="#16324F">n8n受付と手順書</text>
+  <text x="610" y="338" text-anchor="middle" font-family="Hiragino Sans, Noto Sans JP, Yu Gothic, sans-serif" font-size="36" font-weight="500" fill="#1F6B5C">公開スイッチは人です</text>
+  <g font-family="Hiragino Sans, Noto Sans JP, Yu Gothic, sans-serif" font-size="28" font-weight="600" text-anchor="middle">
+    <rect x="110" y="420" width="200" height="96" rx="16" fill="#16324F"/>
+    <text x="210" y="478" fill="#FFFFFF">フォーム</text>
+    <polygon points="322,468 354,452 354,484" fill="#5A6B7A"/>
+    <rect x="366" y="420" width="200" height="96" rx="16" fill="#1F6B5C"/>
+    <text x="466" y="478" fill="#FFFFFF">n8n</text>
+    <polygon points="578,468 610,452 610,484" fill="#5A6B7A"/>
+    <rect x="622" y="420" width="200" height="96" rx="16" fill="#16324F"/>
+    <text x="722" y="478" fill="#FFFFFF">表</text>
+    <polygon points="834,468 866,452 866,484" fill="#5A6B7A"/>
+    <rect x="878" y="420" width="220" height="96" rx="16" fill="#16324F"/>
+    <text x="988" y="478" fill="#FFFFFF">人へ通知</text>
+  </g>
+  <rect x="360" y="560" width="500" height="88" rx="44" fill="#F3F6F8" stroke="#1F6B5C" stroke-width="3"/>
+  <text x="610" y="616" text-anchor="middle" font-family="Hiragino Sans, Noto Sans JP, Yu Gothic, sans-serif" font-size="30" font-weight="600" fill="#1F6B5C">公開は人（自動投稿しない）</text>
+  <rect x="180" y="700" width="860" height="200" rx="20" fill="#F8FAFB" stroke="#D5DEE6" stroke-width="2"/>
+  <text x="610" y="760" text-anchor="middle" font-family="Hiragino Sans, Noto Sans JP, Yu Gothic, sans-serif" font-size="32" font-weight="700" fill="#16324F">手順書</text>
+  <text x="610" y="808" text-anchor="middle" font-family="Hiragino Sans, Noto Sans JP, Yu Gothic, sans-serif" font-size="24" fill="#5A6B7A">何をするか / 失敗したら戻すか / 秘密の欄と編集してよい欄</text>
+  <text x="610" y="852" text-anchor="middle" font-family="Hiragino Sans, Noto Sans JP, Yu Gothic, sans-serif" font-size="22" fill="#5A6B7A">個人の出品です。公式パートナーではありません。</text>
+  <rect x="280" y="944" width="280" height="56" rx="28" fill="#16324F"/>
+  <text x="420" y="982" text-anchor="middle" font-family="Hiragino Sans, Noto Sans JP, Yu Gothic, sans-serif" font-size="24" font-weight="600" fill="#FFFFFF">公式APIのみ</text>
+  <rect x="660" y="944" width="280" height="56" rx="28" fill="#FFFFFF" stroke="#16324F" stroke-width="2"/>
+  <text x="800" y="982" text-anchor="middle" font-family="Hiragino Sans, Noto Sans JP, Yu Gothic, sans-serif" font-size="24" font-weight="600" fill="#16324F">スクレイピングなし</text>
+</svg>
