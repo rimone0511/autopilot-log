@@ -1,0 +1,29 @@
+{
+  "ready_for_review_ids": [
+    "INQ-S0-001",
+    "INQ-S0-002",
+    "INQ-S0-004",
+    "INQ-S0-016",
+    "INQ-S0-017",
+    "INQ-S0-019"
+  ],
+  "needs_human_ids": [
+    "INQ-S0-003",
+    "INQ-S0-005",
+    "INQ-S0-006",
+    "INQ-S0-007",
+    "INQ-S0-008",
+    "INQ-S0-009",
+    "INQ-S0-010",
+    "INQ-S0-011",
+    "INQ-S0-012",
+    "INQ-S0-013",
+    "INQ-S0-014",
+    "INQ-S0-015",
+    "INQ-S0-018",
+    "INQ-S0-020"
+  ],
+  "sent": 0,
+  "published": 0,
+  "secrets_used": 0
+}
