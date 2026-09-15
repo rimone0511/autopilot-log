@@ -25,7 +25,7 @@ Python posting-gate tests were **not** edited.
 
 | Hint | Meaning here |
 |---|---|
-| `pack_ready` | ORDER + 6× CU-NOTE + shared STOP-KYC exist. CU may type later under those rules |
+| `pack_ready` | Files exist. **Not** a play GO. Default `register_cu_cut` |
 | `pending` | Live CU has **not** marked a draft on these desks from **this** folder |
 | `draft_saved` | Fill only after a real CU run |
 | `blocked_skip` | Skip this pass for the listed reason |
