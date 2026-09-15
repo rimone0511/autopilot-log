@@ -1,0 +1,216 @@
+{
+  "name": "SKU-1 Hold Queue STUB — DO NOT ACTIVATE",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## SKU-1 hold queue (STUB)\n\nPark `uncertain` (and anything a person should see).\nTable write and notify are **NoOp placeholders**.\nAttach YOUR credentials in n8n — none ship in this JSON.\nNever auto-send from this graph.",
+        "height": 320,
+        "width": 380,
+        "color": 5
+      },
+      "id": "bbbbbbbb-0001-4000-8000-000000000001",
+      "name": "Note: hold rules",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [0, 80]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "{{WEBHOOK_PATH_SKU1}}-hold",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "bbbbbbbb-0001-4000-8000-000000000002",
+      "name": "Hold intake STUB",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [440, 320],
+      "webhookId": "00000000-0000-4000-8000-00000000bbb1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "hold-label",
+              "name": "label",
+              "value": "={{ $json.label || 'uncertain' }}",
+              "type": "string"
+            },
+            {
+              "id": "hold-status",
+              "name": "queue_status",
+              "value": "hold",
+              "type": "string"
+            },
+            {
+              "id": "hold-table",
+              "name": "table_kind",
+              "value": "{{TABLE_KIND}}",
+              "type": "string"
+            },
+            {
+              "id": "hold-sheet",
+              "name": "sheet_name",
+              "value": "{{SHEET_NAME}}",
+              "type": "string"
+            },
+            {
+              "id": "hold-notify",
+              "name": "notify_channel",
+              "value": "{{OPERATOR_NOTIFY_CHANNEL}}",
+              "type": "string"
+            },
+            {
+              "id": "hold-send",
+              "name": "auto_send",
+              "value": "false",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "bbbbbbbb-0001-4000-8000-000000000003",
+      "name": "Hold row STUB",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [660, 320]
+    },
+    {
+      "parameters": {},
+      "id": "bbbbbbbb-0001-4000-8000-000000000004",
+      "name": "Table write PLACEHOLDER (no credential)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [900, 220]
+    },
+    {
+      "parameters": {},
+      "id": "bbbbbbbb-0001-4000-8000-000000000005",
+      "name": "Operator notify PLACEHOLDER (no credential)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [900, 420]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.auto_send === 'true' }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "bbbbbbbb-0001-4000-8000-000000000006",
+      "name": "Refuse auto-send",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [1140, 320]
+    },
+    {
+      "parameters": {},
+      "id": "bbbbbbbb-0001-4000-8000-000000000007",
+      "name": "STOP — do not send",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1380, 200]
+    },
+    {
+      "parameters": {},
+      "id": "bbbbbbbb-0001-4000-8000-000000000008",
+      "name": "Wait for human",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1380, 440]
+    }
+  ],
+  "connections": {
+    "Hold intake STUB": {
+      "main": [
+        [
+          {
+            "node": "Hold row STUB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hold row STUB": {
+      "main": [
+        [
+          {
+            "node": "Table write PLACEHOLDER (no credential)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Operator notify PLACEHOLDER (no credential)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Table write PLACEHOLDER (no credential)": {
+      "main": [
+        [
+          {
+            "node": "Refuse auto-send",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Operator notify PLACEHOLDER (no credential)": {
+      "main": [
+        [
+          {
+            "node": "Refuse auto-send",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Refuse auto-send": {
+      "main": [
+        [
+          {
+            "node": "STOP — do not send",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait for human",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "sku": "SKU-1",
+    "status": "DRAFT_ONLY_STUB",
+    "templateCredsSetupCompleted": false,
+    "instanceId": "STUB-DO-NOT-USE-AS-INSTANCE-ID"
+  },
+  "versionId": "bbbbbbbb-0001-4000-8000-000000000099",
+  "tags": []
+}
