@@ -1,5 +1,6 @@
+> **REGISTER-CU-CUT.** Not next live CU. Jobs-first. Do not autoplay. Banner: [STATUS.md](STATUS.md).  
 > DRAFT_ONLY field map. NO login in the authoring session. NO secrets. NO invented credentials.  
-> Paste values for CU. Stops: [STOP.md](STOP.md). Step order: [PLAYBOOK.md](PLAYBOOK.md).  
+> Paste values only after a later **human GO**. Stops: [STOP.md](STOP.md). Step order: [PLAYBOOK.md](PLAYBOOK.md).  
 > Labels come from **public `/signup` HTML** + **Workship Help** (2026-09-16). Live wizard wins.
 
 # FIELD-MAP — Workship freelance / B02

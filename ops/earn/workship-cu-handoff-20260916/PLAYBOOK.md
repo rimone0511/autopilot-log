@@ -1,8 +1,9 @@
+> **REGISTER-CU-CUT.** Workship is **not next live CU**. Jobs-first. **Do not autoplay.** See [STATUS.md](STATUS.md) banner `register_cu_cut`.  
 > DRAFT_ONLY CU handoff. NO secrets. NO invented credentials. NO live signup from this authoring agent.  
-> Human / CU paste only. Live form wins.  
+> Human / CU paste only **after a later human GO**. Live form wins. Default: **do not open `/signup` from this pack**.  
 > Desk: Workship / ワークシップ（**B02** / QUEUE **B2** / **CU-11**).  
 > Auth: **MAIN Google** on public https://goworkship.com/signup (`SNSで登録` → Google icon at click-time).  
-> This pass: **profile draft only**. Official help: 「気になる！」= **エントリー完了**. **Do not press 気になる / エントリー.**  
+> This pass (only if GO): **profile draft only**. Official help: 「気になる！」= **エントリー完了**. **Do not press 気になる / エントリー.**  
 > Stop: [STOP.md](STOP.md) (apply + KYC + bank). Fields: [FIELD-MAP.md](FIELD-MAP.md). Session box: [STATUS.md](STATUS.md).
 
 # PLAYBOOK — Workship freelance signup (B02)
@@ -12,7 +13,7 @@
 | Desk | Workship（ワークシップ） / **freelance worker**. Not ENTERPRISE / 採用担当 |
 | IDs | **B02** · QUEUE **B2** · **CU-11** |
 | Not | **Workshift** (`workshift-sol.com`, B09). Do not mix |
-| Mode | **DRAFT_ONLY** |
+| Mode | **DRAFT_ONLY** / **REGISTER-CU-CUT**. Default **do not autoplay** |
 | Language | **日本語** |
 | Google | **PREFER_GOOGLE** — MAIN only. Public `/signup` heading **SNSで登録** + FirebaseUI `GoogleAuthProvider.PROVIDER_ID`. **Icon must say Google** at click-time |
 | Email fallback | Same MAIN mailbox on the same `/signup` form (`メールアドレス` / `パスワード`). OTP = parent Gmail. Confirm URL **24 hours** ([help/44](https://goworkship.com/help/how_to/44)) |
@@ -30,7 +31,7 @@ Sibling packs (bodies **not** required to open this runner; paste fences for 自
 | Thin Week2 | `earn-register-packs-jp-20260916/02-workship.md` ([#3](https://github.com/rimone0511/autopilot-log/pull/3)) |
 | Activity gate | `earn-activity-gate-waveB-20260916/records/02-workship.md` ([#12](https://github.com/rimone0511/autopilot-log/pull/12)) **pass** |
 | Serial pointer (Workship → SOKUDAN → Offers) | `earn-workship-sokudan-offers-serial-cu-20260916/01-workship.md` ([#50](https://github.com/rimone0511/autopilot-log/pull/50)) |
-| Alive serial note B02 | `ops/earn/waveb-alive-cu-serial-20260916/b02-workship/CU-NOTE.md` ([#72](https://github.com/rimone0511/autopilot-log/pull/72)) — folder banner **REGISTER-CU-CUT** (jobs-first). This desk pack is still the Workship runner **when** this desk is opened |
+| Alive serial note B02 | `ops/earn/waveb-alive-cu-serial-20260916/b02-workship/CU-NOTE.md` ([#72](https://github.com/rimone0511/autopilot-log/pull/72)) — **REGISTER-CU-CUT**. Same cut on this desk: not next CU |
 | Morning KYC 1枚 | `earn-kyc-morning-checklist-20260916/` ([#4](https://github.com/rimone0511/autopilot-log/pull/4)) |
 
 This playbook is the **step order**. Placeholders stay empty of secrets in git.
@@ -111,7 +112,7 @@ Do **not**:
 - LINE 通知連携 as a new identity
 - freee 会計連携
 
-Write the success line. Stop. Next desk is **not** this folder (sibling serial said SOKUDAN; morning jobs-first said JOBS — operator chooses).
+Write the success line. Stop. **Default next is JOBS phase, not this desk and not SOKUDAN autoplay.** Do not chain Freelancer → Workship. Human GO only.
 
 ---
 
@@ -131,6 +132,7 @@ Marketing counts on `/portal/search` (全○件) are **not** GMV. Do not paste t
 
 ## Explicit do-not
 
+- Autoplay this desk / chain Freelancer.com → Workship (**REGISTER-CU-CUT**; jobs-first)
 - ENTERPRISE / 採用担当 workspace
 - Workshift (`workshift-sol.com`) by mistake
 - New SNS identity (Facebook / Apple / LINE / Twitter) just for this desk
@@ -171,7 +173,7 @@ prepaid: no
 bank: no
 rate: empty | placeholder-from-ledger | rate_empty
 holdDurationMs_used: <e.g. 1800 or none>
-next: stop
+next: jobs-first | stop
 ```
 
 Copy the same keys into [STATUS.md](STATUS.md) after a live run. Do not put OTP digits, passwords, ID numbers, a live phone, or a bank amount there.
@@ -210,4 +212,4 @@ Copy the same keys into [STATUS.md](STATUS.md) after a live run. Do not put OTP 
 
 ## 日本語（運用だけ）
 
-下書きのみ。このエージェントは登録しない。入口は https://goworkship.com/signup 。**MAIN Google**（アイコンに Google と書いてあること）。無ければ同じメール。プロフィールは **更新する / 追加する** まで。**気になる！とエントリーは押さない**（公式ヘルプでは気になる＝エントリー完了）。スカウト返信・成約報告・契約署名・前払い本人確認・口座はしない。手数料％は捏造しない。
+**REGISTER-CU-CUT。次のライブ CU ではない。JOBS 優先。自動再生しない。** 下書きパックのみ。このエージェントは登録しない。人が GO するまで `/signup` を開かない。GO 後も入口は https://goworkship.com/signup 。**MAIN Google**（アイコンに Google と書いてあること）。無ければ同じメール。プロフィールは **更新する / 追加する** まで。**気になる！とエントリーは押さない**（公式ヘルプでは気になる＝エントリー完了）。スカウト返信・成約報告・契約署名・前払い本人確認・口座はしない。手数料％は捏造しない。
