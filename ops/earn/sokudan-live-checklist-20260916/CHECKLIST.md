@@ -47,6 +47,7 @@ Siblings say 応募しない / 審査書類 STOP. This pack **also** parks if �
 
 ## 0. Hard stop (read before opening SOKUDAN)
 
+- [ ] **REGISTER-CU-CUT.** Default: **do not open** this desk. Prefer JOBS. Human GO required to continue.
 - [ ] Role = **フリーランス・副業**. 発注者 / 採用担当 / `business.sokudan.work` に入らない。
 - [ ] MAIN Google only (`{{GOOGLE_ACCOUNT_EMAIL}}`). Facebook「推奨」/ LinkedIn / X / GitHub を新規身分にしない。
 - [ ] **Gmail OTP allowed** via parent MCP. CU は `mail.google.com` を開かない。
