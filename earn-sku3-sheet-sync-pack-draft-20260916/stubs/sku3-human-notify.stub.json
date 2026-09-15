@@ -1,0 +1,194 @@
+{
+  "name": "SKU-3 Human Notify STUB — DO NOT ACTIVATE",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## SKU-3 human notify (STUB)\n\nOperator ping webhook.\nA person is notified. Nothing is auto-sent.\n`auto_send` / `live_send` → STOP.\nThe notify node is **NoOp** — no live mail, chat, or post.\nDo not treat a new row as yes.",
+        "height": 340,
+        "width": 400,
+        "color": 5
+      },
+      "id": "ffffffff-0003-4000-8000-000000000001",
+      "name": "Note: notify rules",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [0, 80]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "{{WEBHOOK_PATH_SKU3_NOTIFY}}",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "ffffffff-0003-4000-8000-000000000002",
+      "name": "Notify intake STUB",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [460, 320],
+      "webhookId": "00000000-0000-4000-8000-00000000fff1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "nt-sheet",
+              "name": "sheet_name",
+              "value": "={{ $json.sheet_name || $json.body?.sheet_name || '{{SHEET_NAME}}' }}",
+              "type": "string"
+            },
+            {
+              "id": "nt-row",
+              "name": "row_index",
+              "value": "={{ $json.row_index || $json.body?.row_index || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "nt-status",
+              "name": "status",
+              "value": "={{ $json.status || $json.body?.status || 'new' }}",
+              "type": "string"
+            },
+            {
+              "id": "nt-note",
+              "name": "note",
+              "value": "={{ $json.note || $json.body?.note || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "nt-auto",
+              "name": "auto_send",
+              "value": "={{ $json.auto_send || $json.body?.auto_send || 'false' }}",
+              "type": "string"
+            },
+            {
+              "id": "nt-live",
+              "name": "live_send",
+              "value": "={{ $json.live_send || $json.body?.live_send || 'false' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ffffffff-0003-4000-8000-000000000003",
+      "name": "Read ping STUB",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [680, 320]
+    },
+    {
+      "parameters": {
+        "jsCode": "const autoSend = String($json.auto_send ?? false).toLowerCase() === 'true';\nconst liveSend = String($json.live_send ?? false).toLowerCase() === 'true';\n\nlet branch = 'notify_human';\nlet reason = 'operator-ping-only';\n\nif (autoSend || liveSend) {\n  branch = 'fail_closed';\n  reason = 'auto_send-refused';\n}\n\nreturn [{\n  json: {\n    sheet_name: $json.sheet_name || '{{SHEET_NAME}}',\n    row_index: String($json.row_index ?? 'unspecified'),\n    status: $json.status || 'new',\n    note: $json.note || '',\n    branch,\n    reason,\n    notify_channel: '{{OPERATOR_NOTIFY_CHANNEL}}',\n    outbound_allowed: 'false',\n    live_send: 'false',\n    auto_send: 'false',\n  },\n}];"
+      },
+      "id": "ffffffff-0003-4000-8000-000000000004",
+      "name": "Refuse auto-send STUB",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 320]
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $json.branch }}",
+        "rules": {
+          "rules": [
+            { "value2": "notify_human" }
+          ]
+        },
+        "fallbackOut": "extra"
+      },
+      "id": "ffffffff-0003-4000-8000-000000000005",
+      "name": "Route notify STUB",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [1120, 320]
+    },
+    {
+      "parameters": {},
+      "id": "ffffffff-0003-4000-8000-000000000006",
+      "name": "Human notify PLACEHOLDER (no send)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1380, 120]
+    },
+    {
+      "parameters": {},
+      "id": "ffffffff-0003-4000-8000-000000000007",
+      "name": "STOP — fail closed (no auto-send)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1380, 400]
+    }
+  ],
+  "connections": {
+    "Notify intake STUB": {
+      "main": [
+        [
+          {
+            "node": "Read ping STUB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read ping STUB": {
+      "main": [
+        [
+          {
+            "node": "Refuse auto-send STUB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Refuse auto-send STUB": {
+      "main": [
+        [
+          {
+            "node": "Route notify STUB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route notify STUB": {
+      "main": [
+        [
+          {
+            "node": "Human notify PLACEHOLDER (no send)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "STOP — fail closed (no auto-send)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "sku": "SKU-3",
+    "status": "DRAFT_ONLY_STUB",
+    "templateCredsSetupCompleted": false,
+    "instanceId": "STUB-DO-NOT-USE-AS-INSTANCE-ID"
+  },
+  "versionId": "ffffffff-0003-4000-8000-000000000099",
+  "tags": []
+}

@@ -1,0 +1,243 @@
+{
+  "name": "SKU-3 Sheet Inbound STUB — DO NOT ACTIVATE",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## SKU-3 sheet inbound (STUB)\n\nInactive on purpose.\nReplace `{{WEBHOOK_PATH_SKU3}}`.\nNo secrets or spreadsheet IDs in this file.\nA new row stays on hold.\n`outbound_allowed` stays false.\nDo not add live send nodes.\n`auto_send` is NOT permission to send.\nGoogle Sheets Trigger is optional later — buyer-owned credential only.",
+        "height": 380,
+        "width": 400,
+        "color": 7
+      },
+      "id": "eeeeeeee-0003-4000-8000-000000000001",
+      "name": "Note: stub rules",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [0, 80]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "{{WEBHOOK_PATH_SKU3}}",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "eeeeeeee-0003-4000-8000-000000000002",
+      "name": "Webhook inbound row STUB",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [460, 320],
+      "webhookId": "00000000-0000-4000-8000-00000000eee1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "in-event",
+              "name": "event",
+              "value": "={{ $json.event || $json.body?.event || '{{ROW_EVENT}}' }}",
+              "type": "string"
+            },
+            {
+              "id": "in-sheet",
+              "name": "sheet_name",
+              "value": "={{ $json.sheet_name || $json.body?.sheet_name || '{{SHEET_NAME}}' }}",
+              "type": "string"
+            },
+            {
+              "id": "in-row",
+              "name": "row_index",
+              "value": "={{ $json.row_index || $json.body?.row_index || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "in-status",
+              "name": "status",
+              "value": "={{ $json.status || $json.body?.status || 'new' }}",
+              "type": "string"
+            },
+            {
+              "id": "in-note",
+              "name": "note",
+              "value": "={{ $json.note || $json.body?.note || $json.row_text || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "in-auto",
+              "name": "auto_send",
+              "value": "={{ $json.auto_send || $json.body?.auto_send || 'false' }}",
+              "type": "string"
+            },
+            {
+              "id": "in-sent",
+              "name": "already_sent",
+              "value": "={{ $json.already_sent || $json.body?.already_sent || 'false' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "eeeeeeee-0003-4000-8000-000000000003",
+      "name": "Normalize row STUB",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [680, 320]
+    },
+    {
+      "parameters": {
+        "jsCode": "const autoSend = String($json.auto_send ?? false).toLowerCase() === 'true';\nconst alreadySent = String($json.already_sent ?? false).toLowerCase() === 'true';\nconst rowIndex = String($json.row_index ?? '').trim();\nconst note = String($json.note ?? '');\nconst status = String($json.status ?? '').trim();\n\nlet gate = 'hold';\nlet reason = 'pending-human';\n\nif (autoSend) {\n  gate = 'refuse';\n  reason = 'auto_send-refused';\n} else if (alreadySent) {\n  gate = 'refuse';\n  reason = 'already-sent-payload-refused';\n} else if (!rowIndex && !note) {\n  gate = 'refuse';\n  reason = 'empty-row';\n}\n\nreturn [{\n  json: {\n    event: $json.event || 'row_added',\n    sheet_name: $json.sheet_name || '{{SHEET_NAME}}',\n    row_index: rowIndex || 'unspecified',\n    status: status || 'new',\n    note,\n    auto_send: 'false',\n    already_sent: 'false',\n    outbound_allowed: 'false',\n    gate,\n    reason,\n    google_sheet_id_token: '{{GOOGLE_SHEET_ID_DO_NOT_COMMIT}}',\n    sheets_credential_name: '{{GOOGLE_SHEETS_CREDENTIAL_NAME}}',\n    notify_channel: '{{OPERATOR_NOTIFY_CHANNEL}}',\n    live_send: 'false',\n  },\n}];"
+      },
+      "id": "eeeeeeee-0003-4000-8000-000000000004",
+      "name": "Fail-closed row gate STUB",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 320]
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $json.gate }}",
+        "rules": {
+          "rules": [
+            { "value2": "hold" }
+          ]
+        },
+        "fallbackOut": "extra"
+      },
+      "id": "eeeeeeee-0003-4000-8000-000000000005",
+      "name": "Route row STUB",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [1120, 320]
+    },
+    {
+      "parameters": {},
+      "id": "eeeeeeee-0003-4000-8000-000000000006",
+      "name": "Google Sheets read PLACEHOLDER (no credential)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1360, 120]
+    },
+    {
+      "parameters": {},
+      "id": "eeeeeeee-0003-4000-8000-000000000007",
+      "name": "Operator ping PLACEHOLDER (no credential)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1360, 280]
+    },
+    {
+      "parameters": {},
+      "id": "eeeeeeee-0003-4000-8000-000000000008",
+      "name": "Wait for human — no outbound",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1600, 200]
+    },
+    {
+      "parameters": {},
+      "id": "eeeeeeee-0003-4000-8000-000000000009",
+      "name": "STOP — refuse (no auto-send)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1360, 500]
+    }
+  ],
+  "connections": {
+    "Webhook inbound row STUB": {
+      "main": [
+        [
+          {
+            "node": "Normalize row STUB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize row STUB": {
+      "main": [
+        [
+          {
+            "node": "Fail-closed row gate STUB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fail-closed row gate STUB": {
+      "main": [
+        [
+          {
+            "node": "Route row STUB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route row STUB": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets read PLACEHOLDER (no credential)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Operator ping PLACEHOLDER (no credential)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "STOP — refuse (no auto-send)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets read PLACEHOLDER (no credential)": {
+      "main": [
+        [
+          {
+            "node": "Wait for human — no outbound",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Operator ping PLACEHOLDER (no credential)": {
+      "main": [
+        [
+          {
+            "node": "Wait for human — no outbound",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "sku": "SKU-3",
+    "status": "DRAFT_ONLY_STUB",
+    "templateCredsSetupCompleted": false,
+    "instanceId": "STUB-DO-NOT-USE-AS-INSTANCE-ID"
+  },
+  "pinData": {},
+  "versionId": "eeeeeeee-0003-4000-8000-000000000099",
+  "tags": []
+}
