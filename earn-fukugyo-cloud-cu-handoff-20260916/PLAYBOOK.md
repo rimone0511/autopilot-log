@@ -229,8 +229,9 @@ plan: talent-free-cited
 bank: no
 rate: empty | placeholder-from-ledger | rate_empty
 skip: none | blocked_skip + captcha | blocked_skip + hold | blocked_skip + image_puzzle | blocked_skip + waf
+register_cu_cut: yes
 holdDurationMs_used: <e.g. 1800 or none>
-next: stop
+next: stop | jobs-first
 ```
 
 Copy the same keys into [STATUS.md](STATUS.md) after a live run. Do not put OTP digits, passwords, ID numbers, a live phone, or a bank amount there.
