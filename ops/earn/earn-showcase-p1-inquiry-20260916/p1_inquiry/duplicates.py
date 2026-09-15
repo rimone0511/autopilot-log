@@ -120,6 +120,17 @@ def compare_pair(newer: dict, older: dict) -> list[str]:
     return ordered
 
 
+def duplicate_inquiry_ids(records: list[dict]) -> set[str]:
+    """Non-empty inquiry_id values that appear more than once in the batch."""
+    counts: dict[str, int] = {}
+    for record in records:
+        inquiry_id = _s(record.get("inquiry_id"))
+        if not inquiry_id:
+            continue
+        counts[inquiry_id] = counts.get(inquiry_id, 0) + 1
+    return {inquiry_id for inquiry_id, count in counts.items() if count > 1}
+
+
 def find_duplicate_hits(record: dict, prior: list[dict]) -> list[dict]:
     hits = []
     for older in prior:

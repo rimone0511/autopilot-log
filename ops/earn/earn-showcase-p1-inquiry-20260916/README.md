@@ -45,8 +45,10 @@ JSON入力も同じ結果になります。
 python3 run.py --input fixtures/inquiries.json --out output
 ```
 
-`--check` は `fixtures/expected/queues.json` とキューが一致するか見ます。  
-ネットワーク、APIキー、ログインは使いません。
+`--check` は同梱 fixture（`fixtures/inquiries.csv` または `fixtures/inquiries.json`）だけを受け付けます。一時ディレクトリへ再生成し、コミット済み `output/` 全体とキュー期待値を比較します。tracked な `output/` は書き換えません。  
+`--generated-at` で `summary.generated_at_utc` を固定できます。省略時は見本時計 `2026-09-16T12:00:00+00:00` です。  
+ネットワーク、APIキー、ログインは使いません。  
+任意の `--input` は実行できますが、同梱 fixture 以外では `synthetic` / `secrets_used` を事実として書きません。`--check` は同梱 fixture 以外を拒否します。
 
 ## 判定（曖昧なら人へ倒す）
 
@@ -55,6 +57,7 @@ python3 run.py --input fixtures/inquiries.json --out output
 | 必須が欠ける / 形式が壊れている | `needs_human` | 通さない |
 | 未来日付・未知チャネル・リスク語 | `needs_human` | 通さない |
 | 同じメール / 同じ電話 / 本文がほぼ同一 | `needs_human` | 重複として止める |
+| 同じ `inquiry_id` が入力バッチ内で2件以上 | `needs_human` | 受付番号の衝突。**該当する全行**を止める（`DUPLICATE_INQUIRY_ID`） |
 | 氏名+会社は同じだが連絡先が違う | `needs_human` | 同一人物か判断しない |
 | 本文が似ているが連絡先が違う | `needs_human` | 類似として止める |
 | 上記以外で一意 | `ready_for_review` | 整理済み。**それでも送信しない** |

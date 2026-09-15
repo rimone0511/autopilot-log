@@ -7,8 +7,12 @@ from typing import Any
 
 from . import DATASET, TICKET, __version__
 from .drafts import draft_for
-from .duplicates import find_duplicate_hits
+from .duplicates import duplicate_inquiry_ids, find_duplicate_hits
 from .validate import AS_OF, validate_record
+
+# Showcase snapshot clock. Same instant as validate.AS_OF so tracked outputs
+# do not pick up the wall clock.
+SHOWCASE_GENERATED_AT = AS_OF
 
 QUEUE_READY = "ready_for_review"
 QUEUE_HOLD = "needs_human"
@@ -20,8 +24,18 @@ def _sort_key(record: dict) -> tuple:
     return (record.get("received_at") or "", record.get("inquiry_id") or "")
 
 
-def classify_record(record: dict, prior_ok: list[dict]) -> dict[str, Any]:
+def classify_record(
+    record: dict,
+    prior_ok: list[dict],
+    duplicate_ids: set[str] | None = None,
+    *,
+    synthetic: bool = False,
+) -> dict[str, Any]:
     validation = validate_record(record)
+    inquiry_id = (record.get("inquiry_id") or "").strip()
+    batch_reasons = []
+    if inquiry_id and duplicate_ids and inquiry_id in duplicate_ids:
+        batch_reasons.append("DUPLICATE_INQUIRY_ID")
     hits = find_duplicate_hits(record, prior_ok)
     dup_reasons = []
     for hit in hits:
@@ -29,7 +43,7 @@ def classify_record(record: dict, prior_ok: list[dict]) -> dict[str, Any]:
     # unique preserve
     seen = set()
     reasons = []
-    for reason in list(validation) + dup_reasons:
+    for reason in list(validation) + batch_reasons + dup_reasons:
         if reason not in seen:
             seen.add(reason)
             reasons.append(reason)
@@ -63,17 +77,32 @@ def classify_record(record: dict, prior_ok: list[dict]) -> dict[str, Any]:
         "duplicate_of": ",".join(hit["other_id"] for hit in hits),
         "sent": False,
         "published": False,
-        "synthetic": True,
+        "synthetic": bool(synthetic),
     }
 
 
-def run_pipeline(records: list[dict[str, Any]]) -> dict[str, Any]:
+def _format_generated_at(value: datetime) -> str:
+    return value.astimezone(timezone.utc).replace(microsecond=0).isoformat()
+
+
+def run_pipeline(
+    records: list[dict[str, Any]],
+    *,
+    generated_at: datetime | None = None,
+    showcase_fixture: bool = False,
+) -> dict[str, Any]:
     ordered = sorted(records, key=_sort_key)
     results: list[dict[str, Any]] = []
     accepted_for_matching: list[dict] = []
+    dup_ids = duplicate_inquiry_ids(records)
 
     for record in ordered:
-        item = classify_record(record, accepted_for_matching)
+        item = classify_record(
+            record,
+            accepted_for_matching,
+            dup_ids,
+            synthetic=showcase_fixture,
+        )
         results.append(item)
         # Only structurally usable rows become prior identity references.
         # Invalid contact data must not create a "clean" identity, but a
@@ -91,7 +120,12 @@ def run_pipeline(records: list[dict[str, Any]]) -> dict[str, Any]:
             # prior records so a later copy is also held.
             if not any(
                 r in item["reasons"]
-                for r in ("MISSING_CONTACT", "INVALID_EMAIL", "INVALID_PHONE", "MISSING_INQUIRY_ID")
+                for r in (
+                    "MISSING_CONTACT",
+                    "INVALID_EMAIL",
+                    "INVALID_PHONE",
+                    "MISSING_INQUIRY_ID",
+                )
             ):
                 accepted_for_matching.append(record)
 
@@ -100,23 +134,39 @@ def run_pipeline(records: list[dict[str, Any]]) -> dict[str, Any]:
     hold = [row for row in results_by_id if row["queue"] == QUEUE_HOLD]
     drafts = [draft_for(row, row["reasons"]) for row in ready]
 
+    stamp = generated_at or SHOWCASE_GENERATED_AT
+    if showcase_fixture:
+        dataset = DATASET
+        secrets_used: int | None = 0
+        disclaimer = (
+            "Counts describe this synthetic fixture run only. "
+            "They are not a customer KPI, time-saved rate, or sales result."
+        )
+    else:
+        dataset = "external-input-not-asserted"
+        secrets_used = None
+        disclaimer = (
+            "Input is not the bundled showcase fixture. "
+            "synthetic and secrets_used are not asserted as facts. "
+            "The runner did not send or publish. "
+            "Counts describe this local run only and are not a customer KPI."
+        )
+
     summary = {
         "ticket": TICKET,
-        "dataset": DATASET,
+        "dataset": dataset,
         "runner_version": __version__,
-        "generated_at_utc": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
+        "generated_at_utc": _format_generated_at(stamp),
         "input_count": len(results),
         "ready_for_review": len(ready),
         "needs_human": len(hold),
         "sent": 0,
         "published": 0,
-        "secrets_used": 0,
+        "secrets_used": secrets_used,
+        "synthetic": bool(showcase_fixture),
         "as_of_utc": AS_OF.replace(microsecond=0).isoformat(),
         "auto_applied": False,
-        "disclaimer": (
-            "Counts describe this synthetic fixture run only. "
-            "They are not a customer KPI, time-saved rate, or sales result."
-        ),
+        "disclaimer": disclaimer,
     }
     return {
         "summary": summary,

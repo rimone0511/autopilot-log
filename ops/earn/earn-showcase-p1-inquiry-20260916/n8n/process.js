@@ -96,10 +96,18 @@ function comparePair(newer, older) {
 const incoming = $input.all().map((item) => item.json);
 incoming.sort((x, y) => `${x.received_at}|${x.inquiry_id}`.localeCompare(`${y.received_at}|${y.inquiry_id}`));
 
+const idCounts = {};
+for (const row of incoming) {
+  const id = s(row.inquiry_id);
+  if (id) idCounts[id] = (idCounts[id] || 0) + 1;
+}
+
 const results = [];
 const prior = [];
 for (const row of incoming) {
   const validation = validate(row);
+  const inquiryId = s(row.inquiry_id);
+  if (inquiryId && idCounts[inquiryId] > 1) validation.push('DUPLICATE_INQUIRY_ID');
   const hits = [];
   for (const older of prior) {
     const cmp = comparePair(row, older);

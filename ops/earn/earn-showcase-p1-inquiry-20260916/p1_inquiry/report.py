@@ -42,6 +42,21 @@ def render_html(result: dict[str, Any]) -> str:
             "</tr>"
         )
 
+    stamp_label = "SYNTHETIC / 合成" if summary.get("synthetic") else "FIXTURE外 / 非主張"
+    intake_label = (
+        f"合成{summary['input_count']}件"
+        if summary.get("synthetic")
+        else f"{summary['input_count']}件（bundled fixture 外）"
+    )
+    secrets_bit = (
+        f"secrets={summary['secrets_used']}"
+        if summary.get("secrets_used") == 0
+        else "secrets=not_asserted"
+    )
+    validation_rule = (
+        "曖昧・欠損・将来日付・リスク語・同一連絡先・バッチ内の重複 inquiry_id はすべて needs_human。自動で通さない。"
+    )
+
     return f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -130,7 +145,7 @@ def render_html(result: dict[str, Any]) -> str:
 </head>
 <body>
   <header id="screen-input">
-    <div class="stamp">SYNTHETIC / 合成</div>
+    <div class="stamp">{escape(stamp_label)}</div>
     <h1>問い合わせ受付見本 P1</h1>
     <p class="lead">入力検査 → 重複判定 → 人が止める確認待ち一覧。送信・公開・登録はしません。</p>
     <div class="kpis">
@@ -143,7 +158,7 @@ def render_html(result: dict[str, Any]) -> str:
   </header>
 
   <section id="screen-intake">
-    <h2>画面1. 受付入力（合成20件）</h2>
+    <h2>画面1. 受付入力（{escape(intake_label)}）</h2>
     <p>連絡先はすべて example.com / 架空番号。実在の個人情報ではありません。</p>
     <table>
       <thead><tr><th>ID</th><th>経路</th><th>名前</th><th>メール</th><th>電話</th><th>件名</th></tr></thead>
@@ -155,7 +170,7 @@ def render_html(result: dict[str, Any]) -> str:
 
   <section id="screen-validation">
     <h2>画面2. 入力検査と重複判定</h2>
-    <p>曖昧・欠損・将来日付・リスク語・同一連絡先はすべて needs_human。自動で通さない。</p>
+    <p>{escape(validation_rule)}</p>
     <table>
       <thead><tr><th>ID</th><th>受信</th><th>名前</th><th>件名</th><th>キュー</th><th>理由</th></tr></thead>
       <tbody>
@@ -183,7 +198,7 @@ def render_html(result: dict[str, Any]) -> str:
   </section>
 
   <footer>
-    {escape(summary["ticket"])} / {escape(summary["dataset"])} / sent=0 published=0 secrets=0
+    {escape(summary["ticket"])} / {escape(summary["dataset"])} / sent={summary["sent"]} published={summary["published"]} {escape(secrets_bit)}
   </footer>
 </body>
 </html>
@@ -192,15 +207,21 @@ def render_html(result: dict[str, Any]) -> str:
 
 def render_facts_stamp(result: dict[str, Any]) -> str:
     s = result["summary"]
-    return (
+    header = (
         "SYNTHETIC / SELF-MADE / NOT A CUSTOMER RESULT\n"
-        f"ticket={s['ticket']}\n"
+        if s.get("synthetic")
+        else "NOT THE BUNDLED SHOWCASE FIXTURE / NOT A CUSTOMER RESULT\n"
+    )
+    return (
+        header
+        + f"ticket={s['ticket']}\n"
         f"dataset={s['dataset']}\n"
         f"input_count={s['input_count']}\n"
         f"ready_for_review={s['ready_for_review']}\n"
         f"needs_human={s['needs_human']}\n"
         f"sent={s['sent']}\n"
         f"published={s['published']}\n"
-        f"secrets_used={s['secrets_used']}\n"
+        f"synthetic={'true' if s.get('synthetic') else 'false'}\n"
+        f"secrets_used={s['secrets_used'] if s.get('secrets_used') is not None else 'not_asserted'}\n"
         f"{s['disclaimer']}\n"
     )

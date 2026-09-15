@@ -11,8 +11,9 @@
 - このフォルダは、問い合わせ行を読んで確認待ち一覧を出す見本である。
 - 実行に秘密情報は不要である。
 - 送信・公開・サイト登録・応募は実装していない。
-- 曖昧な行は `needs_human` に倒す。
-- 別担当が `python3 run.py --check` で同じキューに再現できる。
+- 曖昧な行は `needs_human` に倒す。同一 `inquiry_id` の全行も `needs_human` に倒す。
+- 別担当が `python3 run.py --check` で committed `output/` 全体を再現できる（一時ディレクトリ比較。`output/` は汚さない）。
+- `--check` は同梱 fixture 以外を拒否する。任意入力では `synthetic` / `secrets_used` を事実化しない。
 
 ## 言わないこと
 
