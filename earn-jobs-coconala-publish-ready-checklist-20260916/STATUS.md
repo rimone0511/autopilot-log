@@ -40,7 +40,7 @@ Current row (authoring time):
 
 | # | desk | hint | reason | next action |
 |---|---|---|---|---|
-| A1 / CU-01 | ココナラ Coconala | `pack_ready` + profile `draft_saved` | Checklist written. No login from this agent | Human: CHECKLIST against PR#79 01. 下書き保存. HUMAN-GO stays false |
+| A1 / CU-01 | ココナラ Coconala | `pack_ready` + profile `draft_saved` | Checklist written. No login from this agent | Human: CHECKLIST against PR#87 SERVICE-PASTE. 下書き保存. HUMAN-GO stays false |
 
 ---
 
@@ -48,12 +48,13 @@ Current row (authoring time):
 
 | PR | Folder | Relation |
 |---|---|---|
-| [#79](https://github.com/rimone0511/autopilot-log/pull/79) | `earn-jobs-coconala-service-drafts-20260916/` | **First-gig paste** (3 通常サービス). This pack points; does not copy fences |
+| [#87](https://github.com/rimone0511/autopilot-log/pull/87) | `earn-jobs-coconala-first-gig-full-paste-20260916/` | **First-gig paste** (`SERVICE-PASTE.md`). This pack points; does not copy fences |
+| [#79](https://github.com/rimone0511/autopilot-log/pull/79) | `earn-jobs-coconala-service-drafts-20260916/` | x3 listings. `01` is same first-gig family as #87 — do not dual-list |
 | [#82](https://github.com/rimone0511/autopilot-log/pull/82) | `earn-jobs-pricing-menu-20260916/` | Price tokens / overlay. Not a second first-gig body |
 | [#11](https://github.com/rimone0511/autopilot-log/pull/11) | `earn-jp-proposal-drafts-20260916/` | 見積もり。出品 1000 字ではない |
 | [#28](https://github.com/rimone0511/autopilot-log/pull/28) | `earn-jp-proposal-wave2-20260916/` | Wave 2 応募文 |
 | [#81](https://github.com/rimone0511/autopilot-log/pull/81) | `earn-jobs-coconala-proposal-replies-20260916/` | Inquiry/custom replies. Do not send from this pack |
-| [#76](https://github.com/rimone0511/autopilot-log/pull/76) | `earn-jobs-weekly-earn-plan-20260916/` | Week calendar. Day 2 look. Its “listing pack missing” predates #79 |
+| [#76](https://github.com/rimone0511/autopilot-log/pull/76) | `earn-jobs-weekly-earn-plan-20260916/` | Week calendar. Day 2 look. Its “listing pack missing” predates #79 / #87 |
 | [#43](https://github.com/rimone0511/autopilot-log/pull/43) | `earn-morning-kyc-slip-refresh-20260916/01-coconala.md` | KYC slip. Not listing GO |
 | [#1](https://github.com/rimone0511/autopilot-log/pull/1) | `earn-register-expand-20260916/QUEUE.md` | A1 `done-draft` |
 | [#54](https://github.com/rimone0511/autopilot-log/pull/54) | `ops/earn/register-wave-a-status-20260916/` | `draft_saved` |
@@ -71,6 +72,7 @@ Current row (authoring time):
 | https://coconala.com/pages/guide_rule | 200 | 同一サービス複数出品禁止、外部決済禁止 |
 | https://coconala.com/news/170 | 200 | タイトル 25 字・ます / キャッチ 30 字 |
 | https://coconala.com/news/1220 | 200 | 通常 1000 字 |
+| https://coconala.com/news/1372 | 200 | 2026-09-01 案内（#87 引用。画像1枚以上は公開時。ライブを正） |
 | https://coconala.com/categories/ | 200 | Live tree wins |
 | https://coconala.com/services/add | 202 | Challenge without session. Logged-in form wins |
 | https://mag.coconala.com/articles/knowhow-the-basics-of-service-pages | 200 | FAQ + 画像は必ず設定 |
@@ -112,7 +114,7 @@ Outcome so far: **not run**.
 ## Next (human)
 
 1. Keep this PR **draft**. Do not merge until Yuta reviews.
-2. Open PR#79 `01-n8n-automation-listing.md` + STOP-PUBLISH.
+2. Open PR#87 `SERVICE-PASTE.md` + `DRAFT_ONLY.md`. Do not also create #79 `01` as a second listing.
 3. Run [CHECKLIST.md](CHECKLIST.md). **下書きで保存する.**
 4. Leave [HUMAN-GO.md](HUMAN-GO.md) all `false` unless 祐太 decides a later morning.
 5. Do not send estimates. Do not announce.

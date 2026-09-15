@@ -11,7 +11,7 @@ Operator: leave rows `unchecked` until a human/CU actually opened the draft.
 ## How to fill
 
 Use only: `present` / `blank` / `mismatch` / `missing` / `blocked` / `n/a` / `not-run`.  
-Do not paste the live title string unless it is already public **and** non-secret. Prefer `present` + which first-gig file it matches (`PR79-01`).
+Do not paste the live title string unless it is already public **and** non-secret. Prefer `present` + which first-gig file it matches (`PR87`).
 
 ---
 
@@ -30,7 +30,8 @@ Do not paste the live title string unless it is already public **and** non-secre
 | Item | Observed |
 |---|---|
 | Unpublished 通常サービス exists | `not-run` |
-| Matches first-gig file | `not-run` (`PR79-01` expected) |
+| Matches first-gig file | `not-run` (`PR87` expected; `PR79-01` = same family) |
+| FAQ count (target 7 from #87) | `not-run` |
 | Multiple drafts (ambiguous) | `not-run` |
 | Already 公開中 | `not-run` |
 | Save control | `not-run` (`下書き` / `no-save-path` / `公開-only`) |
@@ -43,12 +44,12 @@ Do not paste the live title string unless it is already public **and** non-secre
 |---|---|
 | タイトル ≤ 25, ます止め | `not-run` |
 | キャッチ ≤ 30 | `not-run` |
-| サービス内容 ≤ 1000, from PR#79 not estimate packs | `not-run` |
-| カテゴリ nearest automation node | `not-run` |
-| お願い / 見積もりお願い | `not-run` |
+| サービス内容 live counter, from PR#87 not estimate packs | `not-run` |
+| カテゴリ API連携・開発 (fallback その他) | `not-run` |
+| お願い / 見積もりチェック | `not-run` |
 | Images | `not-run` (`images_missing` is a GO-blocker) |
 | Price vs live category minimum | `not-run` (`rate_empty` if ledger blank) |
-| FAQ count (target 6 from 01) | `not-run` |
+| FAQ count (target 7 from #87) | `not-run` |
 | Partner-logo / 景表法 risk | `not-run` |
 
 ---

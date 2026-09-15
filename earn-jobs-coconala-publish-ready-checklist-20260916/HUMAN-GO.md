@@ -64,7 +64,7 @@ If a confirm dialog appears after **下書きで保存する**, read it. If it s
 5. Record gaps locally / in a local GAPS copy.
 6. Close.
 
-First-gig STOP sibling: [PR#79 STOP-PUBLISH.md](https://github.com/rimone0511/autopilot-log/blob/cursor/earn-jobs-coconala-service-drafts-6662/earn-jobs-coconala-service-drafts-20260916/STOP-PUBLISH.md).
+First-gig STOP sibling: [PR#87 DRAFT_ONLY.md](https://github.com/rimone0511/autopilot-log/blob/cursor/coconala-first-gig-full-paste-54d5/earn-jobs-coconala-first-gig-full-paste-20260916/DRAFT_ONLY.md) (also [PR#79 STOP-PUBLISH.md](https://github.com/rimone0511/autopilot-log/blob/cursor/earn-jobs-coconala-service-drafts-6662/earn-jobs-coconala-service-drafts-20260916/STOP-PUBLISH.md) for the x3 pack).
 
 ---
 
@@ -79,7 +79,7 @@ Do **not** unpublish from an agent. Log `already_published` in a local GAPS copy
 1. Re-read https://coconala.com/pages/guide_sell and https://coconala.com/pages/guide_rule.
 2. Re-read category minimum-price help. Local `{{PRICE_YEN}}` ≥ live minimum. Do not commit the number.
 3. Confirm images are original, secrets cropped, no partner logos.
-4. Confirm FAQ 6 from the first-gig pack is on the draft.
+4. Confirm FAQ 7 from the first-gig pack (#87) is on the draft.
 5. Confirm 通常サービス (not 電話 / ビデオチャット).
 6. Flip **one** row in a **local** copy of this file (do not push filled GO to git unless 祐太 wants the audit trail with `true` and a date — still no secrets).
 7. Click the **one** matching live control.

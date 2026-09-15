@@ -12,6 +12,8 @@ This authoring agent: **did not log in, did not 公開する, did not send 見�
 
 Paste bodies live in sibling first-gig packs. **Point. Do not duplicate.**
 
+Primary first-gig paste: **[PR#87](https://github.com/rimone0511/autopilot-log/pull/87)** `SERVICE-PASTE.md`. Do not also open PR#79 `01` as a second listing of the same n8n first gig.
+
 ---
 
 ## Hard rules
@@ -45,14 +47,13 @@ These are the listing paste sources. This folder is the **operator order + GO ga
 
 | Pack | Path (on that PR branch, not `master`) | PR | Use for |
 |---|---|---|---|
-| **First-gig listing DRAFTS x3** | `earn-jobs-coconala-service-drafts-20260916/` | [#79](https://github.com/rimone0511/autopilot-log/pull/79) | Title / catch / サービス内容 / お願い / FAQ 6 / 見積もりお願い. [STOP-PUBLISH.md](https://github.com/rimone0511/autopilot-log/blob/cursor/earn-jobs-coconala-service-drafts-6662/earn-jobs-coconala-service-drafts-20260916/STOP-PUBLISH.md) |
-| Pricing overlay (tokens) | `earn-jobs-pricing-menu-20260916/COCONALA-PASTE.md` | [#82](https://github.com/rimone0511/autopilot-log/pull/82) | `{{PRICE_JPY_SKU_*}}` ladder. Does **not** replace #79 titles if those are already on the draft |
+| **First n8n gig full paste** | `earn-jobs-coconala-first-gig-full-paste-20260916/` | [#87](https://github.com/rimone0511/autopilot-log/pull/87) | **This pass.** `SERVICE-PASTE.md` title / catch / TOC / サービス内容 / FAQ 7 / tiers `{{YEN}}` / options / お願い. Gates: `DRAFT_ONLY.md` `STOP-KYC.md` |
+| Listing DRAFTS x3 | `earn-jobs-coconala-service-drafts-20260916/` | [#79](https://github.com/rimone0511/autopilot-log/pull/79) | Later **different** offers only (`02` 分類 / `03` AI運用伴走). Do **not** also paste `01` as a second first gig |
+| Pricing overlay (tokens) | `earn-jobs-pricing-menu-20260916/COCONALA-PASTE.md` | [#82](https://github.com/rimone0511/autopilot-log/pull/82) | `{{PRICE_JPY_SKU_*}}` ladder. Does **not** retitle over #87 |
 | QUEUE placeholder | `earn-packs/coconala/` | [#8](https://github.com/rimone0511/autopilot-log/pull/8) INDEX | **missing** (`unknown`). Do not invent files there |
 
-Default first gig for **this** pass: **#79 `01-n8n-automation-listing.md`** (`n8n自動化と手順書を作ります`).  
-02（問い合わせ分類）and 03（AI運用伴走）are **different offers**, not duplicate SKUs. Do **not** publish all three from this checklist. Optional later drafts only.
-
-If a later sibling named `earn-jobs-coconala-first-gig-*` lands, use it as paste **only if** it is the same 通常サービス first gig. Still do not copy its body into this folder. This HUMAN-GO still owns 公開.
+Default first gig for **this** pass: **#87 `SERVICE-PASTE.md`** (`n8nの小さな自動化を1本作ります`).  
+#79 `02` / `03` are different offers, not duplicate SKUs. Do **not** publish them from this checklist. Optional later drafts only. Do not run #79 `01` and #87 on two listings — same first-gig family.
 
 Do **not** paste estimate/proposal packs into サービス内容:
 
@@ -74,7 +75,7 @@ Do **not** paste estimate/proposal packs into サービス内容:
 | KYC slip | `earn-morning-kyc-slip-refresh-20260916/01-coconala.md` | [#43](https://github.com/rimone0511/autopilot-log/pull/43) | 出品 GO ではない。振込・NDA 画面が出たときだけ |
 | JOBS week | `earn-jobs-weekly-earn-plan-20260916/` | [#76](https://github.com/rimone0511/autopilot-log/pull/76) | Day 2 look. `coconala_publish_listing: false` there too |
 
-PR#76 was written before #79 landed; its “listing body pack is missing” line is stale for paste. **#79 is the first-gig pack.** This checklist is the fill order.
+PR#76 was written before #79 / #87 landed; its “listing body pack is missing” line is stale for paste. **#87 is the first-gig pack.** This checklist is the fill order + GO gate.
 
 ---
 
@@ -86,6 +87,7 @@ PR#76 was written before #79 landed; its “listing body pack is missing” line
 | ルールとマナー（同一サービス複数出品・外部決済・虚偽） | https://coconala.com/pages/guide_rule | 200 |
 | タイトル分割（提供内容 最大 25 字・「ます」、キャッチ 最大 30 字） | https://coconala.com/news/170 | 200 |
 | 説明文（通常 1,000 字。セラーサポート 1,500 は買わない） | https://coconala.com/news/1220 | 200 |
+| 文字数・画像（2026-09-01 案内。#87 が引用。ライブを正） | https://coconala.com/news/1372 | 200 |
 | カテゴリ一覧 | https://coconala.com/categories/ | 200 |
 | マグ：サービスページのコツ（FAQ・画像必須の案内） | https://mag.coconala.com/articles/knowhow-the-basics-of-service-pages | 200 |
 | マグ：改善チェックリスト（できること／できないこと） | https://mag.coconala.com/articles/knowhow-list-to-improve-service-pages | 200 |
