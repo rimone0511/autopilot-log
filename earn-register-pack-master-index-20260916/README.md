@@ -18,7 +18,7 @@
 
 | 索引 | 役割 | 出典 |
 |---|---|---|
-| **この MASTER INDEX** | フォルダ単位。register / handoff / activity-gate / listing / ops と **開いているPR全部** | 本PR |
+| **この MASTER INDEX** | フォルダ単位。register / handoff / activity-gate / listing / ops と **開いているPR全部** | [PR#14](https://github.com/rimone0511/autopilot-log/pull/14) |
 | [PR#8 CU serial INDEX](https://github.com/rimone0511/autopilot-log/pull/8) | 机単位の貼る順 CU-01–CU-28 と期待ファイル | `earn-register-pack-index-20260916/INDEX.md` |
 | [PR#3 JP-WEEK2-INDEX](https://github.com/rimone0511/autopilot-log/pull/3) | JP Week2 の局所直列（CU-11–CU-18） | `earn-register-packs-jp-20260916/JP-WEEK2-INDEX.md` |
 | [PR#1 QUEUE](https://github.com/rimone0511/autopilot-log/pull/1) | 波（A/B/C/D）と登録作業の状態 | `earn-register-expand-20260916/QUEUE.md` |

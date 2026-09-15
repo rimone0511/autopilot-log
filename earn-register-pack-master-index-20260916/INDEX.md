@@ -2,7 +2,7 @@
 
 観測日: 2026-09-15〜16（公開ページ。ブラウザ登録はしていない）  
 索引日: 2026-09-16  
-スナップショット: **2026-09-15 UTC** 時点の `rimone0511/autopilot-log` 開いているPR（#1–#13）と、その枝のフォルダ  
+スナップショット: **2026-09-15 UTC** 時点の `rimone0511/autopilot-log` 開いているPR（#1–#13 を読んだ。この地図は [#14](https://github.com/rimone0511/autopilot-log/pull/14)）と、その枝のフォルダ  
 状態: **DRAFT-ONLY**（このPRは地図だけ。パック本文はコピーしない）  
 禁止: 秘密の記入、ブラウザ登録、公開、KYC完了、有料プラン加入
 
@@ -33,7 +33,6 @@ register / handoff / activity-gate / listing / ops と、同日に開いてい�
 | `ready · open` | 兄弟PRにファイルがある。PRは下書き解除済み |
 | `ready · draft` | 兄弟PRにファイルがある。PRは draft |
 | `unknown · no PR` | 机または置き場は QUEUE / ランブックにあるが、パックファイルがどの枝にも無い |
-| `this PR · draft` | この MASTER INDEX 自身 |
 
 `ready` は「登録済み」ではない。QUEUE の `done-draft` / `next` / `week-2` / `gate` / `late` は登録作業の状態で、別物。
 
@@ -61,7 +60,7 @@ register / handoff / activity-gate / listing / ops と、同日に開いてい�
 | JP HANDS proposal + estimate | [`earn-jp-proposal-drafts-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/jp-proposal-drafts-c1d1/earn-jp-proposal-drafts-20260916) | CrowdWorks, Lancers, Coconala | prep | ready · draft · DO NOT SEND | [#11](https://github.com/rimone0511/autopilot-log/pull/11) |
 | JP Wave B activity-gate | [`earn-activity-gate-waveB-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/earn-activity-gate-waveb-jp-fced/earn-activity-gate-waveB-20260916) | SOKUDAN, Workship, 複業クラウド, CrowdLinks, Anycrew, MENTA, ストアカ, Skill Shift, AI CrowdWorks, ITプロパートナーズ, YOUTRUST, Offers, Shufti | prep | ready · draft · pass 5 / needs_check 8 / SKIP thin 0 | [#12](https://github.com/rimone0511/autopilot-log/pull/12) |
 | Wave D Fit-Med activity-gate | [`earn-activity-gate-waveD-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/earn-activity-gate-waved-b552/earn-activity-gate-waveD-20260916) | SKIMA, Payhip, Ko-fi, Dribbble Services, Fastwork, Truelancer, Twine, ワークシフト, ママワークス, 99designs, シュフティ, Wellfound | prep | ready · draft · pass 9 / needs_check 1 / SKIP 2 | [#13](https://github.com/rimone0511/autopilot-log/pull/13) |
-| MASTER INDEX (this pack) | [`earn-register-pack-master-index-20260916/`](INDEX.md) | 上の全パックを束ねる。机の貼る順は持たない | prep | this PR · draft | this PR |
+| MASTER INDEX (this pack) | [`earn-register-pack-master-index-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/earn-register-pack-master-index-9290/earn-register-pack-master-index-20260916) | 上の全パックを束ねる。机の貼る順は持たない | prep | ready · draft | [#14](https://github.com/rimone0511/autopilot-log/pull/14) |
 
 QUEUE 内の [`ACTIVITY-GATE.md`](https://github.com/rimone0511/autopilot-log/blob/cursor/earn-register-expand-20260916-b673/earn-register-expand-20260916/ACTIVITY-GATE.md) は **目視チェックリストの型**（件数を作らない）。結果表ではない。結果は PR#2 入れ子、PR#12、PR#13。
 
@@ -69,7 +68,7 @@ QUEUE 内の [`ACTIVITY-GATE.md`](https://github.com/rimone0511/autopilot-log/bl
 
 ## 開いているPR（2026-09-15 UTC）
 
-`gh pr list --state open` の13件。マージ済み・クローズは 0。この MASTER INDEX のPRは作成時点で14件目になる。
+`gh pr list --state open` で #1–#13 を読んだあと、この MASTER INDEX が [#14](https://github.com/rimone0511/autopilot-log/pull/14)（draft）。マージ済み・クローズは 0。
 
 | PR | Draft? | Title | Branch | Folder |
 |---|---|---|---|---|
@@ -86,6 +85,7 @@ QUEUE 内の [`ACTIVITY-GATE.md`](https://github.com/rimone0511/autopilot-log/bl
 | [#11](https://github.com/rimone0511/autopilot-log/pull/11) | draft | earn-ops: JP marketplace proposal DRAFT pack (CW/Lancers/Coconala) | `cursor/jp-proposal-drafts-c1d1` | `earn-jp-proposal-drafts-20260916/` |
 | [#12](https://github.com/rimone0511/autopilot-log/pull/12) | draft | earn-ops: JP Wave B activity-gate results (2026-09-16) | `cursor/earn-activity-gate-waveb-jp-fced` | `earn-activity-gate-waveB-20260916/` |
 | [#13](https://github.com/rimone0511/autopilot-log/pull/13) | draft | earn-ops: Wave D Fit-Med activity-gate (2026-09-16) | `cursor/earn-activity-gate-waved-b552` | `earn-activity-gate-waveD-20260916/` |
+| [#14](https://github.com/rimone0511/autopilot-log/pull/14) | draft | earn-ops: MASTER INDEX linking register/handoff/activity-gate packs (2026-09-16) | `cursor/earn-register-pack-master-index-9290` | `earn-register-pack-master-index-20260916/` |
 
 `master` には earn-ops フォルダはまだ無い（YouTube/TikTok CLI のみ）。
 
