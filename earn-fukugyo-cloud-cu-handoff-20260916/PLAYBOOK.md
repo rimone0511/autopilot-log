@@ -3,6 +3,7 @@
 > Desk: **複業クラウド**（旧 Another Works） / **B03** / **CU-12**.  
 > Auth: **MAIN Google** likely — public JS label **「Googleでサインイン」** on `/sign_up`. Icon must say Google at click-time.  
 > This pass: **talent profile draft only**. Do not エントリー. Do not キニナル.  
+> **REGISTER-CU-CUT / jobs-first:** do **not** open this desk as next live CU. Banner: [STATUS.md](STATUS.md) `register_cu_cut`.  
 > Stop: [STOP.md](STOP.md) (apply + KYC + phone/SMS-as-ID). Fields: [FIELD-MAP.md](FIELD-MAP.md). Session box: [STATUS.md](STATUS.md).
 
 # PLAYBOOK — 複業クラウド talent signup (B03)
@@ -22,6 +23,7 @@
 | Activity gate | **`needs_check`** (this GET). Not `alive`. Not `thin`. See [STATUS.md](STATUS.md) |
 | `thin_site_skip` | **false** (talent 200 + public job **titles**. Unread listing dates ≠ thin) |
 | Skip | Captcha / press-hold that does not clear in one session → **`blocked_skip`**. Do not retry this pass |
+| Serial | **`register_cu_cut`** — not next live CU. Prefer JOBS phase ([#72](https://github.com/rimone0511/autopilot-log/pull/72)) |
 | Authoring session | Public GET / TOS / JS labels only. **Did not create an account** |
 
 Sibling packs (bodies **not** copied; paste fences for 自己紹介 live in [FIELD-MAP.md](FIELD-MAP.md)):
@@ -31,6 +33,9 @@ Sibling packs (bodies **not** copied; paste fences for 自己紹介 live in [FIE
 | Thick CU-12 sample paste | `earn-waveb-alive-handoff-sample-20260916/02-fukugyo-cloud.md` ([#21](https://github.com/rimone0511/autopilot-log/pull/21)) |
 | Activity-gate record | `earn-activity-gate-waveB-20260916/records/03-fukugyo-cloud.md` ([#12](https://github.com/rimone0511/autopilot-log/pull/12)) |
 | Activity-gate re-GET | `ops/earn/waveb-activity-gate-batch1-20260916/b03-fukugyo-cloud.md` ([#62](https://github.com/rimone0511/autopilot-log/pull/62)) |
+| REGISTER-CU-CUT serial | `ops/earn/waveb-alive-cu-serial-20260916/` ([#72](https://github.com/rimone0511/autopilot-log/pull/72)) — **do not play** |
+
+**REGISTER-CU-CUT / jobs-first:** Wave B 登録直列の自動再生は JOBS に譲る。このフォルダは 複業クラウド 机のランナーだが、Freelancer.com（A10）の次に **勝手に開かない。** 人が明示 GO したときだけ PLAYBOOK を踏む。GO しても **エントリー / キニナルはしない。**
 
 This playbook is the **step order**. Placeholders stay empty of secrets in git.
 
@@ -197,6 +202,7 @@ Job-title pay ranges (例: 「月80〜100万円」 on `/projects/91375`) are **t
 - That Autopilot Log posts TikTok unattended (inbox upload is the default; direct post is gated)
 - Browser automation / scraper as a 複業クラウド applicant bot
 - This authoring agent POSTing `/sign_up`
+- Opening this desk as **next live CU** while `register_cu_cut` is set
 
 ---
 
@@ -233,4 +239,4 @@ Copy the same keys into [STATUS.md](STATUS.md) after a live run. Do not put OTP 
 
 ## 日本語（運用だけ）
 
-下書きのみ。このエージェントは登録しない。入口は https://talent.aw-anotherworks.com/sign_up 。**MAIN Google**（「Googleでサインイン」と書いてあること）。無ければ同じメール。プロフィール下書き保存まで。**エントリーとキニナルは押さない**。スカウト返信・ソリューション公開・本人確認・口座はしない。手数料％と流入数は捏造しない。キャプチャ / 長押しが一度で通らなければ **`blocked_skip`**。
+下書きのみ。このエージェントは登録しない。入口は https://talent.aw-anotherworks.com/sign_up 。**MAIN Google**（「Googleでサインイン」と書いてあること）。無ければ同じメール。プロフィール下書き保存まで。**エントリーとキニナルは押さない**。スカウト返信・ソリューション公開・本人確認・口座はしない。手数料％と流入数は捏造しない。キャプチャ / 長押しが一度で通らなければ **`blocked_skip`**。**REGISTER-CU-CUT:** 次のライブ CU としてこの机を開かない（jobs-first）。

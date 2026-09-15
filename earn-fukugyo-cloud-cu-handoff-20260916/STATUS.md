@@ -1,12 +1,18 @@
 # STATUS — 複業クラウド (B03) CU handoff
 
+> ## REGISTER-CU-CUT
+>
+> **2026-09-16.** Wave B **register** CU is **superseded** by register-winddown / **jobs-first** ([#72](https://github.com/rimone0511/autopilot-log/pull/72)).
+> **Do not** open 複業クラウド (B03 / CU-12) as **next live CU** after Freelancer.com (A10 / CU-10) or from Wave B serial autoplay.
+> After Freelancer parks: stay on **JOBS phase** (do-not-send). Do **not** start this folder.
+> Hint: `register_cu_cut`. This folder stays **DRAFT_ONLY**. Not a signup GO. No secrets.
+
 Snapshot: **2026-09-16** (folder stamp)  
 Folder: `earn-fukugyo-cloud-cu-handoff-20260916/`  
-State: **DRAFT_ONLY**
-
-This file is the desk box for **B03 / CU-12 複業クラウド（fukugyo cloud / 旧 Another Works）**. It is not a signup log and **does not claim an account exists**.
-
+State: **DRAFT_ONLY** / **REGISTER-CU-CUT** (pack exists; **not** next CU)  
 Authoring session: public talent HTML/JS + TOS + company privacy only. **No login. No POST. No OAuth follow. No credentials invented or stored.**
+
+This file is the desk box for **B03 / CU-12 複業クラウド（fukugyo cloud / 旧 Another Works）**. It is not a signup log and **does not claim an account exists**. **Cut overrides play:** do not treat `pack_ready` as a live GO.
 
 ---
 
@@ -17,7 +23,7 @@ Authoring session: public talent HTML/JS + TOS + company privacy only. **No logi
 | Desk | 複業クラウド talent worker（旧 Another Works） |
 | IDs | **B03** · Wave B · **CU-12** |
 | Not | Company console / 採用担当. Not Workship. Not CrowdWorks |
-| CU hint | `pack_ready` + `pending` — pack ready; live CU has **not** run this folder |
+| CU hint | `pack_ready` + **`register_cu_cut`** — files exist; **do not play** as next live CU |
 | Activity gate | **`needs_check`** (this GET + [#12](https://github.com/rimone0511/autopilot-log/pull/12) / [#62](https://github.com/rimone0511/autopilot-log/pull/62)). Not `alive`. Not `thin` |
 | Google | **MAIN SSO likely** (`PREFER_GOOGLE`). Public JS **「Googleでサインイン」**. Click-time |
 | Plan | Talent **cited free** (TOS 第2.1条1). Worker ％ **unstated** — do not invent |
@@ -27,13 +33,22 @@ Authoring session: public talent HTML/JS + TOS + company privacy only. **No logi
 
 | Hint | Meaning here |
 |---|---|
-| `pack_ready` | This 4-file handoff is paste-ready. CU may type under PLAYBOOK **after a human GO** |
+| `pack_ready` | Files exist. **Not** a play GO while `register_cu_cut` is set |
+| `register_cu_cut` | Register serial cut. **Not** next live CU. Prefer JOBS phase |
 | `pending` | Live CU has **not** marked a draft on this desk from **this** folder |
 | `draft_saved` | Talent profile parked unpublished (fill after a real CU run) |
 | `blocked_skip` | Skip this pass. Do not retry the listed reason (captcha / hold / image puzzle / waf) |
 | `kyc_wait` | 本人確認画面。朝の本人。アップロードなし |
 | `sms_wait_user` | Phone/SMS required for draft save. User chat. Do not guess |
 | `apply_stop` | エントリー or キニナル pressed by mistake — stop |
+
+Current row (authoring time):
+
+| # | desk | CU hint | reason | next action |
+|---|---|---|---|---|
+| B03 / CU-12 | 複業クラウド | `pack_ready` + **`register_cu_cut`** | Handoff written. REGISTER-CU-CUT / jobs-first | **Do not open** as next live CU. Stay on JOBS. Human GO later still = profile draft only; no エントリー |
+
+Do **not** chain: Freelancer.com → this desk. Prefer JOBS siblings ([#68](https://github.com/rimone0511/autopilot-log/pull/68) Freelancer bid DRAFTs do-not-send; [#76](https://github.com/rimone0511/autopilot-log/pull/76) JOBS week). Wave B serial cut: [#72](https://github.com/rimone0511/autopilot-log/pull/72). This STATUS is not a signup GO.
 
 Sibling paste (bodies not merged here except 自己紹介 fences already in FIELD-MAP):
 
@@ -42,6 +57,7 @@ Sibling paste (bodies not merged here except 自己紹介 fences already in FIEL
 | Thick CU-12 sample | [#21](https://github.com/rimone0511/autopilot-log/pull/21) |
 | Gate record | [#12](https://github.com/rimone0511/autopilot-log/pull/12) |
 | Gate re-GET | [#62](https://github.com/rimone0511/autopilot-log/pull/62) |
+| REGISTER-CU-CUT serial | [#72](https://github.com/rimone0511/autopilot-log/pull/72) |
 
 ---
 
@@ -97,9 +113,9 @@ Google OAuth was **not** started (no 302 follow).
 
 ---
 
-## Live CU outcome (empty until a human/CU runs the playbook)
+## Live CU outcome (empty — do not run while `register_cu_cut`)
 
-Do not pre-fill success. Valid later values match PLAYBOOK:
+Do not pre-fill success. Default this folder: **`register_cu_cut` / `not_run`**. Valid later values match PLAYBOOK **only after an explicit human GO** (still not next auto CU):
 
 ```
 desk: 複業クラウド
@@ -118,10 +134,11 @@ plan: talent-free-cited
 bank: no
 rate:
 skip:
-next: stop
+register_cu_cut: yes
+next: stop | jobs-first
 ```
 
-Current: **not_run**.
+Current: **`register_cu_cut` / `not_run`**. Do not open as next live CU.
 
 ---
 
@@ -136,3 +153,4 @@ Current: **not_run**.
 - Promote the activity gate from `needs_check` to `alive` without a rendered listing date
 - Copy sibling pack folders
 - Change Python posting-gate tests
+- Open 複業クラウド as **next live CU** (REGISTER-CU-CUT / jobs-first)
