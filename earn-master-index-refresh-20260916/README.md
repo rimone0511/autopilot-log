@@ -30,7 +30,7 @@ Wave B/C/D の CU 登録は、Wave A の `pending` が `draft` か parked `block
 
 | 索引 | 役割 | 出典 |
 |---|---|---|
-| **この MASTER INDEX refresh** | フォルダ単位。register / handoff / activity / proposal / ops と **PR#1–#32** | このPR |
+| **この MASTER INDEX refresh** | フォルダ単位。register / handoff / activity / proposal / ops と **PR#1–#32** | [PR#35](https://github.com/rimone0511/autopilot-log/pull/35) |
 | [PR#14 MASTER INDEX](https://github.com/rimone0511/autopilot-log/pull/14) | 同じ地図の初版（#1–#13 を読んだ時点。この refresh が後継） | `earn-register-pack-master-index-20260916/` |
 | [PR#24 REGISTER-BOARD](https://github.com/rimone0511/autopilot-log/pull/24) | 机単位の CU hint（#1–#22 のフォルダ名まで。本文は複製しない） | `earn-register-progress-board-20260916/` |
 | [PR#8 CU serial INDEX](https://github.com/rimone0511/autopilot-log/pull/8) | 机単位の貼る順 CU-01–CU-28 と期待ファイル | `earn-register-pack-index-20260916/INDEX.md` |

@@ -2,7 +2,7 @@
 
 観測日: 2026-09-15〜16（公開ページ。ブラウザ登録はしていない）  
 索引日: 2026-09-16  
-スナップショット: **2026-09-15 UTC** 時点の `rimone0511/autopilot-log` 開いているPR **#1–#32**  
+スナップショット: **2026-09-15 UTC** 時点の `rimone0511/autopilot-log` 開いているPR **#1–#32**（この地図は [#35](https://github.com/rimone0511/autopilot-log/pull/35)）  
 状態: **DRAFT-ONLY**（このPRは地図だけ。パック本文はコピーしない）  
 禁止: 秘密の記入、ブラウザ登録、公開、KYC完了、有料プラン加入
 
@@ -96,11 +96,11 @@ Fiverr と Lancers は parked skip。Wave B/C/D の CU 登録は Wave A `pending
 | Wave B batch2 CU-ready profiles | [`earn-waveb-cu-handoff-batch2-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/earn-waveb-cu-handoff-batch2-87d0/earn-waveb-cu-handoff-batch2-20260916) | Workship, CrowdLinks, ITプロパートナーズ, Offers, YOUTRUST | CU | ready · draft · Wave A のあと | [#30](https://github.com/rimone0511/autopilot-log/pull/30) |
 | EN Wave 2 proposal DRAFTs | [`earn-en-proposal-wave2-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/earn-en-proposal-wave2-7659/earn-en-proposal-wave2-20260916) | Upwork, Fiverr, Contra（n8n / lead classify / AI ops / JP-EN） | prep | ready · draft · DO NOT SEND | [#31](https://github.com/rimone0511/autopilot-log/pull/31) |
 | CrowdWorks + Upwork field maps | [`earn-cw-upwork-fieldmap-livecheck-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/earn-cw-upwork-fieldmap-livecheck-ce1d/earn-cw-upwork-fieldmap-livecheck-20260916) | CrowdWorks worker signup; Upwork freelancer profile（公開ヘルプ。ログイン後フォームは対象外） | prep | ready · draft · CU playbook ではない | [#32](https://github.com/rimone0511/autopilot-log/pull/32) |
-| MASTER INDEX refresh (this pack) | [`earn-master-index-refresh-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/earn-master-index-refresh-127d/earn-master-index-refresh-20260916) | 上の全パックを束ねる。机の貼る順は持たない | prep | ready · draft | this PR |
+| MASTER INDEX refresh (this pack) | [`earn-master-index-refresh-20260916/`](https://github.com/rimone0511/autopilot-log/tree/cursor/earn-master-index-refresh-127d/earn-master-index-refresh-20260916) | 上の全パックを束ねる。机の貼る順は持たない | prep | ready · draft | [#35](https://github.com/rimone0511/autopilot-log/pull/35) |
 
 QUEUE 内の [`ACTIVITY-GATE.md`](https://github.com/rimone0511/autopilot-log/blob/cursor/earn-register-expand-20260916-b673/earn-register-expand-20260916/ACTIVITY-GATE.md) は **目視チェックリストの型**（件数を作らない）。結果表ではない。結果は PR#2 入れ子、PR#12、PR#13、PR#20、PR#22。
 
-この契約は **#1–#32**。#33 以降が開いていても、この表には足さない。
+兄弟パックの契約は **#1–#32**。この地図自身は [#35](https://github.com/rimone0511/autopilot-log/pull/35)。#33 / #34 は MASTER 表に足していない。
 
 ---
 
@@ -142,14 +142,15 @@ QUEUE 内の [`ACTIVITY-GATE.md`](https://github.com/rimone0511/autopilot-log/bl
 | [#30](https://github.com/rimone0511/autopilot-log/pull/30) | draft | earn-ops: Wave B batch2 CU-ready DRAFT profile packs (5 desks) | `cursor/earn-waveb-cu-handoff-batch2-87d0` | `earn-waveb-cu-handoff-batch2-20260916/` |
 | [#31](https://github.com/rimone0511/autopilot-log/pull/31) | draft | earn-ops: Wave 2 EN proposal DRAFTs (n8n / lead classify / AI ops / JP-EN) | `cursor/earn-en-proposal-wave2-7659` | `earn-en-proposal-wave2-20260916/` |
 | [#32](https://github.com/rimone0511/autopilot-log/pull/32) | draft | earn-ops: CrowdWorks + Upwork field maps (public help, DRAFT) | `cursor/earn-cw-upwork-fieldmap-livecheck-ce1d` | `earn-cw-upwork-fieldmap-livecheck-20260916/` |
+| [#35](https://github.com/rimone0511/autopilot-log/pull/35) | draft | earn-ops: MASTER INDEX refresh linking PRs #1–#32 (2026-09-16) | `cursor/earn-master-index-refresh-127d` | `earn-master-index-refresh-20260916/` |
 
-`master` には earn-ops フォルダはまだ無い（YouTube/TikTok CLI のみ）。
+`master` には earn-ops フォルダはまだ無い（YouTube/TikTok CLI のみ）。兄弟パックの契約は **#1–#32**。この地図自身が #35。#33 / #34 はこの refresh の表に足していない。
 
 種別の束ね（本文は開かない）:
 
 | 種別 | PR# |
 |---|---|
-| register（QUEUE / ペーストパック / ボード / 索引） | #1 #2 #3 #8 #14 #24 · this |
+| register（QUEUE / ペーストパック / ボード / 索引） | #1 #2 #3 #8 #14 #24 · #35 |
 | handoff（CU 手渡し） | #4（朝の本人） #16 #17 #18 #19 #21 #29 #30 |
 | activity-gate | #2（入れ子） #12 #13 #20 #22 |
 | proposal（送らない） | #5 #11 #28 #31 |
