@@ -60,7 +60,7 @@ Official [flow](https://goworkship.com/flow) is STEP1 アカウント作成 → 
 
 ### A. Create or open the freelance account
 
-Public GET 2026-09-16 (no POST): `/signup` title **フリーランス登録をする | Workship**. Visible: **SNSで登録**, `#firebaseui-auth-container`, then **メールアドレス**, **パスワード**, **招待コード**, agree **プライバシーポリシー** + **利用規約** (`/guide`) + **個人情報の取り扱いについて**, submit **登録する**, reCAPTCHA. JS includes `firebase.auth.GoogleAuthProvider.PROVIDER_ID`. Static HTML does **not** print the word Google on the SNS icons — **look at the icon**.
+Public GET 2026-09-16 (no POST): `/signup` title **フリーランス登録をする | Workship**. Visible: **SNSで登録**, `#firebaseui-auth-container`, then **メールアドレス 必須**, **パスワード 必須** (placeholder 8–20文字の半角英数字記号), **招待コード**, agree **プライバシーポリシー** + **利用規約** (`/guide`) + **個人情報の取り扱いについて**, submit **登録する**, reCAPTCHA. JS includes `firebase.auth.GoogleAuthProvider.PROVIDER_ID`. Static HTML does **not** print the word “Google” on the SNS icons. Headless render of the same URL showed the FirebaseUI **Google G** button under **SNSで登録**. **If the live icon is missing, fall back to email.**
 
 | # | Do | Do not |
 |---|---|---|

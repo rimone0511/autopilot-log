@@ -41,7 +41,7 @@ Sibling paste (bodies not merged here except 自己紹介 fences already in FIEL
 
 | URL | HTTP | Result used |
 |---|---|---|
-| https://goworkship.com/signup | 200 | Title **フリーランス登録をする**. **SNSで登録**. `#firebaseui-auth-container`. JS `firebase.auth.GoogleAuthProvider.PROVIDER_ID`. Email **メールアドレス** / **パスワード** / **招待コード** / **登録する** / reCAPTCHA. Google **word not in static SNS icons** → click-time |
+| https://goworkship.com/signup | 200 | Title **フリーランス登録をする**. **SNSで登録**. `#firebaseui-auth-container`. JS `firebase.auth.GoogleAuthProvider.PROVIDER_ID`. Headless render: FirebaseUI **Google G** button. Email **メールアドレス 必須** / **パスワード 必須** (8–20) / **招待コード** / **登録する** / reCAPTCHA. Static HTML still has no “Google” string on icons |
 | https://goworkship.com/login | 200 | **フリーランス用ログイン**. **SNSでログイン**. **採用担当者はこちら** = close |
 | https://goworkship.com/help/how_to/44 | 200 | SNSアイコン + 確認URL **24時間**. 契約管理 **署名をする** (STOP) |
 | https://goworkship.com/help/how_to/72 | 200 | **気になる！ = エントリー完了** + メッセージルーム |

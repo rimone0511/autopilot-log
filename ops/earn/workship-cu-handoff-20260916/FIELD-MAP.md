@@ -23,15 +23,15 @@ Placeholders stay empty of secrets in git. Fill only from the operator’s local
 
 ## A. Sign up (public page + help/44)
 
-Public signup (https://goworkship.com/signup, retrieved 2026-09-16): title **フリーランス登録をする | Workship**; heading **SNSで登録**; `#firebaseui-auth-container`; JS `firebase.auth.GoogleAuthProvider.PROVIDER_ID`; then **メールアドレス**, **パスワード**, **招待コード** (placeholder 「招待コードがあれば入力してください」), agree プライバシーポリシー + 利用規約 + 個人情報の取り扱いについて, button **登録する**, reCAPTCHA.
+Public signup (https://goworkship.com/signup, retrieved 2026-09-16): title **フリーランス登録をする | Workship**; heading **SNSで登録**; `#firebaseui-auth-container`; JS `firebase.auth.GoogleAuthProvider.PROVIDER_ID`; then **メールアドレス 必須**, **パスワード 必須** (placeholder 「8〜20文字の半角英数字記号で入力」), **招待コード** (placeholder 「招待コードがあれば入力してください」), agree プライバシーポリシー + 利用規約 + 個人情報の取り扱いについて, button **登録する**, reCAPTCHA.
 
-Static HTML does **not** print “Google” on the SNS icons. **Click-time: the icon must say Google.** Else email fallback.
+Static HTML does **not** print the word “Google” on the SNS icons. Headless render of the same URL (no login) showed the FirebaseUI **Google G** button under **SNSで登録**. **If the live icon is missing, fall back to email.**
 
 | UI label (help / public HTML) | `required_guess` | DRAFT_ONLY paste | Cite / gap |
 |---|---|---|---|
-| SNSで登録 → Google icon | preferred path | MAIN `{{GOOGLE_ACCOUNT_EMAIL}}` only. Same Google every later login | Public `/signup` + Firebase `GoogleAuthProvider.PROVIDER_ID`. Icon label **`needs_check` until click** |
-| メールアドレス | fallback `required (docs)` on email path | Same MAIN `{{EMAIL}}`. No new mailbox | Public `/signup` · [help/44](https://goworkship.com/help/how_to/44) |
-| パスワード | email path | `{{PASSWORD_DO_NOT_STORE}}`. Never in git | Public `/signup` |
+| SNSで登録 → Google G | preferred path | MAIN `{{GOOGLE_ACCOUNT_EMAIL}}` only. Same Google every later login | Public `/signup` + Firebase `GoogleAuthProvider.PROVIDER_ID`. Headless render showed the G button. If missing live → email |
+| メールアドレス（必須） | fallback `required (docs)` on email path | Same MAIN `{{EMAIL}}`. No new mailbox | Public `/signup` rendered **必須** · [help/44](https://goworkship.com/help/how_to/44) |
+| パスワード（必須） | email path | `{{PASSWORD_DO_NOT_STORE}}`. UI hint 8–20 半角英数字記号. Never in git | Public `/signup` |
 | 招待コード | `optional (docs)` | `{{INVITE_CODE}}` empty unless ledger has one | Public placeholder |
 | プライバシーポリシー / 利用規約 / 個人情報の取り扱い に同意する | `required (docs)` | Human reads. Live CU may tick after GO | `/privacy-policy` · `/guide` · `/handling-of-personal-information` |
 | 登録する | control | Email path only. Google path uses FirebaseUI | Public `/signup` |
