@@ -1,0 +1,15 @@
+{
+  "ticket": "EARN-SHOWCASE-P1-20260916",
+  "dataset": "synthetic-self-made",
+  "runner_version": "0.1.0",
+  "generated_at_utc": "2026-09-15T22:22:58+00:00",
+  "input_count": 20,
+  "ready_for_review": 6,
+  "needs_human": 14,
+  "sent": 0,
+  "published": 0,
+  "secrets_used": 0,
+  "as_of_utc": "2026-09-16T12:00:00+00:00",
+  "auto_applied": false,
+  "disclaimer": "Counts describe this synthetic fixture run only. They are not a customer KPI, time-saved rate, or sales result."
+}

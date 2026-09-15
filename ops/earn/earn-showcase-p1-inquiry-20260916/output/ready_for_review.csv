@@ -1,0 +1,7 @@
+inquiry_id,received_at,channel,name,email,phone,company,subject,queue,severity,decision,reason_text,duplicate_of,sent,published
+INQ-S0-001,2026-09-10T09:15:00+09:00,form,山田サンプル,yamada.sample@example.com,0300001001,株式会社サンプル南,料金の見積もり希望,ready_for_review,REVIEW,human_review_required,VALID_UNIQUE,,False,False
+INQ-S0-002,2026-09-10T11:40:00+09:00,email,佐藤デモ,sato.demo@example.com,0300002002,デモ商事,納品日の確認,ready_for_review,REVIEW,human_review_required,VALID_UNIQUE,,False,False
+INQ-S0-004,2026-09-11T13:20:00+09:00,phone_note,高橋見本,,0300004004,見本工房,営業時間の確認,ready_for_review,REVIEW,human_review_required,VALID_UNIQUE,,False,False
+INQ-S0-016,2026-09-13T13:33:00+09:00,chat,伊藤合成,ito.synthetic@example.com,0300016016,合成通信,チャットからの質問,ready_for_review,REVIEW,human_review_required,VALID_UNIQUE,,False,False
+INQ-S0-017,2026-09-14T09:48:00+09:00,email,鈴木サンプル,suzuki.north@example.com,0300017017,株式会社デモ北,資料請求,ready_for_review,REVIEW,human_review_required,VALID_UNIQUE,,False,False
+INQ-S0-019,2026-09-15T08:55:00+09:00,phone_note,渡辺架空,,0300019019,架空製作所,折り返し希望,ready_for_review,REVIEW,human_review_required,VALID_UNIQUE,,False,False

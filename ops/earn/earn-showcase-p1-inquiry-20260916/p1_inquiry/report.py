@@ -62,7 +62,7 @@ def render_html(result: dict[str, Any]) -> str:
     }}
     body {{
       margin: 0;
-      font-family: "Hiragino Sans", "Noto Sans JP", sans-serif;
+      font-family: "Noto Sans CJK JP", "Noto Sans JP", "Hiragino Sans", sans-serif;
       background: var(--paper);
       color: var(--ink);
     }}
@@ -120,6 +120,7 @@ def render_html(result: dict[str, Any]) -> str:
       text-align: left;
       padding: 8px 6px;
       vertical-align: top;
+      overflow-wrap: anywhere;
     }}
     th {{ color: var(--muted); font-weight: 600; }}
     .hold {{ background: var(--hold-bg); }}

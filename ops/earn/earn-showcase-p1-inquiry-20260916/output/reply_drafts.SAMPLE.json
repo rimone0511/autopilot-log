@@ -1,0 +1,86 @@
+[
+  {
+    "inquiry_id": "INQ-S0-001",
+    "label": "SAMPLE / 合成下書き",
+    "synthetic": true,
+    "send_status": "not_sent",
+    "auto_send": false,
+    "queue": "ready_for_review",
+    "validation_ok": true,
+    "reasons": [
+      "VALID_UNIQUE"
+    ],
+    "subject": "[下書き見本] Re: 料金の見積もり希望",
+    "body": "【SAMPLE / 合成下書き】この文面は見本です。送信しないでください。自動送信機能はありません。\n\n山田サンプル 様\n\nお問い合わせ「料金の見積もり希望」（受付番号 INQ-S0-001）を受け付けました。\n担当者が内容を確認したうえで、改めてご連絡します。\nこのメッセージは下書き見本であり、送信済みではありません。\n"
+  },
+  {
+    "inquiry_id": "INQ-S0-002",
+    "label": "SAMPLE / 合成下書き",
+    "synthetic": true,
+    "send_status": "not_sent",
+    "auto_send": false,
+    "queue": "ready_for_review",
+    "validation_ok": true,
+    "reasons": [
+      "VALID_UNIQUE"
+    ],
+    "subject": "[下書き見本] Re: 納品日の確認",
+    "body": "【SAMPLE / 合成下書き】この文面は見本です。送信しないでください。自動送信機能はありません。\n\n佐藤デモ 様\n\nお問い合わせ「納品日の確認」（受付番号 INQ-S0-002）を受け付けました。\n担当者が内容を確認したうえで、改めてご連絡します。\nこのメッセージは下書き見本であり、送信済みではありません。\n"
+  },
+  {
+    "inquiry_id": "INQ-S0-004",
+    "label": "SAMPLE / 合成下書き",
+    "synthetic": true,
+    "send_status": "not_sent",
+    "auto_send": false,
+    "queue": "ready_for_review",
+    "validation_ok": true,
+    "reasons": [
+      "VALID_UNIQUE"
+    ],
+    "subject": "[下書き見本] Re: 営業時間の確認",
+    "body": "【SAMPLE / 合成下書き】この文面は見本です。送信しないでください。自動送信機能はありません。\n\n高橋見本 様\n\nお問い合わせ「営業時間の確認」（受付番号 INQ-S0-004）を受け付けました。\n担当者が内容を確認したうえで、改めてご連絡します。\nこのメッセージは下書き見本であり、送信済みではありません。\n"
+  },
+  {
+    "inquiry_id": "INQ-S0-016",
+    "label": "SAMPLE / 合成下書き",
+    "synthetic": true,
+    "send_status": "not_sent",
+    "auto_send": false,
+    "queue": "ready_for_review",
+    "validation_ok": true,
+    "reasons": [
+      "VALID_UNIQUE"
+    ],
+    "subject": "[下書き見本] Re: チャットからの質問",
+    "body": "【SAMPLE / 合成下書き】この文面は見本です。送信しないでください。自動送信機能はありません。\n\n伊藤合成 様\n\nお問い合わせ「チャットからの質問」（受付番号 INQ-S0-016）を受け付けました。\n担当者が内容を確認したうえで、改めてご連絡します。\nこのメッセージは下書き見本であり、送信済みではありません。\n"
+  },
+  {
+    "inquiry_id": "INQ-S0-017",
+    "label": "SAMPLE / 合成下書き",
+    "synthetic": true,
+    "send_status": "not_sent",
+    "auto_send": false,
+    "queue": "ready_for_review",
+    "validation_ok": true,
+    "reasons": [
+      "VALID_UNIQUE"
+    ],
+    "subject": "[下書き見本] Re: 資料請求",
+    "body": "【SAMPLE / 合成下書き】この文面は見本です。送信しないでください。自動送信機能はありません。\n\n鈴木サンプル 様\n\nお問い合わせ「資料請求」（受付番号 INQ-S0-017）を受け付けました。\n担当者が内容を確認したうえで、改めてご連絡します。\nこのメッセージは下書き見本であり、送信済みではありません。\n"
+  },
+  {
+    "inquiry_id": "INQ-S0-019",
+    "label": "SAMPLE / 合成下書き",
+    "synthetic": true,
+    "send_status": "not_sent",
+    "auto_send": false,
+    "queue": "ready_for_review",
+    "validation_ok": true,
+    "reasons": [
+      "VALID_UNIQUE"
+    ],
+    "subject": "[下書き見本] Re: 折り返し希望",
+    "body": "【SAMPLE / 合成下書き】この文面は見本です。送信しないでください。自動送信機能はありません。\n\n渡辺架空 様\n\nお問い合わせ「折り返し希望」（受付番号 INQ-S0-019）を受け付けました。\n担当者が内容を確認したうえで、改めてご連絡します。\nこのメッセージは下書き見本であり、送信済みではありません。\n"
+  }
+]

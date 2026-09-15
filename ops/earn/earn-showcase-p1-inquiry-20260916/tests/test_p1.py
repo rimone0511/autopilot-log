@@ -138,6 +138,13 @@ class FailClosedTests(unittest.TestCase):
         for banned in ("api_key", "bearer ", "sk-", "aws_secret", "password="):
             self.assertNotIn(banned, text)
 
+    def test_n8n_export_has_no_credentials(self) -> None:
+        workflow = json.loads((ROOT / "n8n" / "inquiry_intake_p1.json").read_text(encoding="utf-8"))
+        self.assertFalse(workflow.get("active"))
+        for node in workflow["nodes"]:
+            self.assertNotIn("credentials", node)
+            self.assertNotIn("httpRequest", node.get("type", ""))
+
 
 if __name__ == "__main__":
     unittest.main()

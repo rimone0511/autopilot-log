@@ -102,7 +102,8 @@ def compare_pair(newer: dict, older: dict) -> list[str]:
             reasons.append("NEAR_DUPLICATE")
         else:
             reasons.append("AMBIGUOUS_SIMILARITY")
-    elif body >= AMBIGUOUS and (contacts or weak_identity_overlap(newer, older)):
+    elif body >= AMBIGUOUS:
+        # Mid+ body overlap is never unique, even with different contact details.
         reasons.append("AMBIGUOUS_SIMILARITY")
 
     # Same name+company with a different contact is never auto-accepted.

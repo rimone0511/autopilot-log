@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>P1 問い合わせ受付見本（合成）</title>
+  <style>
+    :root {
+      --ink: #1b2430;
+      --muted: #5c6b7a;
+      --paper: #f4efe6;
+      --card: #fffdf8;
+      --line: #d7cfc2;
+      --hold: #8a3b12;
+      --hold-bg: #f4ddcf;
+      --review: #1f4d43;
+      --review-bg: #d7ebe4;
+      --stamp: #9b1d2a;
+    }
+    body {
+      margin: 0;
+      font-family: "Noto Sans CJK JP", "Noto Sans JP", "Hiragino Sans", sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+    }
+    header, section, footer {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 20px;
+    }
+    header {
+      border-bottom: 4px solid var(--ink);
+    }
+    .stamp {
+      display: inline-block;
+      border: 3px solid var(--stamp);
+      color: var(--stamp);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      padding: 4px 10px;
+      transform: rotate(-6deg);
+    }
+    h1 { margin: 12px 0 8px; font-size: 28px; }
+    p.lead { color: var(--muted); }
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 16px 0 0;
+    }
+    .kpi {
+      background: var(--card);
+      border: 1px solid var(--line);
+      padding: 12px;
+    }
+    .kpi b { display: block; font-size: 28px; }
+    .kpi span { color: var(--muted); font-size: 12px; }
+    note, .note {
+      display: block;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      margin: 18px auto;
+    }
+    h2 { margin-top: 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      padding: 8px 6px;
+      vertical-align: top;
+      overflow-wrap: anywhere;
+    }
+    th { color: var(--muted); font-weight: 600; }
+    .hold { background: var(--hold-bg); }
+    .review { background: var(--review-bg); }
+    footer { color: var(--muted); font-size: 12px; }
+  </style>
+</head>
+<body>
+  <header id="screen-input">
+    <div class="stamp">SYNTHETIC / 合成</div>
+    <h1>問い合わせ受付見本 P1</h1>
+    <p class="lead">入力検査 → 重複判定 → 人が止める確認待ち一覧。送信・公開・登録はしません。</p>
+    <div class="kpis">
+      <div class="kpi"><span>入力件数（このfixture）</span><b>20</b></div>
+      <div class="kpi review"><span>整理済み・人の確認待ち</span><b>6</b></div>
+      <div class="kpi hold"><span>要確認（閉じて止める）</span><b>14</b></div>
+      <div class="kpi"><span>送信 / 公開</span><b>0 / 0</b></div>
+    </div>
+    <p class="note">Counts describe this synthetic fixture run only. They are not a customer KPI, time-saved rate, or sales result.</p>
+  </header>
+
+  <section id="screen-intake">
+    <h2>画面1. 受付入力（合成20件）</h2>
+    <p>連絡先はすべて example.com / 架空番号。実在の個人情報ではありません。</p>
+    <table>
+      <thead><tr><th>ID</th><th>経路</th><th>名前</th><th>メール</th><th>電話</th><th>件名</th></tr></thead>
+      <tbody>
+        <tr><td>INQ-S0-001</td><td>form</td><td>山田サンプル</td><td>yamada.sample@example.com</td><td>0300001001</td><td>料金の見積もり希望</td></tr><tr><td>INQ-S0-002</td><td>email</td><td>佐藤デモ</td><td>sato.demo@example.com</td><td>0300002002</td><td>納品日の確認</td></tr><tr><td>INQ-S0-003</td><td>email</td><td>山田サンプル</td><td>yamada.sample@example.com</td><td>0300001001</td><td>料金の見積もり希望（再送）</td></tr><tr><td>INQ-S0-004</td><td>phone_note</td><td>高橋見本</td><td>—</td><td>0300004004</td><td>営業時間の確認</td></tr><tr><td>INQ-S0-005</td><td>form</td><td>高橋見本</td><td>takahashi.alt@example.invalid</td><td>0300004004</td><td>営業時間について</td></tr><tr><td>INQ-S0-006</td><td>form</td><td>中村架空</td><td>—</td><td>—</td><td>資料が欲しい</td></tr><tr><td>INQ-S0-007</td><td>email</td><td>小林デモ</td><td>not-an-email</td><td>0300007007</td><td>見積依頼</td></tr><tr><td>INQ-S0-008</td><td>form</td><td>加藤サンプル</td><td>kato.sample@example.com</td><td>0300008008</td><td>問い合わせ</td></tr><tr><td>INQ-S0-009</td><td>email</td><td>吉田合成</td><td>yoshida.synthetic@example.com</td><td>0300009009</td><td>予約の相談</td></tr><tr><td>INQ-S0-010</td><td>email</td><td>渡辺苦情</td><td>watanabe.refund@example.com</td><td>0300010010</td><td>返金してほしい</td></tr><tr><td>INQ-S0-011</td><td>chat</td><td>松本不明</td><td>matsumoto.hello@example.com</td><td>0300011011</td><td>こんにちは</td></tr><tr><td>INQ-S0-012</td><td>email</td><td>林法務</td><td>hayashi.legal@example.com</td><td>0300012012</td><td>法的措置の検討</td></tr><tr><td>INQ-S0-013</td><td>fax</td><td>遠藤見本</td><td>endo.fax@example.com</td><td>0300013013</td><td>FAX問い合わせ</td></tr><tr><td>INQ-S0-014</td><td>form</td><td></td><td>no.name@example.com</td><td>0300014014</td><td>名前なしの問合せ</td></tr><tr><td>INQ-S0-015</td><td>email</td><td>佐藤 デモ</td><td>sato.other@example.invalid</td><td>0800002015</td><td>納品予定の確認</td></tr><tr><td>INQ-S0-016</td><td>chat</td><td>伊藤合成</td><td>ito.synthetic@example.com</td><td>0300016016</td><td>チャットからの質問</td></tr><tr><td>INQ-S0-017</td><td>email</td><td>鈴木サンプル</td><td>suzuki.north@example.com</td><td>0300017017</td><td>資料請求</td></tr><tr><td>INQ-S0-018</td><td>form</td><td>鈴木サンプル</td><td>suzuki.alt@example.invalid</td><td>0800018018</td><td>資料をください</td></tr><tr><td>INQ-S0-019</td><td>phone_note</td><td>渡辺架空</td><td>—</td><td>0300019019</td><td>折り返し希望</td></tr><tr><td>INQ-S0-020</td><td>form</td><td>山田サンプル</td><td>yamada.sample@example.com</td><td>—</td><td>料金について再確認</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="screen-validation">
+    <h2>画面2. 入力検査と重複判定</h2>
+    <p>曖昧・欠損・将来日付・リスク語・同一連絡先はすべて needs_human。自動で通さない。</p>
+    <table>
+      <thead><tr><th>ID</th><th>受信</th><th>名前</th><th>件名</th><th>キュー</th><th>理由</th></tr></thead>
+      <tbody>
+        <tr><td>INQ-S0-001</td><td>2026-09-10T09:15:00+09:00</td><td>山田サンプル</td><td>料金の見積もり希望</td><td>ready_for_review</td><td>VALID_UNIQUE</td></tr>
+<tr><td>INQ-S0-002</td><td>2026-09-10T11:40:00+09:00</td><td>佐藤デモ</td><td>納品日の確認</td><td>ready_for_review</td><td>VALID_UNIQUE</td></tr>
+<tr><td>INQ-S0-003</td><td>2026-09-11T08:05:00+09:00</td><td>山田サンプル</td><td>料金の見積もり希望（再送）</td><td>needs_human</td><td>EXACT_EMAIL_DUPLICATE;EXACT_PHONE_DUPLICATE;NEAR_DUPLICATE</td></tr>
+<tr><td>INQ-S0-004</td><td>2026-09-11T13:20:00+09:00</td><td>高橋見本</td><td>営業時間の確認</td><td>ready_for_review</td><td>VALID_UNIQUE</td></tr>
+<tr><td>INQ-S0-005</td><td>2026-09-11T16:02:00+09:00</td><td>高橋見本</td><td>営業時間について</td><td>needs_human</td><td>EXACT_PHONE_DUPLICATE</td></tr>
+<tr><td>INQ-S0-006</td><td>2026-09-12T09:00:00+09:00</td><td>中村架空</td><td>資料が欲しい</td><td>needs_human</td><td>MISSING_CONTACT</td></tr>
+<tr><td>INQ-S0-007</td><td>2026-09-12T10:12:00+09:00</td><td>小林デモ</td><td>見積依頼</td><td>needs_human</td><td>INVALID_EMAIL</td></tr>
+<tr><td>INQ-S0-008</td><td>2026-09-12T10:30:00+09:00</td><td>加藤サンプル</td><td>問い合わせ</td><td>needs_human</td><td>MISSING_BODY</td></tr>
+<tr><td>INQ-S0-009</td><td>2027-01-01T00:00:00+09:00</td><td>吉田合成</td><td>予約の相談</td><td>needs_human</td><td>FUTURE_RECEIVED_AT</td></tr>
+<tr><td>INQ-S0-010</td><td>2026-09-12T14:18:00+09:00</td><td>渡辺苦情</td><td>返金してほしい</td><td>needs_human</td><td>RISK_KEYWORD</td></tr>
+<tr><td>INQ-S0-011</td><td>2026-09-12T15:01:00+09:00</td><td>松本不明</td><td>こんにちは</td><td>needs_human</td><td>BODY_TOO_SHORT;UNCLEAR_INTENT</td></tr>
+<tr><td>INQ-S0-012</td><td>2026-09-12T16:44:00+09:00</td><td>林法務</td><td>法的措置の検討</td><td>needs_human</td><td>RISK_KEYWORD</td></tr>
+<tr><td>INQ-S0-013</td><td>2026-09-13T09:10:00+09:00</td><td>遠藤見本</td><td>FAX問い合わせ</td><td>needs_human</td><td>UNKNOWN_CHANNEL</td></tr>
+<tr><td>INQ-S0-014</td><td>2026-09-13T10:22:00+09:00</td><td></td><td>名前なしの問合せ</td><td>needs_human</td><td>MISSING_NAME</td></tr>
+<tr><td>INQ-S0-015</td><td>2026-09-13T11:05:00+09:00</td><td>佐藤 デモ</td><td>納品予定の確認</td><td>needs_human</td><td>AMBIGUOUS_SIMILARITY</td></tr>
+<tr><td>INQ-S0-016</td><td>2026-09-13T13:33:00+09:00</td><td>伊藤合成</td><td>チャットからの質問</td><td>ready_for_review</td><td>VALID_UNIQUE</td></tr>
+<tr><td>INQ-S0-017</td><td>2026-09-14T09:48:00+09:00</td><td>鈴木サンプル</td><td>資料請求</td><td>ready_for_review</td><td>VALID_UNIQUE</td></tr>
+<tr><td>INQ-S0-018</td><td>2026-09-14T11:07:00+09:00</td><td>鈴木サンプル</td><td>資料をください</td><td>needs_human</td><td>AMBIGUOUS_IDENTITY</td></tr>
+<tr><td>INQ-S0-019</td><td>2026-09-15T08:55:00+09:00</td><td>渡辺架空</td><td>折り返し希望</td><td>ready_for_review</td><td>VALID_UNIQUE</td></tr>
+<tr><td>INQ-S0-020</td><td>2026-09-15T17:40:00+09:00</td><td>山田サンプル</td><td>料金について再確認</td><td>needs_human</td><td>EXACT_EMAIL_DUPLICATE</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="screen-hold">
+    <h2>画面3. 確認待ち一覧</h2>
+    <h3 class="hold">要確認（14）— 閉じて止める</h3>
+    <table>
+      <thead><tr><th>ID</th><th>受信</th><th>名前</th><th>件名</th><th>キュー</th><th>理由</th></tr></thead>
+      <tbody>
+        <tr><td>INQ-S0-003</td><td>2026-09-11T08:05:00+09:00</td><td>山田サンプル</td><td>料金の見積もり希望（再送）</td><td>needs_human</td><td>EXACT_EMAIL_DUPLICATE;EXACT_PHONE_DUPLICATE;NEAR_DUPLICATE</td></tr>
+<tr><td>INQ-S0-005</td><td>2026-09-11T16:02:00+09:00</td><td>高橋見本</td><td>営業時間について</td><td>needs_human</td><td>EXACT_PHONE_DUPLICATE</td></tr>
+<tr><td>INQ-S0-006</td><td>2026-09-12T09:00:00+09:00</td><td>中村架空</td><td>資料が欲しい</td><td>needs_human</td><td>MISSING_CONTACT</td></tr>
+<tr><td>INQ-S0-007</td><td>2026-09-12T10:12:00+09:00</td><td>小林デモ</td><td>見積依頼</td><td>needs_human</td><td>INVALID_EMAIL</td></tr>
+<tr><td>INQ-S0-008</td><td>2026-09-12T10:30:00+09:00</td><td>加藤サンプル</td><td>問い合わせ</td><td>needs_human</td><td>MISSING_BODY</td></tr>
+<tr><td>INQ-S0-009</td><td>2027-01-01T00:00:00+09:00</td><td>吉田合成</td><td>予約の相談</td><td>needs_human</td><td>FUTURE_RECEIVED_AT</td></tr>
+<tr><td>INQ-S0-010</td><td>2026-09-12T14:18:00+09:00</td><td>渡辺苦情</td><td>返金してほしい</td><td>needs_human</td><td>RISK_KEYWORD</td></tr>
+<tr><td>INQ-S0-011</td><td>2026-09-12T15:01:00+09:00</td><td>松本不明</td><td>こんにちは</td><td>needs_human</td><td>BODY_TOO_SHORT;UNCLEAR_INTENT</td></tr>
+<tr><td>INQ-S0-012</td><td>2026-09-12T16:44:00+09:00</td><td>林法務</td><td>法的措置の検討</td><td>needs_human</td><td>RISK_KEYWORD</td></tr>
+<tr><td>INQ-S0-013</td><td>2026-09-13T09:10:00+09:00</td><td>遠藤見本</td><td>FAX問い合わせ</td><td>needs_human</td><td>UNKNOWN_CHANNEL</td></tr>
+<tr><td>INQ-S0-014</td><td>2026-09-13T10:22:00+09:00</td><td></td><td>名前なしの問合せ</td><td>needs_human</td><td>MISSING_NAME</td></tr>
+<tr><td>INQ-S0-015</td><td>2026-09-13T11:05:00+09:00</td><td>佐藤 デモ</td><td>納品予定の確認</td><td>needs_human</td><td>AMBIGUOUS_SIMILARITY</td></tr>
+<tr><td>INQ-S0-018</td><td>2026-09-14T11:07:00+09:00</td><td>鈴木サンプル</td><td>資料をください</td><td>needs_human</td><td>AMBIGUOUS_IDENTITY</td></tr>
+<tr><td>INQ-S0-020</td><td>2026-09-15T17:40:00+09:00</td><td>山田サンプル</td><td>料金について再確認</td><td>needs_human</td><td>EXACT_EMAIL_DUPLICATE</td></tr>
+      </tbody>
+    </table>
+    <h3 class="review">整理済み（6）— 返信してよいのは人の承認後だけ</h3>
+    <table>
+      <thead><tr><th>ID</th><th>受信</th><th>名前</th><th>件名</th><th>キュー</th><th>理由</th></tr></thead>
+      <tbody>
+        <tr><td>INQ-S0-001</td><td>2026-09-10T09:15:00+09:00</td><td>山田サンプル</td><td>料金の見積もり希望</td><td>ready_for_review</td><td>VALID_UNIQUE</td></tr>
+<tr><td>INQ-S0-002</td><td>2026-09-10T11:40:00+09:00</td><td>佐藤デモ</td><td>納品日の確認</td><td>ready_for_review</td><td>VALID_UNIQUE</td></tr>
+<tr><td>INQ-S0-004</td><td>2026-09-11T13:20:00+09:00</td><td>高橋見本</td><td>営業時間の確認</td><td>ready_for_review</td><td>VALID_UNIQUE</td></tr>
+<tr><td>INQ-S0-016</td><td>2026-09-13T13:33:00+09:00</td><td>伊藤合成</td><td>チャットからの質問</td><td>ready_for_review</td><td>VALID_UNIQUE</td></tr>
+<tr><td>INQ-S0-017</td><td>2026-09-14T09:48:00+09:00</td><td>鈴木サンプル</td><td>資料請求</td><td>ready_for_review</td><td>VALID_UNIQUE</td></tr>
+<tr><td>INQ-S0-019</td><td>2026-09-15T08:55:00+09:00</td><td>渡辺架空</td><td>折り返し希望</td><td>ready_for_review</td><td>VALID_UNIQUE</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer>
+    EARN-SHOWCASE-P1-20260916 / synthetic-self-made / sent=0 published=0 secrets=0
+  </footer>
+</body>
+</html>

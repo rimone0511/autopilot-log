@@ -88,7 +88,7 @@ function comparePair(newer, older) {
   if (contacts.includes('email')) reasons.push('EXACT_EMAIL_DUPLICATE');
   if (contacts.includes('phone')) reasons.push('EXACT_PHONE_DUPLICATE');
   if (body >= NEAR) reasons.push(contacts.length ? 'NEAR_DUPLICATE' : 'AMBIGUOUS_SIMILARITY');
-  else if (body >= AMBIG && (contacts.length || a.name_company === b.name_company)) reasons.push('AMBIGUOUS_SIMILARITY');
+  else if (body >= AMBIG) reasons.push('AMBIGUOUS_SIMILARITY');
   if (a.name_company && a.name_company === b.name_company && !contacts.length) reasons.push('AMBIGUOUS_IDENTITY');
   return { reasons: [...new Set(reasons)], body, contacts };
 }

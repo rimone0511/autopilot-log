@@ -1,0 +1,21 @@
+inquiry_id,received_at,channel,name,email,phone,company,subject,queue,severity,decision,reason_text,duplicate_of,sent,published
+INQ-S0-001,2026-09-10T09:15:00+09:00,form,山田サンプル,yamada.sample@example.com,0300001001,株式会社サンプル南,料金の見積もり希望,ready_for_review,REVIEW,human_review_required,VALID_UNIQUE,,False,False
+INQ-S0-002,2026-09-10T11:40:00+09:00,email,佐藤デモ,sato.demo@example.com,0300002002,デモ商事,納品日の確認,ready_for_review,REVIEW,human_review_required,VALID_UNIQUE,,False,False
+INQ-S0-003,2026-09-11T08:05:00+09:00,email,山田サンプル,yamada.sample@example.com,0300001001,株式会社サンプル南,料金の見積もり希望（再送）,needs_human,BLOCK,fail_closed,EXACT_EMAIL_DUPLICATE;EXACT_PHONE_DUPLICATE;NEAR_DUPLICATE,INQ-S0-001,False,False
+INQ-S0-004,2026-09-11T13:20:00+09:00,phone_note,高橋見本,,0300004004,見本工房,営業時間の確認,ready_for_review,REVIEW,human_review_required,VALID_UNIQUE,,False,False
+INQ-S0-005,2026-09-11T16:02:00+09:00,form,高橋見本,takahashi.alt@example.invalid,0300004004,見本工房,営業時間について,needs_human,BLOCK,fail_closed,EXACT_PHONE_DUPLICATE,INQ-S0-004,False,False
+INQ-S0-006,2026-09-12T09:00:00+09:00,form,中村架空,,,架空商店,資料が欲しい,needs_human,BLOCK,fail_closed,MISSING_CONTACT,,False,False
+INQ-S0-007,2026-09-12T10:12:00+09:00,email,小林デモ,not-an-email,0300007007,デモ設計,見積依頼,needs_human,BLOCK,fail_closed,INVALID_EMAIL,,False,False
+INQ-S0-008,2026-09-12T10:30:00+09:00,form,加藤サンプル,kato.sample@example.com,0300008008,サンプル堂,問い合わせ,needs_human,BLOCK,fail_closed,MISSING_BODY,,False,False
+INQ-S0-009,2027-01-01T00:00:00+09:00,email,吉田合成,yoshida.synthetic@example.com,0300009009,合成企画,予約の相談,needs_human,BLOCK,fail_closed,FUTURE_RECEIVED_AT,,False,False
+INQ-S0-010,2026-09-12T14:18:00+09:00,email,渡辺苦情,watanabe.refund@example.com,0300010010,苦情サンプル社,返金してほしい,needs_human,BLOCK,fail_closed,RISK_KEYWORD,,False,False
+INQ-S0-011,2026-09-12T15:01:00+09:00,chat,松本不明,matsumoto.hello@example.com,0300011011,不明商店,こんにちは,needs_human,BLOCK,fail_closed,BODY_TOO_SHORT;UNCLEAR_INTENT,,False,False
+INQ-S0-012,2026-09-12T16:44:00+09:00,email,林法務,hayashi.legal@example.com,0300012012,法務サンプル,法的措置の検討,needs_human,BLOCK,fail_closed,RISK_KEYWORD,,False,False
+INQ-S0-013,2026-09-13T09:10:00+09:00,fax,遠藤見本,endo.fax@example.com,0300013013,FAX見本社,FAX問い合わせ,needs_human,BLOCK,fail_closed,UNKNOWN_CHANNEL,,False,False
+INQ-S0-014,2026-09-13T10:22:00+09:00,form,,no.name@example.com,0300014014,無名社,名前なしの問合せ,needs_human,BLOCK,fail_closed,MISSING_NAME,,False,False
+INQ-S0-015,2026-09-13T11:05:00+09:00,email,佐藤 デモ,sato.other@example.invalid,0800002015,別窓商事,納品予定の確認,needs_human,BLOCK,fail_closed,AMBIGUOUS_SIMILARITY,INQ-S0-002,False,False
+INQ-S0-016,2026-09-13T13:33:00+09:00,chat,伊藤合成,ito.synthetic@example.com,0300016016,合成通信,チャットからの質問,ready_for_review,REVIEW,human_review_required,VALID_UNIQUE,,False,False
+INQ-S0-017,2026-09-14T09:48:00+09:00,email,鈴木サンプル,suzuki.north@example.com,0300017017,株式会社デモ北,資料請求,ready_for_review,REVIEW,human_review_required,VALID_UNIQUE,,False,False
+INQ-S0-018,2026-09-14T11:07:00+09:00,form,鈴木サンプル,suzuki.alt@example.invalid,0800018018,株式会社デモ北,資料をください,needs_human,BLOCK,fail_closed,AMBIGUOUS_IDENTITY,INQ-S0-017,False,False
+INQ-S0-019,2026-09-15T08:55:00+09:00,phone_note,渡辺架空,,0300019019,架空製作所,折り返し希望,ready_for_review,REVIEW,human_review_required,VALID_UNIQUE,,False,False
+INQ-S0-020,2026-09-15T17:40:00+09:00,form,山田サンプル,yamada.sample@example.com,,株式会社サンプル南,料金について再確認,needs_human,BLOCK,fail_closed,EXACT_EMAIL_DUPLICATE,INQ-S0-001,False,False
