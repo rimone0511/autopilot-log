@@ -1,8 +1,10 @@
 # STOP — Workship (B02)
 
-Mode: **DRAFT_ONLY**  
+Mode: **DRAFT_ONLY** / **REGISTER-CU-CUT**  
 Pack: `ops/earn/workship-cu-handoff-20260916/`  
 Date: 2026-09-16
+
+**Default: do not autoplay.** Workship is not next live CU (jobs-first). See [STATUS.md](STATUS.md) `register_cu_cut`.
 
 **This file is a stop list.** It does not tell anyone how to pass identity checks, which ID to use, which bank to pick, or how to エントリー.
 
