@@ -128,6 +128,172 @@ class LineageTest(unittest.TestCase):
         self.assertEqual(self.report.input_sha256, wr.sha256_file(FIXTURE))
         md = (OUT / "weekly-2026-W37.md").read_text(encoding="utf-8")
         self.assertIn(self.report.input_sha256, md)
+        self.assertEqual(self.report.source_rel, "fixtures/inbound-ops-synthetic-w37.csv")
+        self.assertEqual(self.report.timezone_name, "Asia/Tokyo")
+
+
+class ProvenanceAndTimezoneTest(unittest.TestCase):
+    """SOL P2 FAIL: labels/links must follow the real --input; timezone must calculate."""
+
+    DEFAULT_NAME = "inbound-ops-synthetic-w37.csv"
+
+    def test_custom_input_provenance_matches_source_link_and_hash(self):
+        with tempfile.TemporaryDirectory(prefix="p2-custom-in-") as tmp:
+            tmp_path = Path(tmp)
+            custom = tmp_path / "customer-input.csv"
+            custom.write_bytes(FIXTURE.read_bytes())
+            digest = wr.sha256_file(custom)
+            self.assertEqual(digest, wr.sha256_file(FIXTURE))
+            self.assertEqual(wr.source_rel_for(custom), "customer-input.csv")
+            self.assertNotIn(tmp_path.as_posix(), wr.source_rel_for(custom))
+
+            report = wr.build_report(custom)
+            self.assertEqual(report.source_rel, "customer-input.csv")
+            self.assertEqual(report.input_sha256, digest)
+            self.assertNotIn(self.DEFAULT_NAME, report.source_rel)
+
+            out_dir = tmp_path / "out"
+            paths = wr.write_outputs(report, out_dir)
+            md = paths["markdown"].read_text(encoding="utf-8")
+            evidence = paths["evidence"].read_text(encoding="utf-8")
+            summary = paths["summary"].read_text(encoding="utf-8")
+            exceptions = paths["exceptions"].read_text(encoding="utf-8")
+            run = json.loads(paths["run"].read_text(encoding="utf-8"))
+
+            self.assertIn("入力: `customer-input.csv`", md)
+            self.assertIn(digest, md)
+            self.assertIn("../customer-input.csv#L2", md)
+            self.assertNotIn(self.DEFAULT_NAME, md)
+            self.assertNotIn(tmp_path.as_posix(), md)
+
+            self.assertEqual(run["input"], "customer-input.csv")
+            self.assertEqual(run["input_sha256"], digest)
+            self.assertNotIn(self.DEFAULT_NAME, run["input"])
+
+            for body in (evidence, summary, exceptions):
+                self.assertIn("customer-input.csv#L", body)
+                self.assertNotIn(self.DEFAULT_NAME, body)
+                self.assertNotIn(tmp_path.as_posix(), body)
+
+            rc = wr.main(
+                [
+                    "--input",
+                    str(custom),
+                    "--out-dir",
+                    str(out_dir / "cli"),
+                    "--check",
+                ]
+            )
+            self.assertEqual(rc, 0)
+            cli_run = json.loads((out_dir / "cli" / "weekly-2026-W37-RUN.json").read_text(encoding="utf-8"))
+            self.assertEqual(cli_run["input"], "customer-input.csv")
+            self.assertEqual(cli_run["input_sha256"], digest)
+
+    def test_broken_temp_copy_is_cited_as_evidence_source(self):
+        with tempfile.TemporaryDirectory(prefix="p2-broken-copy-") as tmp:
+            custom = Path(tmp) / "broken-copy.csv"
+            text = FIXTURE.read_text(encoding="utf-8")
+            text = text.replace(
+                "ROW-W37-001,2026-09-07T09:12:00+09:00,store,NB-A5,2,480,fulfilled,合成・店頭",
+                "ROW-W37-001,2026-09-07T09:12:00+09:00,store,NB-A5,-1,480,fulfilled,合成・壊した行",
+            )
+            custom.write_text(text, encoding="utf-8")
+            digest = wr.sha256_file(custom)
+            self.assertNotEqual(digest, wr.sha256_file(FIXTURE))
+
+            report = wr.build_report(custom)
+            l03 = next(x for x in report.lines if x.line_id == "L03")
+            l15 = next(x for x in report.lines if x.line_id == "L15")
+            self.assertNotIn("ROW-W37-001", l03.row_ids)
+            self.assertIn("ROW-W37-001", l15.row_ids)
+            self.assertEqual(l03.synthetic_jpy, 8640)
+
+            paths = wr.write_outputs(report, Path(tmp) / "out")
+            md = paths["markdown"].read_text(encoding="utf-8")
+            run = json.loads(paths["run"].read_text(encoding="utf-8"))
+            evidence = paths["evidence"].read_text(encoding="utf-8")
+            self.assertEqual(run["input"], "broken-copy.csv")
+            self.assertEqual(run["input_sha256"], digest)
+            self.assertIn("broken-copy.csv", md)
+            self.assertIn("../broken-copy.csv#L2", evidence)
+            self.assertNotIn(self.DEFAULT_NAME, md)
+            self.assertNotIn(self.DEFAULT_NAME, evidence)
+
+    def test_timezone_utc_is_used_for_bounds_and_recorded(self):
+        jst_report = wr.build_report(FIXTURE, timezone_name="Asia/Tokyo")
+        utc_report = wr.build_report(FIXTURE, timezone_name="UTC")
+        jst_alias = wr.build_report(FIXTURE, timezone_name="JST")
+
+        self.assertEqual(jst_report.timezone_name, "Asia/Tokyo")
+        self.assertEqual(jst_alias.timezone_name, "Asia/Tokyo")
+        self.assertEqual(utc_report.timezone_name, "UTC")
+        self.assertEqual(jst_report.week_start.isoformat(), "2026-09-07T00:00:00+09:00")
+        self.assertEqual(utc_report.week_start.isoformat(), "2026-09-07T00:00:00+00:00")
+        self.assertEqual(utc_report.week_end_exclusive.isoformat(), "2026-09-14T00:00:00+00:00")
+
+        with tempfile.TemporaryDirectory(prefix="p2-tz-bound-") as tmp:
+            custom = Path(tmp) / "tz-boundary.csv"
+            custom.write_text(
+                "row_id,occurred_at,channel,sku,qty,unit_amount_jpy,status,note\n"
+                "ROW-TZ-JST-ONLY,2026-09-07T00:30:00+09:00,store,NB-A5,1,480,fulfilled,合成・JST週内UTC週外\n"
+                "ROW-TZ-BOTH,2026-09-08T12:00:00+09:00,store,NB-A5,1,480,fulfilled,合成・両帯で週内\n",
+                encoding="utf-8",
+            )
+            jst_b = wr.build_report(custom, timezone_name="Asia/Tokyo")
+            utc_b = wr.build_report(custom, timezone_name="UTC")
+            by_jst = {r.row_id: r for r in jst_b.rows}
+            by_utc = {r.row_id: r for r in utc_b.rows}
+            self.assertEqual(by_jst["ROW-TZ-JST-ONLY"].bucket, "fulfilled")
+            self.assertEqual(by_utc["ROW-TZ-JST-ONLY"].bucket, "exception")
+            self.assertIn("out_of_week", by_utc["ROW-TZ-JST-ONLY"].reasons)
+            self.assertEqual(by_jst["ROW-TZ-BOTH"].bucket, "fulfilled")
+            self.assertEqual(by_utc["ROW-TZ-BOTH"].bucket, "fulfilled")
+
+            utc_paths = wr.write_outputs(utc_b, Path(tmp) / "out-utc")
+            utc_md = utc_paths["markdown"].read_text(encoding="utf-8")
+            utc_run = json.loads(utc_paths["run"].read_text(encoding="utf-8"))
+            self.assertEqual(utc_run["timezone"], "UTC")
+            self.assertEqual(utc_run["week_start"], "2026-09-07T00:00:00+00:00")
+            self.assertEqual(utc_run["input"], "tz-boundary.csv")
+            self.assertIn("（ISO、UTC）", utc_md)
+            self.assertIn("tz-boundary.csv", utc_md)
+            self.assertNotIn(self.DEFAULT_NAME, utc_md)
+
+            rc = wr.main(
+                [
+                    "--input",
+                    str(custom),
+                    "--out-dir",
+                    str(Path(tmp) / "out-cli"),
+                    "--timezone",
+                    "UTC",
+                    "--check",
+                ]
+            )
+            self.assertEqual(rc, 0)
+            cli_run = json.loads((Path(tmp) / "out-cli" / "weekly-2026-W37-RUN.json").read_text(encoding="utf-8"))
+            self.assertEqual(cli_run["timezone"], "UTC")
+            self.assertEqual(cli_run["week_start"], "2026-09-07T00:00:00+00:00")
+
+    def test_unknown_timezone_and_missing_input_fail_closed(self):
+        with self.assertRaises(ValueError):
+            wr.build_report(FIXTURE, timezone_name="Not/AZone")
+        with tempfile.TemporaryDirectory(prefix="p2-missing-") as tmp:
+            missing = Path(tmp) / "no-such.csv"
+            rc_missing = wr.main(["--input", str(missing), "--out-dir", tmp, "--check"])
+            self.assertEqual(rc_missing, 2)
+            rc_tz = wr.main(
+                [
+                    "--input",
+                    str(FIXTURE),
+                    "--out-dir",
+                    tmp,
+                    "--timezone",
+                    "Not/AZone",
+                    "--check",
+                ]
+            )
+            self.assertEqual(rc_tz, 2)
 
 
 if __name__ == "__main__":

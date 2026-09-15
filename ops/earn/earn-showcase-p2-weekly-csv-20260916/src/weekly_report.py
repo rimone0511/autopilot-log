@@ -34,6 +34,13 @@ DEFAULT_TZ_NAME = "Asia/Tokyo"
 DEFAULT_GENERATED_AT = "2026-09-16T12:00:00+09:00"
 DEFAULT_DATASET = "ハーバー文具（合成）"
 SOURCE_REL = "fixtures/inbound-ops-synthetic-w37.csv"
+TZ_ALIASES = {
+    "jst": "Asia/Tokyo",
+    "asia/tokyo": "Asia/Tokyo",
+    "utc": "UTC",
+    "gmt": "UTC",
+    "z": "UTC",
+}
 
 ALLOWED_CHANNELS = ("store", "web", "phone", "wholesale")
 ALLOWED_SKUS = ("NB-A5", "PEN-BK", "CLIP-20")
@@ -59,12 +66,51 @@ SECRET_RE = re.compile(
 
 
 def jst():
+    tz, _ = resolve_timezone(DEFAULT_TZ_NAME)
+    return tz
+
+
+def resolve_timezone(name: str) -> Tuple[object, str]:
+    """Return (tzinfo, recorded IANA name). Unknown names fail closed."""
+    raw = (name or "").strip()
+    if not raw:
+        raise ValueError("timezone must be non-empty")
+    iana = TZ_ALIASES.get(raw.lower(), raw)
     if ZoneInfo is not None:
         try:
-            return ZoneInfo(DEFAULT_TZ_NAME)
-        except Exception:
-            pass
-    return timezone(timedelta(hours=9), name="JST")
+            return ZoneInfo(iana), iana
+        except Exception as exc:
+            raise ValueError(f"unknown timezone: {name}") from exc
+    if iana == "Asia/Tokyo":
+        return timezone(timedelta(hours=9), name="JST"), "Asia/Tokyo"
+    if iana == "UTC":
+        return timezone.utc, "UTC"
+    raise ValueError(f"unknown timezone: {name}")
+
+
+def source_rel_for(input_path: Path, pack_root: Path = PACK_ROOT) -> str:
+    """Leak-free source label for the file that was actually read.
+
+    Pack-internal paths stay pack-relative (so the default fixture keeps
+    `fixtures/inbound-ops-synthetic-w37.csv`). Paths outside the pack use
+    the basename only — parent directories are never written into output.
+    """
+    resolved = input_path.expanduser().resolve()
+    try:
+        rel = resolved.relative_to(pack_root.resolve())
+    except ValueError:
+        name = resolved.name
+        if not name or name in {".", ".."}:
+            raise ValueError("input path has no usable filename")
+        return name
+    posix = rel.as_posix()
+    if not posix or posix == ".":
+        raise ValueError("input path has no usable filename")
+    return posix
+
+
+def evidence_href(source_rel: str, source_line: int) -> str:
+    return f"../{source_rel}#L{source_line}"
 
 
 def sha256_file(path: Path) -> str:
@@ -122,8 +168,8 @@ class SourceRow:
     status: str
     note: str
 
-    def fixture_link(self) -> str:
-        return f"../{SOURCE_REL}#L{self.source_line}"
+    def fixture_link(self, source_rel: str) -> str:
+        return evidence_href(source_rel, self.source_line)
 
 
 @dataclass
@@ -157,12 +203,12 @@ class SummaryLine:
     row_ids: List[str]
     source_lines: List[int]
 
-    def evidence_cell(self) -> str:
+    def evidence_cell(self, source_rel: str) -> str:
         if not self.row_ids:
             return "（該当なし）"
         parts = []
         for rid, line in zip(self.row_ids, self.source_lines):
-            parts.append(f"[{rid}](../{SOURCE_REL}#L{line})")
+            parts.append(f"[{rid}]({evidence_href(source_rel, line)})")
         return ", ".join(parts)
 
 
@@ -174,6 +220,7 @@ class Report:
     timezone_name: str
     dataset_label: str
     input_path: Path
+    source_rel: str
     input_sha256: str
     generated_at: str
     rows: List[ClassifiedRow]
@@ -365,7 +412,9 @@ def build_report(
     generated_at: str = DEFAULT_GENERATED_AT,
     dataset_label: str = DEFAULT_DATASET,
 ) -> Report:
-    tz = jst() if timezone_name in ("Asia/Tokyo", "JST") else jst()
+    if not input_path.is_file():
+        raise FileNotFoundError(f"input not found: {input_path}")
+    tz, recorded_tz = resolve_timezone(timezone_name)
     week_start, week_end = parse_week_bounds(week, tz)
     sources = load_csv(input_path)
     rows = classify_rows(sources, week_start, week_end, tz)
@@ -374,9 +423,10 @@ def build_report(
         week=week,
         week_start=week_start,
         week_end_exclusive=week_end,
-        timezone_name=DEFAULT_TZ_NAME,
+        timezone_name=recorded_tz,
         dataset_label=dataset_label,
         input_path=input_path,
+        source_rel=source_rel_for(input_path),
         input_sha256=sha256_file(input_path),
         generated_at=generated_at,
         rows=rows,
@@ -479,7 +529,7 @@ def render_markdown(report: Report) -> str:
         "",
         f"- 週: `{report.week}`（ISO、{report.timezone_name}）",
         f"- 期間: `{start}` 以上、`{end}` 未満（半開）",
-        f"- 入力: `{SOURCE_REL}`",
+        f"- 入力: `{report.source_rel}`",
         f"- 入力 SHA-256: `{report.input_sha256}`",
         f"- 生成時刻（固定）: `{report.generated_at}`",
         "- エンジン: `src/weekly_report.py`（n8n JSON は inactive の見本。正本はこのスクリプト）",
@@ -492,7 +542,7 @@ def render_markdown(report: Report) -> str:
     for line in report.lines:
         lines_md.append(
             f"| {line.line_id} | {line.label} | {line.row_count} | {line.qty} | "
-            f"{line.synthetic_jpy} | {line.evidence_cell()} |"
+            f"{line.synthetic_jpy} | {line.evidence_cell(report.source_rel)} |"
         )
     lines_md += [
         "",
@@ -509,7 +559,7 @@ def render_markdown(report: Report) -> str:
     else:
         for row in sorted(exceptions, key=lambda r: r.source_line):
             reasons = ",".join(row.reasons)
-            link = f"[L{row.source_line}]({row.source.fixture_link()})"
+            link = f"[L{row.source_line}]({row.source.fixture_link(report.source_rel)})"
             rid = row.row_id or "(empty)"
             lines_md.append(f"| {row.source_line} | `{rid}` | `{reasons}` | {link} |")
 
@@ -527,7 +577,7 @@ def render_markdown(report: Report) -> str:
         lines_md += [
             f"### {row.row_id or '(empty-id)'} · L{row.source_line}",
             "",
-            f"- CSV: [行 {row.source_line}]({row.source.fixture_link()})",
+            f"- CSV: [行 {row.source_line}]({row.source.fixture_link(report.source_rel)})",
             f"- occurred_at: `{occurred}`",
             f"- channel: `{row.source.channel}` / sku: `{row.source.sku}` / status: `{row.source.status}`",
             f"- qty: `{row.source.qty_raw}` / unit_amount_jpy: `{row.source.unit_amount_raw}`",
@@ -597,7 +647,7 @@ def write_outputs(report: Report, out_dir: Path) -> Dict[str, Path]:
                 "row_ids": "|".join(line.row_ids),
                 "source_lines": "|".join(str(n) for n in line.source_lines),
                 "evidence_links": "|".join(
-                    f"../{SOURCE_REL}#L{n}" for n in line.source_lines
+                    evidence_href(report.source_rel, n) for n in line.source_lines
                 ),
             }
             for line in report.lines
@@ -612,7 +662,7 @@ def write_outputs(report: Report, out_dir: Path) -> Dict[str, Path]:
                     "line_id": line.line_id,
                     "row_id": rid,
                     "source_line": src_line,
-                    "evidence_link": f"../{SOURCE_REL}#L{src_line}",
+                    "evidence_link": evidence_href(report.source_rel, src_line),
                     "predicate": line.predicate,
                 }
             )
@@ -643,7 +693,7 @@ def write_outputs(report: Report, out_dir: Path) -> Dict[str, Path]:
                 "sku": row.source.sku,
                 "status": row.source.status,
                 "occurred_at": row.source.occurred_at_raw,
-                "evidence_link": row.source.fixture_link(),
+                "evidence_link": row.source.fixture_link(report.source_rel),
             }
             for row in report.rows
             if row.bucket == "exception"
@@ -666,7 +716,7 @@ def write_outputs(report: Report, out_dir: Path) -> Dict[str, Path]:
         "week_start": report.week_start.isoformat(),
         "week_end_exclusive": report.week_end_exclusive.isoformat(),
         "timezone": report.timezone_name,
-        "input": SOURCE_REL,
+        "input": report.source_rel,
         "input_sha256": report.input_sha256,
         "generated_at": report.generated_at,
         "counts": counts,
@@ -688,7 +738,11 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument("--input", type=Path, default=DEFAULT_INPUT)
     parser.add_argument("--out-dir", type=Path, default=DEFAULT_OUT)
     parser.add_argument("--week", default=DEFAULT_WEEK)
-    parser.add_argument("--timezone", default=DEFAULT_TZ_NAME)
+    parser.add_argument(
+        "--timezone",
+        default=DEFAULT_TZ_NAME,
+        help="IANA timezone for week bounds (default Asia/Tokyo). JST is an alias.",
+    )
     parser.add_argument("--generated-at", default=DEFAULT_GENERATED_AT)
     parser.add_argument("--dataset-label", default=DEFAULT_DATASET)
     parser.add_argument("--trace", metavar="ROW_ID", help="print summary lines that cite this row_id")
@@ -696,19 +750,24 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     args = parser.parse_args(argv)
 
     input_path = args.input if args.input.is_absolute() else (Path.cwd() / args.input)
-    if not input_path.exists():
-        input_path = args.input if args.input.exists() else PACK_ROOT / SOURCE_REL
+    if not input_path.is_file():
+        print(f"input not found: {input_path}", file=sys.stderr)
+        return 2
     out_dir = args.out_dir if args.out_dir.is_absolute() else (Path.cwd() / args.out_dir)
     if str(args.out_dir) == str(DEFAULT_OUT) and not out_dir.exists():
         out_dir = DEFAULT_OUT
 
-    report = build_report(
-        input_path=input_path.resolve(),
-        week=args.week,
-        timezone_name=args.timezone,
-        generated_at=args.generated_at,
-        dataset_label=args.dataset_label,
-    )
+    try:
+        report = build_report(
+            input_path=input_path.resolve(),
+            week=args.week,
+            timezone_name=args.timezone,
+            generated_at=args.generated_at,
+            dataset_label=args.dataset_label,
+        )
+    except (ValueError, FileNotFoundError, OSError) as exc:
+        print(str(exc), file=sys.stderr)
+        return 2
     errors = lineage_errors(report)
     if args.trace:
         hits = lines_for_row(report, args.trace)

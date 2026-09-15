@@ -71,6 +71,10 @@ python3 src/weekly_report.py --trace ROW-W37-007
 
 `git diff -- ops/earn/earn-showcase-p2-weekly-csv-20260916/out` が空なら、コミット済み見本と再生成が一致している。
 
+`--input` を別ファイルにすると、Markdown / evidence / RUN の出典名・`#Ln` リンク・SHA-256 は **そのファイル** を指す。パック内ならパック相対、パック外ならファイル名のみ（親ディレクトリは書かない）。存在しない `--input` は既定 fixture に落とさず終了する。
+
+`--timezone` は週の半開区間の計算に使う（既定 `Asia/Tokyo`。`JST` は同義。`UTC` も可）。記録される timezone / week_start は実際に使った帯である。未知の帯は終了する。
+
 ### n8n（任意・動かさなくてよい）
 
 1. n8n で Import from File → `n8n/p2-weekly-csv-evidence.inactive.json`

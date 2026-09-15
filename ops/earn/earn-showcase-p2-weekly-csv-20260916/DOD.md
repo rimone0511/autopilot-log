@@ -14,6 +14,8 @@
 - [x] README が日本語で再現手順を持つ
 - [x] n8n JSON は `active: false`。送信ノードなし
 - [x] 販売者の実売上・時短・精度を数字で主張していない
+- [x] `--input` の出典（表示名・`#Ln` リンク・SHA-256）が実ファイルと一致する。既定 fixture 名を他ファイルに付けない
+- [x] `--timezone` が週境界の計算と Markdown / RUN の記録に使われる。未知の帯は終了する
 
 コマンド:
 
@@ -42,7 +44,9 @@ python3 -c "import json,pathlib; p=pathlib.Path('n8n/p2-weekly-csv-evidence.inac
 
 - [ ] 空の作業領域で README のコマンドだけを使い、同じ `out/` が再生成される
 - [ ] `weekly-2026-W37.md` のリンクを1つ開き、CSVの該当行と指標が一致する
-- [ ] 入力を1行壊して再実行し、その行が L03 から消えて L15 に出る
+- [ ] 入力を1行壊して再実行し、その行が L03 から消えて L15 に出る（原 fixture は汚さず一時コピー。そのコピーが根拠として表示される）
+- [ ] 一時コピー入力で Markdown / evidence / RUN の source・link・hash がコピー側と一致する
+- [ ] `--timezone UTC` で week_start が UTC になり、境界行の分類が JST と異なる
 - [ ] n8n を Import しても Active にしない（任意。正本は Python）
 
 ## 合格に使わない（Should / 対象外）
