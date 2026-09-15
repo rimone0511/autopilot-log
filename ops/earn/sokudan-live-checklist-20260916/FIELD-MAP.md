@@ -1,6 +1,7 @@
 # FIELD-MAP — SOKUDAN 人材 下書き（safe JA paste）
 
 > **DRAFT_ONLY.** Paste-ready JA. No secrets. Live form wins.  
+> **REGISTER-CU-CUT.** Do not open SOKUDAN to paste these now. Prefer JOBS. See [STATUS.md](STATUS.md).  
 > Seller-brand = 石田祐太 / ユタラボ / 公式APIのみ / 人が検品できる仕組み。  
 > **生年月日と電話番号は創作しない。このファイルに実値を書かない。CU は打たない。**  
 > 実パスワード・OTP・番地・口座・身分証番号も **このリポジトリに書かない**。

@@ -1,11 +1,19 @@
 # STATUS — SOKUDAN live-register field checklist
 
+> ## REGISTER-CU-CUT
+>
+> **2026-09-16.** This SOKUDAN **register** checklist is **not** next live CU.
+> Prefer **JOBS phase** (`register-winddown` / jobs-first).
+> **Do not** open `sokudan.work` / `/signup/pro` / Google OAuth from this folder.
+> After Freelancer (or any Wave A park): stay on JOBS (do-not-send bids / listings / week plan). Do **not** chain into B01 SOKUDAN.
+> Field order below stays **DRAFT_ONLY** archive for a later human GO. **Not a signup GO.**
+
 Snapshot: **2026-09-16**  
 Folder: `ops/earn/sokudan-live-checklist-20260916/`  
-State: **DRAFT_ONLY**  
+State: **DRAFT_ONLY** / **REGISTER-CU-CUT** (prep, not next CU)  
 Authoring: 公開 GET / 公式 FAQ（トップ） / 規約 / プライバシーのみ。**アカウント作成なし。OAuth 未完走。POST なし。**
 
-This file is a desk box for **CU-13 / QUEUE B1**. It does not claim a SOKUDAN account exists. It does not rewrite Wave B snapshots in sibling PRs.
+This file is a desk box for **CU-13 / QUEUE B1**. It does not claim a SOKUDAN account exists. It does not rewrite Wave B snapshots in sibling PRs. **Cut overrides play:** do not start this desk from a Freelancer `done-draft` or as the next live CU.
 
 Forbidden: secrets, live phones/passwords/OTP/DOB, KYC files, signup from this authoring agent, 応募, 審査書類アップロード, invented traffic/GMV/fee %.
 
@@ -15,8 +23,8 @@ Forbidden: secrets, live phones/passwords/OTP/DOB, KYC files, signup from this a
 
 | Item | Status |
 |---|---|
-| This checklist pack | **ready · draft** (markdown only) |
-| Live CU Google → profile draft | **not run** from this agent |
+| This checklist pack | **ready · draft** (markdown only). **REGISTER-CU-CUT** |
+| Live CU Google → profile draft | **not run** — **do not run next**. Prefer JOBS |
 | SOKUDAN account | **not claimed** |
 | Phone / DOB | **do not type** — required → STOP |
 | 審査書類 / 応募 | **STOP — not this pack** |
@@ -29,9 +37,10 @@ Forbidden: secrets, live phones/passwords/OTP/DOB, KYC files, signup from this a
 
 | Hint | Meaning here |
 |---|---|
-| `pack_ready` | This 3-file checklist is field-ordered. CU may type under CHECKLIST rules |
+| `pack_ready` | Files exist. **Not** a play GO. Default `register_cu_cut` |
 | `pending` | Live CU has **not** marked a draft from **this** folder |
-| `draft_saved` | Talent profile parked unpublished (fill after a real CU run) |
+| `register_cu_cut` | Register cut. **Not** next live CU. Prefer JOBS phase |
+| `draft_saved` | Talent profile parked unpublished (fill only after a later human GO + real CU run) |
 | `phone_required_stop` | Phone required to save; this pack does not type a number |
 | `dob_required_stop` | DOB required to save; this pack does not invent a date |
 | `blocked_skip` | Skip this pass. Do not retry the listed reason |
@@ -42,9 +51,11 @@ Current row (authoring time):
 
 | # | desk | CU hint | reason | next action |
 |---|---|---|---|---|
-| B1 / CU-13 | SOKUDAN ソクダン | `pack_ready` + `pending` | Live checklist written. No signup from this agent | CU: Google `/signup/pro` → profile **draft**. STOP if phone/DOB required. STOP KYC. STOP apply |
+| B1 / CU-13 | SOKUDAN ソクダン | `pack_ready` + `register_cu_cut` | Checklist written. **Do not play.** | Stay JOBS-first. Do **not** open SOKUDAN as next live CU |
 
-Wave B context (pointers only): activity gate [PR#12](https://github.com/rimone0511/autopilot-log/pull/12) = **pass**. Serial [PR#50](https://github.com/rimone0511/autopilot-log/pull/50) places this desk after Workship, before Offers. This pack does **not** start those desks.
+Wave B context (pointers only): activity gate [PR#12](https://github.com/rimone0511/autopilot-log/pull/12) = **pass**. Serial [PR#50](https://github.com/rimone0511/autopilot-log/pull/50) places this desk after Workship, before Offers. Wave B serial [PR#72](https://github.com/rimone0511/autopilot-log/pull/72) is already **REGISTER-CU-CUT**. This pack does **not** start those desks and does **not** reopen the serial.
+
+JOBS-first (do-not-send): [PR#88](https://github.com/rimone0511/autopilot-log/pull/88) TODAY apply queue · [PR#76](https://github.com/rimone0511/autopilot-log/pull/76) 7-day week plan · [PR#80](https://github.com/rimone0511/autopilot-log/pull/80) board scan · [PR#68](https://github.com/rimone0511/autopilot-log/pull/68) Freelancer bids.
 
 ---
 
@@ -52,9 +63,9 @@ Wave B context (pointers only): activity gate [PR#12](https://github.com/rimone0
 
 | File | What CU does |
 |---|---|
-| [CHECKLIST.md](CHECKLIST.md) | Ordered fields: Google で登録 → プロフィール下書き。STOP 電話必須 / 生年月日必須 / KYC / 応募 |
-| [FIELD-MAP.md](FIELD-MAP.md) | Safe JA paste（キャッチ 30/12、bio 200/800/nourl、スキル）。phone/DOB empty |
-| [STATUS.md](STATUS.md) | This box. Fill the success line after a live run |
+| [CHECKLIST.md](CHECKLIST.md) | Field order **on file**. Default **do not play**. STOP 電話必須 / 生年月日必須 / KYC / 応募 |
+| [FIELD-MAP.md](FIELD-MAP.md) | Safe JA paste（キャッチ 30/12、bio 200/800/nourl、スキル）。phone/DOB empty. For a later GO only |
+| [STATUS.md](STATUS.md) | This box. **REGISTER-CU-CUT.** Not a live-run log |
 
 ---
 
@@ -71,7 +82,7 @@ Wave B context (pointers only): activity gate [PR#12](https://github.com/rimone0
 | [#4](https://github.com/rimone0511/autopilot-log/pull/4) | `earn-kyc-morning-checklist-20260916/` | Morning user KYC slip. This pack does not open 審査書類 |
 | [#67](https://github.com/rimone0511/autopilot-log/pull/67) | `ops/earn/craudia-live-checklist-20260916/` | Sibling **pattern** (different desk) |
 
-This folder does **not** replace those packs. It adds the live **field order** and a phone/DOB required stop.
+This folder does **not** replace those packs. It archives the live **field order** and a phone/DOB required stop. **Cut overrides play.**
 
 ---
 
@@ -99,7 +110,7 @@ Google 開始 URL は HTML 上 `data-method="post"`。この authoring セッシ
 
 ---
 
-## After live CU (leave blank until a run)
+## After live CU (leave blank — default: do not run)
 
 Fill only the secret-free keys. Do not paste OTP, ID, a phone, or a date of birth.
 
@@ -124,17 +135,17 @@ dob_typed: no
 upload: none
 ```
 
-Outcome so far: **not run**. Valid later values: `done-draft` | `already_member_draft` | `phone_required_stop` | `dob_required_stop` | `kyc_wait` | `apply_stop` | `no_draft_path` | `otp_missing` | `hold_failed` | `oauth_overreach` | `already_applied`.
+Outcome so far: **not run** / **REGISTER-CU-CUT**. Valid later values (only after a human GO): `done-draft` | `already_member_draft` | `phone_required_stop` | `dob_required_stop` | `kyc_wait` | `apply_stop` | `no_draft_path` | `otp_missing` | `hold_failed` | `oauth_overreach` | `already_applied`.
 
 ---
 
 ## Next (human / CU)
 
-1. Keep DRAFT. Do not merge until Yuta reviews.
-2. CU: [CHECKLIST.md](CHECKLIST.md) in order. Paste from [FIELD-MAP.md](FIELD-MAP.md). Gmail OTP via parent. Phone/DOB empty.
-3. Stop if phone or DOB is required to save. Stop before 審査書類 / 応募.
-4. Do not continue this folder into Offers / Workship.
-5. Next Wave B desk in the serial is Offers — **not this folder**.
+1. **REGISTER-CU-CUT.** Do not open SOKUDAN as next live CU. Prefer JOBS phase.
+2. Keep DRAFT. Do not merge until Yuta reviews.
+3. JOBS: do-not-send pastes / week plan / apply queue on desks that already have `draft_saved`. Do not start Wave B register from this folder.
+4. If register CU is ever re-opened by a **human GO**, then and only then follow [CHECKLIST.md](CHECKLIST.md) + [FIELD-MAP.md](FIELD-MAP.md). Default is **cut**.
+5. Do not continue this folder into Offers / Workship.
 
 ---
 
@@ -148,4 +159,5 @@ Outcome so far: **not run**. Valid later values: `done-draft` | `already_member_
 - 応募 / スカウト返信 / 発注者申込
 - Invent fee % or yen rates or paste 「92%」 into the bio
 - Rewrite the Wave B activity-gate pass
+- Start SOKUDAN (or Wave B register serial) as next live CU after Freelancer
 - Change Python posting-gate tests

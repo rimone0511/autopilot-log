@@ -1,13 +1,19 @@
 # CHECKLIST — SOKUDAN live register (Google → profile draft)
 
+> ## REGISTER-CU-CUT
+>
+> **2026-09-16. Do not play.** This file is field-order archive, not next live CU.  
+> Prefer **JOBS phase**. Do **not** open `/signup/pro`. See [STATUS.md](STATUS.md).  
+> A later **human GO** is required before any tick below. Default is **cut**.
+
 > **DRAFT_ONLY.** JP OK. No secrets.  
-> Computer-use（CU）直列用。このフォルダを書いているエージェントは **登録していない / OAuth 未完走 / POST していない**。  
+> Computer-use（CU）直列用の **手順書**。このフォルダを書いているエージェントは **登録していない / OAuth 未完走 / POST していない**。  
 > Live form wins. 公開ページに無いラベルは `needs_check`。
 
 Pack date: **2026-09-16**  
 Folder: `ops/earn/sokudan-live-checklist-20260916/`  
 Desk: SOKUDAN（ソクダン）— **フリーランス・副業（人材 / 受注者側）**  
-CU serial: **CU-13** / QUEUE **B1**  
+CU serial: **CU-13** / QUEUE **B1** — **REGISTER-CU-CUT** (not next CU)  
 Host: `sokudan.work`（発注者 LP は `business.sokudan.work` — **入らない**）  
 Operator: CAMELORS株式会社（規約前文）  
 Google: **PREFER_GOOGLE**（MAIN のみ）  
@@ -59,7 +65,8 @@ Siblings say 応募しない / 審査書類 STOP. This pack **also** parks if �
 
 ## 1. Preflight
 
-- [ ] You are the **CU serial** for this desk, not the pack-author.
+- [ ] **REGISTER-CU-CUT check.** Default = **do not open SOKUDAN**. If you do not have a human GO in chat for *this* desk *this* day, stop. Prefer JOBS.
+- [ ] You are the **CU serial** for this desk **only after that GO**, not the pack-author.
 - [ ] Viewport desktop ≥ 1280px. One marketplace profile. Do not also live in Gmail in that profile.
 - [ ] Previous CU left a different Google user → sign **out**, then MAIN (`rimone0511`).
 - [ ] Timebox 15–25 min. 1モーダル 10 min 超えたら park.
@@ -304,6 +311,7 @@ Copy the same keys into [STATUS.md](STATUS.md). Do not put OTP digits, passwords
 - ID / 自撮り / 銀行 / マイナンバー
 - 案件応募 / スカウト返信 / 発注者申込
 - Facebook / LinkedIn / X / GitHub を新規身分にする
-- Workship / Offers / Skill Shift など他机
+- Workship / Offers / Skill Shift など他机（Wave B serial は [PR#72](https://github.com/rimone0511/autopilot-log/pull/72) で **REGISTER-CU-CUT**）
+- このフォルダを次の live CU として開くこと（default **cut**。JOBS-first）
 - Sibling 本文の二重貼り、`earn-packs/` へのコピー
 - Python posting-gate の変更
