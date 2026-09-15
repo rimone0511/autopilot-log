@@ -1,0 +1,165 @@
+{
+  "name": "P3 Fail-stop / double-registration STUB — DO NOT ACTIVATE",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## P3 fail-stop (STUB)\n\nInactive on purpose.\nReplace `{{WEBHOOK_PATH_P3}}`.\nNo secrets in this file.\nDuplicate / invalid writes STOP.\nTimeout is NOT approve.\nPython runner is the DoD source of truth.\nPOST body: `{ ledger, event }` or `{ ledger, events }`.",
+        "height": 360,
+        "width": 420,
+        "color": 7
+      },
+      "id": "eeeeeeee-0003-4000-8000-000000000001",
+      "name": "Note: stub rules",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [0, 60]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "{{WEBHOOK_PATH_P3}}",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "eeeeeeee-0003-4000-8000-000000000002",
+      "name": "Webhook event STUB",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [480, 300],
+      "webhookId": "00000000-0000-4000-8000-00000000eee1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const EMAIL_RE = /^[^@\\s]+@[^@\\s]+\\.[A-Za-z]{2,}$/;\nconst REQUIRED = ['record_id', 'kind', 'display_name', 'email'];\nconst STOP = { timeout: 'timeout_not_approve', reject: 'rejected', rejected: 'rejected', missing: 'decision_missing', '': 'decision_missing' };\nconst REASON_JA = {\n  duplicate_registration: '同じ登録キーまたは同じ顧客が台帳に既にあります。二重登録になるため書き込みを止めました。',\n  idempotency_conflict: '同じ登録キーなのに中身が違います。衝突として止めました。',\n  id_collision: '同じ顧客IDなのに中身が違います。衝突として止めました。',\n  invalid_payload: '必須項目の欠落または形式不正です。台帳には書いていません。',\n  timeout_not_approve: '待ち時間が切れました。タイムアウトは承認ではありません。台帳には書いていません。',\n  rejected: '人が却下しました。台帳には書いていません。',\n  decision_missing: '判定が空です。空の判定は承認ではありません。',\n  unknown_decision: '判定が approve / reject / timeout 以外です。承認として扱いません。',\n  unknown_hold_target: '保留中の書き込みが見つかりません。勝手には書きません。',\n  unknown_event_type: '未知のイベント種別です。書き込みしていません。'\n};\n\nfunction payloadHash(record) {\n  const identity = {\n    display_name: String(record.display_name || ''),\n    email: String(record.email || ''),\n    kind: String(record.kind || ''),\n    record_id: String(record.record_id || '')\n  };\n  const blob = JSON.stringify(identity);\n  return 'sha256-n8n-illustration:' + blob.length + ':' + identity.record_id;\n}\n\nfunction validate(record, key) {\n  const errors = [];\n  if (!record || typeof record !== 'object') return ['record-not-object'];\n  if (!String(key || '').trim()) errors.push('idempotency_key-empty');\n  for (const field of REQUIRED) {\n    const value = record[field];\n    if (typeof value !== 'string' || !value.trim()) errors.push('missing-' + field);\n  }\n  if (record.kind && record.kind !== 'customer') errors.push('kind-not-allowed');\n  if (record.email && !EMAIL_RE.test(String(record.email))) errors.push('email-malformed');\n  return errors;\n}\n\nfunction needsHuman(event, reason, extra) {\n  return Object.assign({\n    event_id: event.event_id,\n    status: 'needs_human',\n    reason,\n    written: false,\n    message_ja: REASON_JA[reason],\n    timeout_is_approve: false\n  }, extra || {});\n}\n\nclass Guard {\n  constructor(ledger) {\n    this.ledger = JSON.parse(JSON.stringify(ledger || { records: [] }));\n    this.ledger.records = this.ledger.records || [];\n    this.ledger.synthetic = true;\n    this.byKey = {};\n    this.byId = {};\n    for (const row of this.ledger.records) {\n      row.payload_hash = row.payload_hash || payloadHash(row);\n      if (row.idempotency_key) this.byKey[row.idempotency_key] = row;\n      if (row.record_id) this.byId[row.record_id] = row;\n    }\n    this.holds = {};\n    this.needs_human = [];\n    this.trace = [];\n  }\n  processEvents(events) {\n    for (const event of events) this.processEvent(event);\n    return this.result();\n  }\n  processEvent(event) {\n    let outcome;\n    if (event.event_type === 'write_attempt') outcome = this.writeAttempt(event, false);\n    else if (event.event_type === 'human_decision') outcome = this.humanDecision(event);\n    else {\n      outcome = needsHuman(event, 'unknown_event_type');\n      this.needs_human.push(outcome);\n    }\n    this.trace.push({\n      event_id: event.event_id,\n      event_type: event.event_type,\n      status: outcome.status,\n      reason: outcome.reason || null,\n      written: !!outcome.written\n    });\n    return outcome;\n  }\n  stop(event, reason, extra) {\n    const item = needsHuman(event, reason, extra);\n    this.needs_human.push(item);\n    return item;\n  }\n  writeAttempt(event, fromHold) {\n    const record = event.record || {};\n    const key = String(event.idempotency_key || '').trim();\n    const errors = validate(record, key);\n    if (errors.length) return this.stop(event, 'invalid_payload', { validation_errors: errors, record_id: record.record_id });\n    const digest = payloadHash(record);\n    const existingKey = this.byKey[key];\n    if (existingKey) {\n      return this.stop(event, existingKey.payload_hash !== digest ? 'idempotency_conflict' : 'duplicate_registration', { record_id: record.record_id, idempotency_key: key });\n    }\n    const existingId = this.byId[record.record_id];\n    if (existingId) {\n      return this.stop(event, existingId.payload_hash !== digest ? 'id_collision' : 'duplicate_registration', { record_id: record.record_id });\n    }\n    if (event.hold_for_human && !fromHold) {\n      this.holds[event.event_id] = { event, record, idempotency_key: key, payload_hash: digest };\n      return { status: 'held', written: false, event_id: event.event_id, record_id: record.record_id };\n    }\n    const row = {\n      record_id: record.record_id,\n      kind: record.kind,\n      display_name: record.display_name,\n      email: record.email,\n      source: record.source,\n      idempotency_key: key,\n      payload_hash: digest,\n      written_at: event.occurred_at,\n      source_event_id: event.event_id\n    };\n    if (event.approved_from_event_id) row.approved_from_event_id = event.approved_from_event_id;\n    this.ledger.records.push(row);\n    this.byKey[key] = row;\n    this.byId[row.record_id] = row;\n    return { status: 'written', written: true, event_id: event.event_id, record_id: row.record_id };\n  }\n  humanDecision(event) {\n    const target = event.target_event_id;\n    const decision = event.decision == null ? '' : String(event.decision).trim().toLowerCase();\n    const held = target ? this.holds[target] : null;\n    if (target) delete this.holds[target];\n    if (!held) return this.stop(event, 'unknown_hold_target', { target_event_id: target, decision: decision || null });\n    if (decision === 'approve') {\n      const writeEvent = Object.assign({}, held.event, {\n        event_id: event.event_id,\n        occurred_at: event.occurred_at,\n        hold_for_human: false,\n        approved_from_event_id: held.event.event_id\n      });\n      const outcome = this.writeAttempt(writeEvent, true);\n      outcome.target_event_id = target;\n      outcome.decision = decision;\n      return outcome;\n    }\n    if (Object.prototype.hasOwnProperty.call(STOP, decision)) {\n      return this.stop(event, STOP[decision], { target_event_id: target, decision, held_event_id: held.event.event_id, record_id: held.record.record_id });\n    }\n    return this.stop(event, 'unknown_decision', { target_event_id: target, decision, held_event_id: held.event.event_id });\n  }\n  result() {\n    return {\n      meta: { ticket: 'EARN-SHOWCASE-P3-20260916', synthetic: true, timeout_is_approve: false },\n      ledger: this.ledger,\n      holds_open: Object.keys(this.holds).map((id) => ({ event_id: id, status: 'held', written: false })),\n      needs_human: this.needs_human,\n      trace: this.trace\n    };\n  }\n}\n\nconst body = $input.first().json || {};\nconst ledger = body.ledger || { records: [] };\nconst events = Array.isArray(body.events) ? body.events : [body.event || body];\nconst result = new Guard(ledger).processEvents(events);\nresult.live_send = 'false';\nresult.illustration_only = true;\nresult.note_ja = 'n8n は分岐の見本。検品の正本は runner/failstop.py。';\nreturn [{ json: result }];"
+      },
+      "id": "eeeeeeee-0003-4000-8000-000000000003",
+      "name": "Fail-stop guard STUB",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [720, 300]
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $json.needs_human && $json.needs_human.length ? 'needs_human' : ($json.holds_open && $json.holds_open.length ? 'held' : 'written') }}",
+        "rules": {
+          "rules": [
+            { "value2": "written" },
+            { "value2": "held" },
+            { "value2": "needs_human" }
+          ]
+        },
+        "fallbackOut": "extra"
+      },
+      "id": "eeeeeeee-0003-4000-8000-000000000004",
+      "name": "Route outcome STUB",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [960, 300]
+    },
+    {
+      "parameters": {},
+      "id": "eeeeeeee-0003-4000-8000-000000000005",
+      "name": "Ledger write PLACEHOLDER (no credential)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1220, 80]
+    },
+    {
+      "parameters": {},
+      "id": "eeeeeeee-0003-4000-8000-000000000006",
+      "name": "Wait for human — no outbound",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1220, 260]
+    },
+    {
+      "parameters": {},
+      "id": "eeeeeeee-0003-4000-8000-000000000007",
+      "name": "STOP — needs_human (no write)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1220, 440]
+    },
+    {
+      "parameters": {},
+      "id": "eeeeeeee-0003-4000-8000-000000000008",
+      "name": "STOP — unknown route (no write)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1220, 620]
+    }
+  ],
+  "connections": {
+    "Webhook event STUB": {
+      "main": [
+        [
+          {
+            "node": "Fail-stop guard STUB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fail-stop guard STUB": {
+      "main": [
+        [
+          {
+            "node": "Route outcome STUB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route outcome STUB": {
+      "main": [
+        [
+          {
+            "node": "Ledger write PLACEHOLDER (no credential)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait for human — no outbound",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "STOP — needs_human (no write)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "STOP — unknown route (no write)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "ticket": "EARN-SHOWCASE-P3-20260916",
+    "status": "DRAFT_ONLY_STUB",
+    "templateCredsSetupCompleted": false,
+    "instanceId": "STUB-DO-NOT-USE-AS-INSTANCE-ID"
+  },
+  "pinData": {},
+  "versionId": "eeeeeeee-0003-4000-8000-000000000099",
+  "tags": []
+}

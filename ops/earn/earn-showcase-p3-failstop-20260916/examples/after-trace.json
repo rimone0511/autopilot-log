@@ -1,0 +1,134 @@
+[
+  {
+    "event_id": "evt-01",
+    "event_type": "write_attempt",
+    "occurred_at": "2026-09-16T00:01:00Z",
+    "status": "written",
+    "reason": null,
+    "written": true,
+    "record_id": "cust-1003",
+    "decision": null,
+    "target_event_id": null
+  },
+  {
+    "event_id": "evt-02",
+    "event_type": "write_attempt",
+    "occurred_at": "2026-09-16T00:02:00Z",
+    "status": "needs_human",
+    "reason": "duplicate_registration",
+    "written": false,
+    "record_id": "cust-1001",
+    "decision": null,
+    "target_event_id": null
+  },
+  {
+    "event_id": "evt-03",
+    "event_type": "write_attempt",
+    "occurred_at": "2026-09-16T00:03:00Z",
+    "status": "needs_human",
+    "reason": "invalid_payload",
+    "written": false,
+    "record_id": "cust-1090",
+    "decision": null,
+    "target_event_id": null
+  },
+  {
+    "event_id": "evt-04",
+    "event_type": "write_attempt",
+    "occurred_at": "2026-09-16T00:04:00Z",
+    "status": "needs_human",
+    "reason": "id_collision",
+    "written": false,
+    "record_id": "cust-1002",
+    "decision": null,
+    "target_event_id": null
+  },
+  {
+    "event_id": "evt-05",
+    "event_type": "write_attempt",
+    "occurred_at": "2026-09-16T00:05:00Z",
+    "status": "needs_human",
+    "reason": "duplicate_registration",
+    "written": false,
+    "record_id": "cust-1003",
+    "decision": null,
+    "target_event_id": null
+  },
+  {
+    "event_id": "evt-06",
+    "event_type": "write_attempt",
+    "occurred_at": "2026-09-16T00:06:00Z",
+    "status": "held",
+    "reason": null,
+    "written": false,
+    "record_id": "cust-1004",
+    "decision": null,
+    "target_event_id": null
+  },
+  {
+    "event_id": "evt-07",
+    "event_type": "human_decision",
+    "occurred_at": "2026-09-16T00:07:00Z",
+    "status": "needs_human",
+    "reason": "timeout_not_approve",
+    "written": false,
+    "record_id": "cust-1004",
+    "decision": "timeout",
+    "target_event_id": "evt-06"
+  },
+  {
+    "event_id": "evt-08",
+    "event_type": "write_attempt",
+    "occurred_at": "2026-09-16T00:08:00Z",
+    "status": "held",
+    "reason": null,
+    "written": false,
+    "record_id": "cust-1005",
+    "decision": null,
+    "target_event_id": null
+  },
+  {
+    "event_id": "evt-09",
+    "event_type": "human_decision",
+    "occurred_at": "2026-09-16T00:09:00Z",
+    "status": "written",
+    "reason": null,
+    "written": true,
+    "record_id": "cust-1005",
+    "decision": "approve",
+    "target_event_id": "evt-08"
+  },
+  {
+    "event_id": "evt-10",
+    "event_type": "write_attempt",
+    "occurred_at": "2026-09-16T00:10:00Z",
+    "status": "held",
+    "reason": null,
+    "written": false,
+    "record_id": "cust-1006",
+    "decision": null,
+    "target_event_id": null
+  },
+  {
+    "event_id": "evt-11",
+    "event_type": "human_decision",
+    "occurred_at": "2026-09-16T00:11:00Z",
+    "status": "needs_human",
+    "reason": "rejected",
+    "written": false,
+    "record_id": "cust-1006",
+    "decision": "reject",
+    "target_event_id": "evt-10"
+  },
+  {
+    "event_id": "evt-12",
+    "event_type": "write_attempt",
+    "occurred_at": "2026-09-16T00:12:00Z",
+    "status": "needs_human",
+    "reason": "invalid_payload",
+    "written": false,
+    "record_id": "cust-1091",
+    "decision": null,
+    "target_event_id": null
+  }
+]

@@ -1,0 +1,24 @@
+{
+  "ticket": "EARN-SHOWCASE-P3-20260916",
+  "synthetic": true,
+  "timeout_is_approve": false,
+  "ledger_record_ids_before": ["cust-1001", "cust-1002"],
+  "ledger_record_ids_after": ["cust-1001", "cust-1002", "cust-1003", "cust-1005"],
+  "written_event_ids": ["evt-01", "evt-09"],
+  "not_written_record_ids": ["cust-1004", "cust-1006", "cust-1090", "cust-1091"],
+  "open_holds": [],
+  "needs_human": {
+    "evt-02": "duplicate_registration",
+    "evt-03": "invalid_payload",
+    "evt-04": "id_collision",
+    "evt-05": "duplicate_registration",
+    "evt-07": "timeout_not_approve",
+    "evt-11": "rejected",
+    "evt-12": "invalid_payload"
+  },
+  "held_then_closed": {
+    "evt-06": "timeout_not_approve",
+    "evt-08": "written_after_approve",
+    "evt-10": "rejected"
+  }
+}
