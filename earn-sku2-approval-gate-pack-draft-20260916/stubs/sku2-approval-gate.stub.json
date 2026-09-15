@@ -1,0 +1,237 @@
+{
+  "name": "SKU-2 Approval Gate STUB — DO NOT ACTIVATE",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## SKU-2 approval gate (STUB)\n\nInactive on purpose.\nReplace `{{WEBHOOK_PATH_SKU2}}`.\nNo secrets in this file.\nDraft notify stays `pending`.\n`outbound_allowed` stays false.\nDo not add live send nodes.\nTimeout is NOT approve.",
+        "height": 340,
+        "width": 380,
+        "color": 7
+      },
+      "id": "cccccccc-0002-4000-8000-000000000001",
+      "name": "Note: stub rules",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [0, 80]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "{{WEBHOOK_PATH_SKU2}}",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "cccccccc-0002-4000-8000-000000000002",
+      "name": "Webhook draft STUB",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [440, 320],
+      "webhookId": "00000000-0000-4000-8000-00000000ccc1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "gate-source",
+              "name": "source",
+              "value": "={{ $json.source || $json.body?.source || 'unspecified' }}",
+              "type": "string"
+            },
+            {
+              "id": "gate-channel",
+              "name": "channel",
+              "value": "={{ $json.channel || $json.body?.channel || '{{OPERATOR_NOTIFY_CHANNEL}}' }}",
+              "type": "string"
+            },
+            {
+              "id": "gate-draft",
+              "name": "draft_text",
+              "value": "={{ $json.draft_text || $json.body?.draft_text || $json.text || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "gate-audience",
+              "name": "audience",
+              "value": "={{ $json.audience || $json.body?.audience || 'unspecified' }}",
+              "type": "string"
+            },
+            {
+              "id": "gate-auto",
+              "name": "auto_send",
+              "value": "={{ $json.auto_send || $json.body?.auto_send || 'false' }}",
+              "type": "string"
+            },
+            {
+              "id": "gate-status",
+              "name": "approval_status",
+              "value": "={{ $json.approval_status || 'pending' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "cccccccc-0002-4000-8000-000000000003",
+      "name": "Normalize draft STUB",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [660, 320]
+    },
+    {
+      "parameters": {
+        "jsCode": "const autoSend = String($json.auto_send ?? false).toLowerCase() === 'true';\nconst claimedApproved = String($json.approval_status ?? '').toLowerCase() === 'approved';\nconst draftText = String($json.draft_text ?? '');\n\nlet gate = 'hold';\nlet reason = 'pending-human';\n\nif (autoSend) {\n  gate = 'refuse';\n  reason = 'auto_send-refused';\n} else if (claimedApproved) {\n  gate = 'refuse';\n  reason = 'pre-approved-payload-refused';\n} else if (!draftText.trim()) {\n  gate = 'refuse';\n  reason = 'empty-draft';\n}\n\nreturn [{\n  json: {\n    source: $json.source,\n    channel: $json.channel,\n    draft_text: draftText,\n    audience: $json.audience || 'unspecified',\n    auto_send: 'false',\n    approval_status: 'pending',\n    outbound_allowed: 'false',\n    gate,\n    reason,\n    table_kind: '{{TABLE_KIND}}',\n    sheet_name: '{{SHEET_NAME}}',\n    notify_channel: '{{OPERATOR_NOTIFY_CHANNEL}}',\n    live_send: 'false',\n  },\n}];"
+      },
+      "id": "cccccccc-0002-4000-8000-000000000004",
+      "name": "Fail-closed gate STUB",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [880, 320]
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $json.gate }}",
+        "rules": {
+          "rules": [
+            { "value2": "hold" }
+          ]
+        },
+        "fallbackOut": "extra"
+      },
+      "id": "cccccccc-0002-4000-8000-000000000005",
+      "name": "Route gate STUB",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [1100, 320]
+    },
+    {
+      "parameters": {},
+      "id": "cccccccc-0002-4000-8000-000000000006",
+      "name": "Table write PLACEHOLDER (no credential)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1340, 120]
+    },
+    {
+      "parameters": {},
+      "id": "cccccccc-0002-4000-8000-000000000007",
+      "name": "Operator ping PLACEHOLDER (no credential)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1340, 280]
+    },
+    {
+      "parameters": {},
+      "id": "cccccccc-0002-4000-8000-000000000008",
+      "name": "Wait for human — no outbound",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1580, 200]
+    },
+    {
+      "parameters": {},
+      "id": "cccccccc-0002-4000-8000-000000000009",
+      "name": "STOP — refuse (no outbound)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1340, 500]
+    }
+  ],
+  "connections": {
+    "Webhook draft STUB": {
+      "main": [
+        [
+          {
+            "node": "Normalize draft STUB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize draft STUB": {
+      "main": [
+        [
+          {
+            "node": "Fail-closed gate STUB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fail-closed gate STUB": {
+      "main": [
+        [
+          {
+            "node": "Route gate STUB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route gate STUB": {
+      "main": [
+        [
+          {
+            "node": "Table write PLACEHOLDER (no credential)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Operator ping PLACEHOLDER (no credential)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "STOP — refuse (no outbound)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Table write PLACEHOLDER (no credential)": {
+      "main": [
+        [
+          {
+            "node": "Wait for human — no outbound",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Operator ping PLACEHOLDER (no credential)": {
+      "main": [
+        [
+          {
+            "node": "Wait for human — no outbound",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "sku": "SKU-2",
+    "status": "DRAFT_ONLY_STUB",
+    "templateCredsSetupCompleted": false,
+    "instanceId": "STUB-DO-NOT-USE-AS-INSTANCE-ID"
+  },
+  "pinData": {},
+  "versionId": "cccccccc-0002-4000-8000-000000000099",
+  "tags": []
+}
