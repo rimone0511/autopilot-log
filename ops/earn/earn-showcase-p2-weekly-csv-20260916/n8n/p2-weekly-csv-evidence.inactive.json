@@ -1,0 +1,151 @@
+{
+  "name": "P2 Weekly CSV evidence STUB — DO NOT ACTIVATE",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## P2 週報（合成・根拠付き）\n\nInactive on purpose.\nCanonical engine: src/weekly_report.py\nInput: fixtures/inbound-ops-synthetic-w37.csv\nNo credentials in this file. No outbound connectors. No live Sheets.\nReplace {{P2_FIXTURE_PATH}} only in a private copy.\nDo not click Active.",
+        "height": 340,
+        "width": 380,
+        "color": 7
+      },
+      "id": "p2000000-0001-4000-8000-000000000001",
+      "name": "Note: P2 rules",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        80
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "p2000000-0001-4000-8000-000000000002",
+      "name": "Manual run (inactive sample)",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        420,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "filePath": "{{P2_FIXTURE_PATH}}",
+        "dataPropertyName": "data"
+      },
+      "id": "p2000000-0001-4000-8000-000000000003",
+      "name": "Read CSV bytes STUB",
+      "type": "n8n-nodes-base.readBinaryFile",
+      "typeVersion": 1,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "binaryPropertyName": "data",
+        "options": {
+          "headerRow": true,
+          "delimiter": ","
+        }
+      },
+      "id": "p2000000-0001-4000-8000-000000000004",
+      "name": "CSV to rows STUB",
+      "type": "n8n-nodes-base.spreadsheetFile",
+      "typeVersion": 2,
+      "position": [
+        860,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\n * P2 weekly evidence aggregator for n8n Code node (inactive showcase).\n * Canonical engine is ../src/weekly_report.py — keep predicates aligned.\n *\n * Expects items with CSV columns:\n * row_id, occurred_at, channel, sku, qty, unit_amount_jpy, status, note\n * plus optional source_line (1-based CSV line; defaults to item index + 2).\n *\n * No send. No credentials. Synthetic stationery shop only.\n */\nconst ALLOWED_CHANNELS = new Set(['store', 'web', 'phone', 'wholesale']);\nconst ALLOWED_SKUS = new Set(['NB-A5', 'PEN-BK', 'CLIP-20']);\nconst ALLOWED_STATUSES = new Set(['fulfilled', 'cancelled', 'hold']);\nconst WEEK_START = Date.parse('2026-09-07T00:00:00+09:00');\nconst WEEK_END = Date.parse('2026-09-14T00:00:00+09:00');\nconst SOURCE_REL = 'fixtures/inbound-ops-synthetic-w37.csv';\n\nfunction parseIntStrict(raw) {\n  const text = String(raw ?? '').trim();\n  if (text === '') return { value: null, error: 'missing_number' };\n  if (!/^-?\\d+$/.test(text)) return { value: null, error: 'not_integer' };\n  return { value: Number(text), error: null };\n}\n\nfunction parseDt(raw) {\n  const text = String(raw ?? '').trim();\n  if (!text) return null;\n  const ms = Date.parse(text);\n  if (Number.isNaN(ms)) return null;\n  return ms;\n}\n\nconst incoming = $input.all();\nconst sources = incoming.map((item, idx) => {\n  const j = item.json || {};\n  return {\n    source_line: Number(j.source_line || idx + 2),\n    row_id: String(j.row_id || '').trim(),\n    occurred_at_raw: String(j.occurred_at || '').trim(),\n    channel: String(j.channel || '').trim(),\n    sku: String(j.sku || '').trim(),\n    qty_raw: String(j.qty ?? '').trim(),\n    unit_amount_raw: String(j.unit_amount_jpy ?? '').trim(),\n    status: String(j.status || '').trim(),\n    note: String(j.note || '').trim(),\n  };\n});\n\nconst idCounts = {};\nfor (const src of sources) {\n  if (src.row_id) idCounts[src.row_id] = (idCounts[src.row_id] || 0) + 1;\n}\n\nconst rows = sources.map((src) => {\n  const reasons = [];\n  if (!src.row_id) reasons.push('missing_row_id');\n  else if ((idCounts[src.row_id] || 0) > 1) reasons.push('id_collision');\n\n  const occurredMs = parseDt(src.occurred_at_raw);\n  if (occurredMs === null) reasons.push('missing_or_bad_occurred_at');\n  else if (occurredMs < WEEK_START || occurredMs >= WEEK_END) reasons.push('out_of_week');\n\n  if (!ALLOWED_CHANNELS.has(src.channel)) reasons.push('unknown_channel');\n  if (!src.sku) reasons.push('missing_sku');\n  else if (!ALLOWED_SKUS.has(src.sku)) reasons.push('unknown_sku');\n  if (!ALLOWED_STATUSES.has(src.status)) reasons.push('unknown_status');\n\n  const qty = parseIntStrict(src.qty_raw);\n  if (qty.error) reasons.push('bad_qty');\n  else if (qty.value < 0) reasons.push('negative_qty');\n  else if (qty.value === 0) reasons.push('zero_qty');\n\n  const amount = parseIntStrict(src.unit_amount_raw);\n  if (amount.error) reasons.push('bad_unit_amount');\n  else if (amount.value < 0) reasons.push('negative_unit_amount');\n\n  let lineAmount = null;\n  if (qty.value !== null && amount.value !== null && qty.value > 0 && amount.value >= 0) {\n    lineAmount = qty.value * amount.value;\n  }\n\n  return {\n    ...src,\n    bucket: reasons.length ? 'exception' : src.status,\n    reasons,\n    qty: qty.value,\n    unit_amount_jpy: amount.value,\n    line_amount_jpy: lineAmount,\n  };\n});\n\nfunction agg(group) {\n  const ordered = group.slice().sort((a, b) => a.source_line - b.source_line || a.row_id.localeCompare(b.row_id));\n  return {\n    row_count: ordered.length,\n    qty: ordered.reduce((s, r) => s + (r.qty || 0), 0),\n    synthetic_jpy: ordered.reduce((s, r) => s + (r.line_amount_jpy || 0), 0),\n    row_ids: ordered.map((r) => r.row_id),\n    source_lines: ordered.map((r) => r.source_line),\n    evidence_links: ordered.map((r) => `../${SOURCE_REL}#L${r.source_line}`),\n  };\n}\n\nconst fulfilled = rows.filter((r) => r.bucket === 'fulfilled');\nconst cancelled = rows.filter((r) => r.bucket === 'cancelled');\nconst hold = rows.filter((r) => r.bucket === 'hold');\nconst exceptions = rows.filter((r) => r.bucket === 'exception');\n\nconst lines = [\n  { line_id: 'L01', label: '確定件数（fulfilled）', predicate: 'bucket==fulfilled', ...agg(fulfilled) },\n  { line_id: 'L03', label: '確定・合成金額(円)', predicate: 'bucket==fulfilled', ...agg(fulfilled) },\n  { line_id: 'L11', label: 'キャンセル件数（確定合計に含めない）', predicate: 'bucket==cancelled', ...agg(cancelled) },\n  { line_id: 'L13', label: '確認待ち件数（確定合計に含めない）', predicate: 'bucket==hold', ...agg(hold) },\n  { line_id: 'L15', label: '除外件数（失敗は成功に混ぜない）', predicate: 'bucket==exception', ...agg(exceptions) },\n];\n\nconst banner = 'SYNTHETIC / 合成データ。販売者の売上・顧客実績ではない。n8n は inactive 見本。正本は src/weekly_report.py。';\nconst md = [\n  '# 週報 2026-W37 — n8n smoke（合成）',\n  '',\n  `> ${banner}`,\n  '',\n  '| 行ID | 指標 | 件数 | 合成円 | 根拠 |',\n  '|---|---|---:|---:|---|',\n  ...lines.map((line) => {\n    const ev = line.row_ids.map((id, i) => `${id} (L${line.source_lines[i]})`).join(', ') || '（該当なし）';\n    return `| ${line.line_id} | ${line.label} | ${line.row_count} | ${line.synthetic_jpy} | ${ev} |`;\n  }),\n  '',\n  'このノードは送信しない。Operator が markdown をコピーするだけ。',\n].join('\\n');\n\nreturn [\n  {\n    json: {\n      synthetic: true,\n      seller_revenue_claim: false,\n      week: '2026-W37',\n      banner,\n      markdown: md,\n      lines,\n      exception_rows: exceptions.map((r) => ({\n        row_id: r.row_id,\n        source_line: r.source_line,\n        reasons: r.reasons.join('|'),\n        evidence_link: `../${SOURCE_REL}#L${r.source_line}`,\n      })),\n      next: 'operator-copy-only',\n    },\n  },\n];\n"
+      },
+      "id": "p2000000-0001-4000-8000-000000000005",
+      "name": "Evidence weekly STUB",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1080,
+        300
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "p2000000-0001-4000-8000-000000000006",
+      "name": "Operator copies markdown (no send)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Manual run (inactive sample)": {
+      "main": [
+        [
+          {
+            "node": "Read CSV bytes STUB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read CSV bytes STUB": {
+      "main": [
+        [
+          {
+            "node": "CSV to rows STUB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CSV to rows STUB": {
+      "main": [
+        [
+          {
+            "node": "Evidence weekly STUB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evidence weekly STUB": {
+      "main": [
+        [
+          {
+            "node": "Operator copies markdown (no send)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "ticket": "EARN-SHOWCASE-P2-20260916",
+    "status": "DRAFT_ONLY_STUB",
+    "synthetic": true,
+    "seller_revenue_claim": false,
+    "templateCredsSetupCompleted": false,
+    "instanceId": "STUB-DO-NOT-USE-AS-INSTANCE-ID"
+  },
+  "pinData": {},
+  "versionId": "p2000000-0001-4000-8000-000000000099",
+  "tags": []
+}

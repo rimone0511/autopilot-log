@@ -1,0 +1,28 @@
+{
+  "ticket": "EARN-SHOWCASE-P2-20260916",
+  "dataset_label": "ハーバー文具（合成）",
+  "synthetic": true,
+  "seller_revenue_claim": false,
+  "week": "2026-W37",
+  "week_start": "2026-09-07T00:00:00+09:00",
+  "week_end_exclusive": "2026-09-14T00:00:00+09:00",
+  "timezone": "Asia/Tokyo",
+  "input": "fixtures/inbound-ops-synthetic-w37.csv",
+  "input_sha256": "8c9638a9bebb8e8d96c26e08968e303fa0ba78658750cd887aa5c31d614ba96b",
+  "generated_at": "2026-09-16T12:00:00+09:00",
+  "counts": {
+    "input_rows": 29,
+    "fulfilled": 14,
+    "cancelled": 2,
+    "hold": 2,
+    "exception": 11
+  },
+  "lineage_error_count": 0,
+  "outputs": {
+    "markdown": "weekly-2026-W37.md",
+    "summary": "weekly-2026-W37-summary.csv",
+    "evidence": "weekly-2026-W37-evidence.csv",
+    "exceptions": "weekly-2026-W37-exceptions.csv"
+  },
+  "banner": "SYNTHETIC / 合成データ。販売者の売上・顧客実績・時短・精度の証拠ではない。自主制作サンプル。"
+}
