@@ -1,0 +1,95 @@
+[
+  {
+    "event_id": "evt-02",
+    "status": "needs_human",
+    "reason": "duplicate_registration",
+    "written": false,
+    "message_ja": "同じ登録キーまたは同じ顧客が台帳に既にあります。二重登録になるため書き込みを止めました。",
+    "message_en": "This registration key or customer is already in the ledger. Write stopped to avoid a duplicate.",
+    "record_id": "cust-1001",
+    "idempotency_key": "reg:studio-a:cust-1001",
+    "validation_errors": [],
+    "payload_hash": "sha256:397c1409996acda4f93458f616c77d1cb2de271ae943e1b9f08191e0a97b37d7",
+    "existing_record_id": "cust-1001"
+  },
+  {
+    "event_id": "evt-03",
+    "status": "needs_human",
+    "reason": "invalid_payload",
+    "written": false,
+    "message_ja": "必須項目の欠落または形式不正です。台帳には書いていません。",
+    "message_en": "Missing or invalid required fields. Not written.",
+    "record_id": "cust-1090",
+    "idempotency_key": "reg:studio-a:cust-bad-email",
+    "validation_errors": [
+      "missing-email"
+    ]
+  },
+  {
+    "event_id": "evt-04",
+    "status": "needs_human",
+    "reason": "id_collision",
+    "written": false,
+    "message_ja": "同じ顧客IDなのに中身が違います。衝突として止めました。",
+    "message_en": "Same customer id, different payload. Treated as a collision; not written.",
+    "record_id": "cust-1002",
+    "idempotency_key": "reg:studio-a:cust-1002-alt",
+    "validation_errors": [],
+    "payload_hash": "sha256:b8741a55eb5d78aaf8b434f19171e5adb9328fc36911e932d4a95bededfc7362",
+    "existing_record_id": "cust-1002"
+  },
+  {
+    "event_id": "evt-05",
+    "status": "needs_human",
+    "reason": "duplicate_registration",
+    "written": false,
+    "message_ja": "同じ登録キーまたは同じ顧客が台帳に既にあります。二重登録になるため書き込みを止めました。",
+    "message_en": "This registration key or customer is already in the ledger. Write stopped to avoid a duplicate.",
+    "record_id": "cust-1003",
+    "idempotency_key": "reg:studio-a:cust-1003",
+    "validation_errors": [],
+    "payload_hash": "sha256:1a04f356038488d72678ae25ada93a06cf589080306270c7dcba57ef6a578b7b",
+    "existing_record_id": "cust-1003"
+  },
+  {
+    "event_id": "evt-07",
+    "status": "needs_human",
+    "reason": "timeout_not_approve",
+    "written": false,
+    "message_ja": "待ち時間が切れました。タイムアウトは承認ではありません。台帳には書いていません。",
+    "message_en": "The wait expired. Timeout is not approve. Not written.",
+    "target_event_id": "evt-06",
+    "decision": "timeout",
+    "actor": "system-wait",
+    "held_event_id": "evt-06",
+    "record_id": "cust-1004",
+    "idempotency_key": "reg:studio-a:cust-1004"
+  },
+  {
+    "event_id": "evt-11",
+    "status": "needs_human",
+    "reason": "rejected",
+    "written": false,
+    "message_ja": "人が却下しました。台帳には書いていません。",
+    "message_en": "A person rejected the write. Not written.",
+    "target_event_id": "evt-10",
+    "decision": "reject",
+    "actor": "example-operator",
+    "held_event_id": "evt-10",
+    "record_id": "cust-1006",
+    "idempotency_key": "reg:studio-a:cust-1006"
+  },
+  {
+    "event_id": "evt-12",
+    "status": "needs_human",
+    "reason": "invalid_payload",
+    "written": false,
+    "message_ja": "必須項目の欠落または形式不正です。台帳には書いていません。",
+    "message_en": "Missing or invalid required fields. Not written.",
+    "record_id": "cust-1091",
+    "idempotency_key": "reg:studio-a:cust-1091",
+    "validation_errors": [
+      "missing-display_name"
+    ]
+  }
+]

@@ -1,0 +1,57 @@
+{
+  "ledger_id": "example-studio-a",
+  "label_ja": "見本スタジオA（架空）",
+  "label_en": "Example Studio A (fictional)",
+  "synthetic": true,
+  "as_of": "2026-09-16T12:00:00Z",
+  "note_ja": "合成台帳の after。書けた行だけ。顧客実績ではない。",
+  "records": [
+    {
+      "record_id": "cust-1001",
+      "kind": "customer",
+      "display_name": "依頼者A",
+      "email": "client-a@example.invalid",
+      "source": "seed",
+      "idempotency_key": "reg:studio-a:cust-1001",
+      "written_at": "2026-09-15T10:00:00Z",
+      "source_event_id": "seed-001",
+      "payload_hash": "sha256:397c1409996acda4f93458f616c77d1cb2de271ae943e1b9f08191e0a97b37d7"
+    },
+    {
+      "record_id": "cust-1002",
+      "kind": "customer",
+      "display_name": "依頼者B",
+      "email": "client-b@example.invalid",
+      "source": "seed",
+      "idempotency_key": "reg:studio-a:cust-1002",
+      "written_at": "2026-09-15T11:00:00Z",
+      "source_event_id": "seed-002",
+      "payload_hash": "sha256:85471c96661aa9f0e47b6e5cb0b4174c5ac5001d128599c08f00902bb766cec1"
+    },
+    {
+      "record_id": "cust-1003",
+      "kind": "customer",
+      "display_name": "依頼者C",
+      "email": "client-c@example.invalid",
+      "source": "web-form",
+      "idempotency_key": "reg:studio-a:cust-1003",
+      "payload_hash": "sha256:1a04f356038488d72678ae25ada93a06cf589080306270c7dcba57ef6a578b7b",
+      "written_at": "2026-09-16T00:01:00Z",
+      "source_event_id": "evt-01"
+    },
+    {
+      "record_id": "cust-1005",
+      "kind": "customer",
+      "display_name": "依頼者E",
+      "email": "client-e@example.invalid",
+      "source": "web-form",
+      "idempotency_key": "reg:studio-a:cust-1005",
+      "payload_hash": "sha256:c4343fd9bfd648206acda5204d6f5138f769b97e39a4476a3c2095c22a81a2a3",
+      "written_at": "2026-09-16T00:09:00Z",
+      "source_event_id": "evt-09",
+      "approved_from_event_id": "evt-08"
+    }
+  ],
+  "ticket": "EARN-SHOWCASE-P3-20260916",
+  "note_en": "Synthetic ledger after a guarded run. Written rows only. Not a client case."
+}

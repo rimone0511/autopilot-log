@@ -1,0 +1,30 @@
+{
+  "ledger_id": "example-studio-a",
+  "label_ja": "見本スタジオA（架空）",
+  "label_en": "Example Studio A (fictional)",
+  "synthetic": true,
+  "as_of": "2026-09-15T12:00:00Z",
+  "note_ja": "合成シード。実在の顧客・会社ではない。",
+  "records": [
+    {
+      "record_id": "cust-1001",
+      "kind": "customer",
+      "display_name": "依頼者A",
+      "email": "client-a@example.invalid",
+      "source": "seed",
+      "idempotency_key": "reg:studio-a:cust-1001",
+      "written_at": "2026-09-15T10:00:00Z",
+      "source_event_id": "seed-001"
+    },
+    {
+      "record_id": "cust-1002",
+      "kind": "customer",
+      "display_name": "依頼者B",
+      "email": "client-b@example.invalid",
+      "source": "seed",
+      "idempotency_key": "reg:studio-a:cust-1002",
+      "written_at": "2026-09-15T11:00:00Z",
+      "source_event_id": "seed-002"
+    }
+  ]
+}

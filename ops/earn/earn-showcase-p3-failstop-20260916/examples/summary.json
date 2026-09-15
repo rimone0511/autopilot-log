@@ -1,0 +1,10 @@
+{
+  "ledger_count_after": 4,
+  "written_event_ids": [
+    "evt-01",
+    "evt-09"
+  ],
+  "needs_human_count": 7,
+  "open_hold_count": 0,
+  "timeout_wrote": false
+}
