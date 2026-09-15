@@ -1,8 +1,10 @@
 # STATUS — Wave A+B morning-loop snapshot (05:56)
 
+> **REGISTER-CU-CUT.** `register-winddown` / **jobs-first** is live. After Freelancer park, next is **JOBS only**. Do **not** open Wave B register CU. See [NEXT.md](NEXT.md).
+
 Snapshot: **2026-09-16 05:56 JST**  
 Folder: `ops/earn/register-loop-status-0556-20260916/`  
-State: **DRAFT-ONLY**
+State: **DRAFT-ONLY** / **REGISTER-CU-CUT**
 
 One-page CU box after the 05:56 morning-loop reconcile. Desk set and QUEUE letters come from [PR#1](https://github.com/rimone0511/autopilot-log/pull/1) `QUEUE.md`. CU numbers come from [PR#8](https://github.com/rimone0511/autopilot-log/pull/8). Pack pointers are **folder-bearing sibling PRs only** (bodies not copied). This file is not a signup log and does not claim an account exists.
 
@@ -18,13 +20,14 @@ This snapshot **overrides** older next-CU / pending hints:
 - [PR#60](https://github.com/rimone0511/autopilot-log/pull/60) Craudia `pending`
 - [PR#64](https://github.com/rimone0511/autopilot-log/pull/64) next Craudia after Contra `draft_saved`
 - [PR#66](https://github.com/rimone0511/autopilot-log/pull/66) Freelancer.com `pending`
-- [PR#50](https://github.com/rimone0511/autopilot-log/pull/50) Workship → SOKUDAN → Offers as the live serial
-- [PR#72](https://github.com/rimone0511/autopilot-log/pull/72) Workship-first six-desk play **and** REGISTER-CU-CUT (this 05:56 box is later: Wave A is parked; next CU is the six alive desks in **this** order)
-- [PR#88](https://github.com/rimone0511/autopilot-log/pull/88) JOBS inventory still listing Craudia / Freelancer signup as `pending` (that pack is apply-queue, not this register loop)
+- [PR#50](https://github.com/rimone0511/autopilot-log/pull/50) Workship → SOKUDAN → Offers as the live **register** serial
+- This folder’s first revision (SOKUDAN-first Wave B as next CU)
+
+This snapshot **agrees with** [PR#72](https://github.com/rimone0511/autopilot-log/pull/72) REGISTER-CU-CUT and with JOBS packs [PR#76](https://github.com/rimone0511/autopilot-log/pull/76) / [PR#88](https://github.com/rimone0511/autopilot-log/pull/88). It does **not** override that cut.
 
 QUEUE `done-draft` / `next` / `week-2` rows are **not** rewritten here. INDEX CU-11 Workship-first is **not** rewritten here.
 
-Same-folder companion: [NEXT.md](NEXT.md) (open path).
+Same-folder companion: [NEXT.md](NEXT.md) (JOBS-only open path; Wave B register cut).
 
 ## CU hint
 
@@ -32,10 +35,11 @@ Same-folder companion: [NEXT.md](NEXT.md) (open path).
 |---|---|
 | `draft_saved` | Seller draft already parked unpublished. Do not reopen to publish |
 | `blocked_skip` | Skip this desk this pass. Do not retry the listed reason. Do not invent a recovery |
-| `pending` | Not started. Do not open until earlier serial desks are parked |
+| `pending` | Not started. **Not** used to open Wave B this pass |
+| `register_cu_cut` | Register serial cut. Prep packs exist. **Do not play.** Prefer JOBS |
 | `in_progress` | **None** in this box |
 
-[PR#54](https://github.com/rimone0511/autopilot-log/pull/54) said: do not start Wave B until Wave A `pending` rows are `draft_saved` or still parked `blocked_skip`. That gate is met in this box.
+[PR#54](https://github.com/rimone0511/autopilot-log/pull/54) said: do not start Wave B until Wave A `pending` rows are `draft_saved` or still parked `blocked_skip`. That register gate is met **and then cut**: [PR#72](https://github.com/rimone0511/autopilot-log/pull/72) jobs-first means Wave B register still does **not** open.
 
 ## Wave A — Top10 + Gumroad
 
@@ -55,29 +59,29 @@ Same-folder companion: [NEXT.md](NEXT.md) (open path).
 
 Wave A counts this box: `draft_saved` **3** · `blocked_skip` **8** · `in_progress` **0** · `pending` **0**.
 
-## Wave B — next CU (alive six; this pass)
+## Wave B — REGISTER-CU-CUT (not next)
 
-Not started from this folder. `pending` until a later live CU parks each desk. Order for **this** pass is operator serial (not INDEX CU-11-first, not PR#50’s three-desk subset, not PR#72’s Workship-first play).
+Alive-six packs exist. **Do not play.** `register_cu_cut` this pass. Next is JOBS ([NEXT.md](NEXT.md)).
 
 | Play | desk | QUEUE / CU | CU hint | gate (sibling, not re-scored) | pack PR | next action |
 |---|---|---|---|---|---|---|
-| 1 | SOKUDAN | B1 / **CU-13** | `pending` **open desk** | [PR#12](https://github.com/rimone0511/autopilot-log/pull/12) `pass` | [#3](https://github.com/rimone0511/autopilot-log/pull/3) [#21](https://github.com/rimone0511/autopilot-log/pull/21) [#33](https://github.com/rimone0511/autopilot-log/pull/33) [#50](https://github.com/rimone0511/autopilot-log/pull/50) [#72](https://github.com/rimone0511/autopilot-log/pull/72) | **Open desk.** 人材 `/signup/pro`. Profile **draft**. No 応募 |
-| 2 | Workship | B2 / **CU-11** | `pending` | PR#12 `pass` | [#3](https://github.com/rimone0511/autopilot-log/pull/3) [#50](https://github.com/rimone0511/autopilot-log/pull/50) [#72](https://github.com/rimone0511/autopilot-log/pull/72) | After SOKUDAN parks. フリーランス `/signup`. Profile **draft**. ≠ Workshift |
-| 3 | Skill Shift | B16 / **CU-27** | `pending` | PR#12 `pass` (host `skill-shift.com`) | [#12](https://github.com/rimone0511/autopilot-log/pull/12) [#33](https://github.com/rimone0511/autopilot-log/pull/33) [#34](https://github.com/rimone0511/autopilot-log/pull/34) [#72](https://github.com/rimone0511/autopilot-log/pull/72) | After Workship. `www.skill-shift.com` only. `skillshift.jp` DNS fail (PR#12 / PR#72). Profile **draft** |
-| 4 | ITプロパートナーズ | B17 / **CU-28** | `pending` | PR#12 `pass` | [#12](https://github.com/rimone0511/autopilot-log/pull/12) [#34](https://github.com/rimone0511/autopilot-log/pull/34) [#72](https://github.com/rimone0511/autopilot-log/pull/72) | After Skill Shift. Agent desk. Profile **draft**. CU does not attend 面談. Do not apply |
-| 5 | Workshift | **QUEUE外** / **no CU — do not invent** | `pending` | [PR#13](https://github.com/rimone0511/autopilot-log/pull/13) `pass` | [#13](https://github.com/rimone0511/autopilot-log/pull/13) [#72](https://github.com/rimone0511/autopilot-log/pull/72) | After ITプロ. `workshift-sol.com`. ≠ Workship. Email = MAIN mailbox. 現地カード: do not apply |
-| 6 | Offers | B14 / **CU-25** | `pending` | PR#12 `pass` | [#12](https://github.com/rimone0511/autopilot-log/pull/12) [#34](https://github.com/rimone0511/autopilot-log/pull/34) [#50](https://github.com/rimone0511/autopilot-log/pull/50) [#72](https://github.com/rimone0511/autopilot-log/pull/72) | After Workshift. Worker `/worker/signup` (`/signup` 404 in PR#72). Profile **draft**. Do not 応募 |
+| — | SOKUDAN | B1 / **CU-13** | `register_cu_cut` | [PR#12](https://github.com/rimone0511/autopilot-log/pull/12) `pass` | [#3](https://github.com/rimone0511/autopilot-log/pull/3) [#21](https://github.com/rimone0511/autopilot-log/pull/21) [#33](https://github.com/rimone0511/autopilot-log/pull/33) [#50](https://github.com/rimone0511/autopilot-log/pull/50) [#72](https://github.com/rimone0511/autopilot-log/pull/72) | **Do not open.** Archive only |
+| — | Workship | B2 / **CU-11** | `register_cu_cut` | PR#12 `pass` | [#3](https://github.com/rimone0511/autopilot-log/pull/3) [#50](https://github.com/rimone0511/autopilot-log/pull/50) [#72](https://github.com/rimone0511/autopilot-log/pull/72) | **Do not open.** ≠ Workshift |
+| — | Skill Shift | B16 / **CU-27** | `register_cu_cut` | PR#12 `pass` (host `skill-shift.com`) | [#12](https://github.com/rimone0511/autopilot-log/pull/12) [#33](https://github.com/rimone0511/autopilot-log/pull/33) [#34](https://github.com/rimone0511/autopilot-log/pull/34) [#72](https://github.com/rimone0511/autopilot-log/pull/72) | **Do not open.** `skillshift.jp` DNS fail |
+| — | ITプロパートナーズ | B17 / **CU-28** | `register_cu_cut` | PR#12 `pass` | [#12](https://github.com/rimone0511/autopilot-log/pull/12) [#34](https://github.com/rimone0511/autopilot-log/pull/34) [#72](https://github.com/rimone0511/autopilot-log/pull/72) | **Do not open.** Agent desk; no 面談 |
+| — | Workshift | **QUEUE外** / **no CU — do not invent** | `register_cu_cut` | [PR#13](https://github.com/rimone0511/autopilot-log/pull/13) `pass` | [#13](https://github.com/rimone0511/autopilot-log/pull/13) [#72](https://github.com/rimone0511/autopilot-log/pull/72) | **Do not open.** ≠ Workship |
+| — | Offers | B14 / **CU-25** | `register_cu_cut` | PR#12 `pass` | [#12](https://github.com/rimone0511/autopilot-log/pull/12) [#34](https://github.com/rimone0511/autopilot-log/pull/34) [#50](https://github.com/rimone0511/autopilot-log/pull/50) [#72](https://github.com/rimone0511/autopilot-log/pull/72) | **Do not open.** `/signup` 404 in PR#72 |
 
-Wave B counts this box: `pending` **6** (this serial) · live CU `draft_saved` **0**. Other Wave B desks (複業クラウド / CrowdLinks / Anycrew / MENTA / ストアカ / GLOBAL / AI CrowdWorks / YOUTRUST / Freelancermap) are **not** this chain.
+Wave B this box: `register_cu_cut` **6** · live CU `draft_saved` **0**. Other Wave B desks (複業クラウド / CrowdLinks / Anycrew / MENTA / ストアカ / GLOBAL / AI CrowdWorks / YOUTRUST / Freelancermap) are also **not** this pass.
 
 ## This pass
 
 1. Skip Fiverr (`hold`), Lancers (`captcha`), CrowdWorks (`403`), Upwork (`Google`), LinkedIn (`captcha`), TimeTicket (`DOB`), Craudia (`captcha`), Freelancer.com (`spinner`). No retry. No invented recovery.
-2. Leave Coconala / Contra / Gumroad `draft_saved`. Do not reopen to publish. JOBS pastes in sibling PRs stay do-not-send from this folder.
-3. Open desk is **SOKUDAN** (B1 / CU-13). 人材 draft only. Not 企業. Not 応募.
-4. After each desk parks (`draft_saved` or a documented stop that is not a retry of a Wave A skip): **Workship → Skill Shift → ITプロパートナーズ → Workshift → Offers**.
+2. Leave Coconala / Contra / Gumroad `draft_saved`. Do not reopen to publish.
+3. After Freelancer park: **JOBS only** ([PR#76](https://github.com/rimone0511/autopilot-log/pull/76) week plan, [PR#88](https://github.com/rimone0511/autopilot-log/pull/88) ranked queue). Do-not-send. Default GO rows stay false.
+4. **Do not** open SOKUDAN / Workship / Skill Shift / ITプロ / Workshift / Offers. REGISTER-CU-CUT.
 5. Do not signup-complete past KYC. Stop at identity walls. Leave profiles unpublished.
-6. Do not start Wave C remaining High / Wave D (except Workshift, which is **in** this serial) until these six are `draft_saved` or parked `blocked_skip`.
+6. Do not start Wave C remaining High / Wave D register CU from this folder.
 
 Reason labels of record (this folder). Older sibling wording is the **same skip**, not a recovery:
 
@@ -101,4 +105,5 @@ Reason labels of record (this folder). Older sibling wording is the **same skip*
 - Retry Fiverr hold / Lancers captcha / CrowdWorks 403 / Upwork Google / LinkedIn captcha / TimeTicket DOB / Craudia captcha / Freelancer spinner
 - Invent a Craudia or Freelancer `draft_saved`, a TimeTicket 生年月日, or a hold/captcha/403/Google/spinner clear
 - Invent CU-29 for Workshift
+- Open Wave B register CU or override [PR#72](https://github.com/rimone0511/autopilot-log/pull/72) REGISTER-CU-CUT
 - Rewrite QUEUE letters or INDEX CU-11-first
